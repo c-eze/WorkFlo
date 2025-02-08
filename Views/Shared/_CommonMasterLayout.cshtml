@@ -16,13 +16,13 @@
         string appName = TempData.Peek("appName") as string ?? "";
         string productPage = TempData.Peek("productPage") as string ?? "";
     }
-  <title>@title | @appName - Asp.Net Core MVC Free Admin Template</title>
+  <title>@title | @appName - Issue/Task Management System</title>
   <meta name="description" content="" />
 
   <!-- Canonical SEO -->
   <link rel="canonical" href='@productPage'>
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="~/img/favicon/favicon.ico" />
+  <link rel="icon" href="~/img/favicon/favicon.ico?v=2" />
 
   <!-- Core Styles -->
   @await Html.PartialAsync("Sections/_Styles")
