@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace AspnetCoreMvcFull.Areas.Identity.Pages.Account
 {
@@ -22,18 +23,20 @@ namespace AspnetCoreMvcFull.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<BTUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly IConfiguration _configuration;
 
-        public LoginModel(SignInManager<BTUser> signInManager, ILogger<LoginModel> logger)
-        {
-            _signInManager = signInManager;
-            _logger = logger;
-        }
+    public LoginModel(SignInManager<BTUser> signInManager, ILogger<LoginModel> logger, IConfiguration configuration)
+    {
+      _signInManager = signInManager;
+      _logger = logger;
+      _configuration = configuration;
+    }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        [BindProperty]
+    /// <summary>
+    ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+    ///     directly from your code. This API may change or be removed in future releases.
+    /// </summary>
+    [BindProperty]
         public InputModel Input { get; set; }
 
         /// <summary>
@@ -102,13 +105,79 @@ namespace AspnetCoreMvcFull.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null, string demoLoginEmail = null)
         {
-            returnUrl ??= Url.Content("~/");
+            returnUrl ??= Url.Content("~/Home/Dashboard");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            if (ModelState.IsValid)
+      if (demoLoginEmail == "DemoAdmin")
+      {
+        Input.Email = "demoadmin@bugtracker.com";
+        Input.Password = Environment.GetEnvironmentVariable("UserPassword") ?? _configuration.GetSection("User")["Password"];
+        Input.RememberMe = true;
+
+        var userResult = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+        if (userResult.Succeeded)
+        {
+          _logger.LogInformation("User logged in.");
+          return LocalRedirect(returnUrl);
+        }
+      }
+      else if (demoLoginEmail == "DemoPM")
+      {
+        Input.Email = "demopm@bugtracker.com";
+        Input.Password = Environment.GetEnvironmentVariable("UserPassword") ?? _configuration.GetSection("User")["Password"];
+        Input.RememberMe = true;
+
+        var userResult = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+        if (userResult.Succeeded)
+        {
+          _logger.LogInformation("User logged in.");
+          return LocalRedirect(returnUrl);
+        }
+      }
+      else if (demoLoginEmail == "DemoDev")
+      {
+        Input.Email = "demodev@bugtracker.com";
+        Input.Password = Environment.GetEnvironmentVariable("UserPassword") ?? _configuration.GetSection("User")["Password"];
+        Input.RememberMe = true;
+
+        var userResult = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+        if (userResult.Succeeded)
+        {
+          _logger.LogInformation("User logged in.");
+          return LocalRedirect(returnUrl);
+        }
+      }
+      else if (demoLoginEmail == "DemoSub")
+      {
+        Input.Email = "demosub@bugtracker.com";
+        Input.Password = Environment.GetEnvironmentVariable("UserPassword") ?? _configuration.GetSection("User")["Password"];
+        Input.RememberMe = true;
+
+        var userResult = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+        if (userResult.Succeeded)
+        {
+          _logger.LogInformation("User logged in.");
+          return LocalRedirect(returnUrl);
+        }
+      }
+      else if (demoLoginEmail == "DemoNew")
+      {
+        Input.Email = "demonew@bugtracker.com";
+        Input.Password = Environment.GetEnvironmentVariable("UserPassword") ?? _configuration.GetSection("User")["Password"];
+        Input.RememberMe = true;
+
+        var userResult = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+        if (userResult.Succeeded)
+        {
+          _logger.LogInformation("User logged in.");
+          return LocalRedirect(returnUrl);
+        }
+      }
+
+      if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true

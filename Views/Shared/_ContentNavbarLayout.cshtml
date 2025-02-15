@@ -1,24 +1,27 @@
 @await Html.PartialAsync("Sections/_Variables")
 @{
-  TempData.Keep();
-  Layout = "_CommonMasterLayout";
+	TempData.Keep();
+	Layout = "_CommonMasterLayout";
 
-  ViewData["contentNavbar"] = true;
+	ViewData["contentNavbar"] = true;
 
-  @* Display elements *@
-  ViewData["isNavbar"] = (ViewData["isNavbar"] ??= true);
-  ViewData["isMenu"] = (ViewData["isMenu"] ??= true);
-  ViewData["isFlex"] = (ViewData["isFlex"] ??= false);
-  ViewData["isFooter"] = (ViewData["isFooter"] ??= true);
-  @* ViewData["customizerHidden"] = (ViewData["customizerHidden"] ??= "customizer-hide"); *@
+	@* Display elements *@
+	ViewData["isNavbar"] = (ViewData["isNavbar"] ??= true);
+	ViewData["isMenu"] = (ViewData["isMenu"] ??= true);
+	ViewData["isFlex"] = (ViewData["isFlex"] ??= false);
+	ViewData["isFooter"] = (ViewData["isFooter"] ??= true);
+	@* ViewData["customizerHidden"] = (ViewData["customizerHidden"] ??= "customizer-hide"); *@
 
 
-  @*HTML Classes *@
-  ViewData["navbarDetached"] = (ViewData["navbarDetached"] ?? "navbar-detached");
+	@*HTML Classes *@
+	ViewData["navbarDetached"] = (ViewData["navbarDetached"] ?? "navbar-detached");
 
-  @*Content classes *@
-  ViewData["container"] = (ViewData["container"] ?? "container-xxl");
-  ViewData["containerNav"] = (ViewData["containerNav"] ?? "container-xxl");
+	@*Content classes *@
+
+	ViewData["container"] = (ViewData["container"] ?? "container-xxl");
+	ViewData["containerNav"] = (ViewData["containerNav"] ?? "container-xxl");
+
+	IgnoreSection("scripts");
 }
 
 @section VendorStyles{ @RenderSection("VendorStyles", required: false) }
