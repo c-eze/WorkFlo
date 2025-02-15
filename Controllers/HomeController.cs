@@ -28,7 +28,19 @@ public class HomeController : Controller
   public IActionResult Index()
     {
         return View();
-    }
+  }
+
+  public async Task<IActionResult> MemberProfile(string userId)
+  {
+    int companyId = User.Identity.GetCompanyId().Value;
+
+    Company company = await _companyInfoService.GetCompanyInfoByIdAsync(companyId);
+
+    BTUser model = company.Members.FirstOrDefault(m => m.Id == userId);
+
+    return View(model);
+  }
+
   public async Task<IActionResult> Profile()
   {
     DashboardViewModel model = new();

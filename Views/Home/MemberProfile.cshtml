@@ -1,0 +1,50 @@
+@model AspnetCoreMvcFull.Models.BTUser
+
+@using AspnetCoreMvcFull.Services.Interfaces
+@using AspnetCoreMvcFull.Models.Enums
+
+@inject IBTRolesService RolesService
+
+@{
+	ViewData["Title"] = "Member Profile";
+}
+
+<h4>Member Profile</h4>
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a asp-controller="Home" asp-action="Company">Company</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Member Profile</li>
+	</ol>
+</nav>
+
+<div class="row my-2">
+	<div class="col">
+		<div class="card" style="width: 18rem;">
+			<div class="card-body">
+				@if (Model?.AvatarFileData != null)
+				{
+					<img class="card-img-top" src="data:image/*;base64,@(Convert.ToBase64String(Model.AvatarFileData))" alt="" />
+				}
+				else
+				{
+					<img class="card-img-top" src="https://api.dicebear.com/9.x/initials/svg?seed=@Model.FullName" alt="" />
+				}
+				<h5 class="card-title">@Model.FullName</h5>
+				<div>
+					@foreach (string role in (await RolesService.GetUserRolesAsync(Model)))
+					{
+						<span class="badge bg-dark">@role</span>
+					}
+				</div>
+				<p class="card-text"><strong>Company: </strong>@Model.Company.Name - @Model.Company.Description</p>
+				<a href="#" class="btn btn-success">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+						<path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z" />
+					</svg>
+					<span> Message</span>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
