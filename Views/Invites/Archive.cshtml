@@ -1,0 +1,40 @@
+@model AspnetCoreMvcFull.Models.Invite
+
+@{
+	ViewData["Title"] = "Cancel";
+}
+
+<h2>Cancel Invite</h2>
+
+<h3>Are you sure you want to cancel this invite?</h3>
+<div>
+	<h4>Cancel</h4>
+	<hr />
+	<dl class="row">
+		<dt class="col-sm-2">
+			Invitee
+		</dt>
+		<dd class="col-sm-10">
+			<div>@Html.DisplayFor(model => model.InviteeFirstName) @Html.DisplayFor(model => model.InviteeLastName)</div>
+			<div>@Html.DisplayFor(model => model.InviteeEmail)</div>
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Project)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Project.Name)
+		</dd>
+		<dt class="col-sm-2">
+			Sent
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.InviteDate)
+		</dd>
+	</dl>
+
+	<form asp-action="Archive">
+		<input type="hidden" asp-for="Id" />
+		<input type="submit" value="Cancel Invite" class="btn btn-danger" /> |
+		<a asp-action="Index">Back to List</a>
+	</form>
+</div>

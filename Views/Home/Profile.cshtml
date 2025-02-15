@@ -44,7 +44,7 @@
 				<h5 class="flex-grow-1">Members</h5>
 				@if (User.IsInRole(nameof(Roles.Admin)))
 				{
-					<a class="text-decoration-none" style="font-size: .875rem;font-weight: 500;" asp-controller="UserRoles" asp-action="ManageUserRoles"><i class="bi bi-gear-fill"></i><span class="text-uppercase"> Manage Roles</span></a>
+					<a class="text-decoration-none" style="font-size: .875rem;font-weight: 500;" asp-controller="UserRoles" asp-action="ManageUserRoles"><i class='bx bxs-cog'></i><span class="text-uppercase"> Manage Roles</span></a>
 				}
 			</div>
 			<div class="my-2">

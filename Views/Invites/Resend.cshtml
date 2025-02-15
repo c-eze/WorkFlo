@@ -1,0 +1,60 @@
+@model AspnetCoreMvcFull.Models.Invite
+
+@{
+	ViewData["Title"] = "Resend Invite";
+}
+
+<h2>Resend Invite</h2>
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Resend" method="post">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" asp-for="Id" value="@Model.Id" />
+			<input type="hidden" asp-for="InviteDate" value="@DateTimeOffset.Now" />
+			<input type="hidden" asp-for="IsValid" value="true" />
+			<input type="hidden" asp-for="InviterId" value="@Model.InviterId" />
+			<input type="hidden" asp-for="CompanyId" value="@Model.CompanyId" />
+			<input type="hidden" asp-for="ProjectId" value="@Model.ProjectId" />
+			<input type="hidden" asp-for="CompanyToken" value="@Model.CompanyToken" />
+			<div class="form-group">
+				<label asp-for="CompanyId" class="control-label"></label>
+				@* <input asp-for="CompanyId" class="form-control" value="@Model.Company.Name"/> *@
+				<select asp-for="CompanyId" class="form-control" asp-items="ViewBag.CompanyId" disabled></select>
+			</div>
+			<div class="form-group">
+				<label asp-for="ProjectId" class="control-label"></label>
+				@* <input asp-for="ProjectId" class="form-control" value="@Model.Project.Name"/> *@
+				<select asp-for="ProjectId" class="form-control" asp-items="ViewBag.ProjectId" disabled></select>
+			</div>
+			<div class="form-group">
+				<label asp-for="InviteeFirstName" class="control-label"></label>
+				<input asp-for="InviteeFirstName" class="form-control" value="@Model.InviteeFirstName" readonly />
+				@* <span asp-validation-for="InviteeFirstName" class="text-danger"></span> *@
+			</div>
+			<div class="form-group">
+				<label asp-for="InviteeLastName" class="control-label"></label>
+				<input asp-for="InviteeLastName" class="form-control" value="@Model.InviteeLastName" readonly />
+				@* <span asp-validation-for="InviteeLastName" class="text-danger"></span> *@
+			</div>
+			<div class="form-group">
+				<label asp-for="InviteeEmail" class="control-label"></label>
+				<input asp-for="InviteeEmail" class="form-control" value="@Model.InviteeEmail" readonly />
+				<span asp-validation-for="InviteeEmail" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Resend Invitation" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>
+
+@section PageScripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

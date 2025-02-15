@@ -24,7 +24,7 @@
 	@* ! Full version menu-items *@
 	<ul class="menu-inner py-1">
 		<!-- Company -->
-		<li class='menu-item@(currentPage.EndsWith("/") || currentPage.StartsWith("/Home/") ? " active open" : "")'>
+		<li class='menu-item@(currentPage.EndsWith("/") || currentPage.StartsWith("/Home/")  || currentPage.StartsWith("/Invites") ? " active open" : "")'>
 			<a href="javascript:void(0);" class="menu-link menu-toggle">
 				<i class='menu-icon tf-icons bx bxs-buildings'></i>
 				<div>Company</div>
@@ -38,6 +38,11 @@
 				<li class='menu-item@(currentPage == "/Home/Profile" ? " active" : "")'>
 					<a asp-controller="Home" asp-action="Profile" class="menu-link">
 						<div>Profile</div>
+					</a>
+				</li>
+				<li class='menu-item@(currentPage == "/Invites" ? " active" : "")'>
+					<a asp-controller="Invites" asp-action="Index" class="menu-link">
+						<div>Invites</div>
 					</a>
 				</li>
 			</ul>
