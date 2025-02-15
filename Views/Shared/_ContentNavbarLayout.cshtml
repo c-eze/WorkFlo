@@ -19,9 +19,7 @@
 	@*Content classes *@
 
 	ViewData["container"] = (ViewData["container"] ?? "container-xxl");
-	ViewData["containerNav"] = (ViewData["containerNav"] ?? "container-xxl");
-
-	IgnoreSection("scripts");
+	ViewData["containerNav"] = (ViewData["containerNav"] ?? "container-xxl"); 
 }
 
 @section VendorStyles{ @RenderSection("VendorStyles", required: false) }
@@ -30,7 +28,7 @@
 
 @section VendorScripts{ @RenderSection("VendorScripts", required: false) }
 
-@section PageScripts{ @RenderSection("PageScripts", required: false) }
+@section PageScripts{ @RenderSection("PageScripts", required: false) } 
 
 @{
   bool isMenu = ViewData["isMenu"] != null && Convert.ToBoolean(ViewData["isMenu"]);
@@ -83,4 +81,4 @@
   }
   <!-- Drag Target Area To SlideIn Menu On Small Screens -->
   <div class="drag-target"></div>
-</div>
+</div> 

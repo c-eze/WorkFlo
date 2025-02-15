@@ -1,8 +1,6 @@
 @{
 
-	Layout = "_CommonMasterLayout";
-
-	IgnoreSection("Scripts");
+	Layout = "_CommonMasterLayout"; 
 }
 
 @section VendorStyles { @RenderSection("VendorStyles", required: false) }
@@ -14,3 +12,5 @@
 @section VendorScripts { @RenderSection("VendorScripts", required: false) }
 
 @section PageScripts { @RenderSection("PageScripts", required: false) }
+
+@await RenderSectionAsync("Scripts", required: false)
