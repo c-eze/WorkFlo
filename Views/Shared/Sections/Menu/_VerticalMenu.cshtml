@@ -59,6 +59,51 @@
 			</ul>
 		</li>
 
+		<!-- Projects -->
+		<li class='menu-item@(currentPage.StartsWith("/Projects") ? " active open" : "")'>
+			<a href="javascript:void(0);" class="menu-link menu-toggle">
+				<i class='menu-icon tf-icons bx bx-folder'></i>
+				<div>Projects</div>
+			</a>
+
+			<ul class="menu-sub">
+				@if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
+				{
+					<li class='menu-item@(currentPage == "/Projects/Create" ? " active" : "")'>
+						<a asp-controller="Projects" asp-action="Create" class="menu-link">
+							<div>New Project</div>
+						</a>
+					</li>
+				}
+				<li class='menu-item@(currentPage == "/Projects/AllProjects" ? " active" : "")'>
+					<a asp-controller="Projects" asp-action="AllProjects" class="menu-link">
+						<div>All Projects</div>
+					</a>
+				</li>
+				@if (!User.IsInRole(nameof(Roles.Admin)))
+				{
+					<li class='menu-item@(currentPage == "/Projects/MyProjects" ? " active" : "")'>
+						<a asp-controller="Projects" asp-action="MyProjects" class="menu-link">
+							<div>My Projects</div>
+						</a>
+					</li>
+				}
+				@if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
+				{
+					<li class='menu-item@(currentPage == "/Projects/UnassignedProjects" ? " active" : "")'>
+						<a asp-controller="Projects" asp-action="UnassignedProjects" class="menu-link">
+							<div>Assign Project</div>
+						</a>
+					</li>
+				}
+				<li class='menu-item@(currentPage == "/Projects/ArchivedProjects" ? " active" : "")'>
+					<a asp-controller="Projects" asp-action="ArchivedProjects" class="menu-link">
+						<div>Archived Projects</div>
+					</a>
+				</li>
+			</ul>
+		</li>
+
 		<!-- Tickets -->
 		<li class='menu-item@(currentPage.StartsWith("/Tickets") ? " active open" : "")'>
 			<a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -79,7 +124,6 @@
 					</a>
 				</li>
 				@if (!User.IsInRole(nameof(Roles.Admin)))
-
 				{
 					<li class='menu-item@(currentPage == "/Tickets/MyTickets" ? " active" : "")'>
 						<a asp-controller="Tickets" asp-action="MyTickets" class="menu-link">
@@ -88,11 +132,10 @@
 					</li>
 				}
 				@if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
-
 				{
 					<li class='menu-item@(currentPage == "/Tickets/UnassignedTickets" ? " active" : "")'>
 						<a asp-controller="Tickets" asp-action="UnassignedTickets" class="menu-link">
-							<div>Assign Tickets</div>
+							<div>Assign Ticket</div>
 						</a>
 					</li>
 				}
