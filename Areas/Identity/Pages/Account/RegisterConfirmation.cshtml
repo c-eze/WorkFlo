@@ -1,23 +1,55 @@
-﻿@page
+@page
 @model RegisterConfirmationModel
 @{
-    ViewData["Title"] = "Register confirmation";
+	ViewData["Title"] = "Register confirmation";
+	Layout = "_BlankLayout";
 }
 
-<h1>@ViewData["Title"]</h1>
-@{
-    if (@Model.DisplayConfirmAccountLink)
-    {
-<p>
-    This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.
-    Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
-</p>
-    }
-    else
-    {
-<p>
-        Please check your email to confirm your account.
-</p>
-    }
+@section PageStyles {
+	<link rel="stylesheet" href="~/vendor/css/pages/page-auth.css">
 }
+
+@* ************** Content ************** *@
+
+<div class="container-xxl">
+	<div class="authentication-wrapper authentication-basic container-p-y">
+		<div class="authentication-inner">
+
+			<!-- Register Confirmation-->
+			<div class="card px-sm-6 px-0">
+				<div class="card-body">
+					<section>
+						<!-- Logo -->
+						<div class="app-brand justify-content-center">
+							<a href="/" class="app-brand-link gap-2">
+								<img src="~/img/workflo logo.png" width="38" height="auto" />
+								<span class="app-brand-text demo text-heading fw-bold">WorkFlo</span>
+							</a>
+						</div>
+						<!-- /Logo -->
+						<h4>@ViewData["Title"]</h4>
+						@{
+							if (@Model.DisplayConfirmAccountLink)
+							{
+								<p>
+									This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.
+									Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
+								</p>
+							}
+							else
+							{
+								<p>
+									Please check your email to confirm your account.
+								</p>
+							}
+						}
+					</section>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
 

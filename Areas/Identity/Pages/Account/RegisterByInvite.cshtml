@@ -1,7 +1,12 @@
 @page
 @model RegisterByInviteModel
 @{
-	ViewData["Title"] = "Register";
+	ViewData["Title"] = "Register By Invite";
+	Layout = "_BlankLayout";
+}
+
+@section PageStyles {
+	<link rel="stylesheet" href="~/vendor/css/pages/page-auth.css">
 }
 
 <h2>Invitation to join @Model.GuestInvite.Company?.Name from Adminstrator</h2>

@@ -1,8 +1,37 @@
-﻿@page
+@page
 @model ConfirmEmailModel
 @{
-    ViewData["Title"] = "Confirm email";
+	ViewData["Title"] = "Confirm email";
+	Layout = "_BlankLayout";
 }
 
-<h1>@ViewData["Title"]</h1>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
+@section PageStyles {
+	<link rel="stylesheet" href="~/vendor/css/pages/page-auth.css">
+}
+
+@* ************** Content ************** *@
+
+<div class="container-xxl">
+	<div class="authentication-wrapper authentication-basic container-p-y">
+		<div class="authentication-inner">
+
+			<!-- Confirm Email -->
+			<div class="card px-sm-6 px-0">
+				<div class="card-body">
+					<section>
+						<!-- Logo -->
+						<div class="app-brand justify-content-center">
+							<a href="/" class="app-brand-link gap-2">
+								<img src="~/img/workflo logo.png" width="38" height="auto" />
+								<span class="app-brand-text demo text-heading fw-bold">WorkFlo</span>
+							</a>
+						</div>
+						<!-- /Logo -->
+						<h4>@ViewData["Title"]</h4>
+						<partial name="_StatusMessage" model="Model.StatusMessage" />
+					</section>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
