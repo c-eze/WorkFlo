@@ -1,0 +1,45 @@
+@page
+@model RegisterByInviteModel
+@{
+	ViewData["Title"] = "Register";
+}
+
+<h2>Invitation to join @Model.GuestInvite.Company?.Name from Adminstrator</h2>
+
+<p>Welcome, <span>@Model.GuestInvite.InviteeFirstName @Model.GuestInvite.InviteeLastName</span>!</p>
+
+<p>
+	Administrator has invited you to join <strong>@Model.GuestInvite.Company?.Name</strong> for
+	project <strong>@Model.GuestInvite.Project?.Name</strong>. Enter your password and then click the button below to complete
+	registration and begin working with the team.
+</p>
+
+<div class="row">
+	<div class="col-md-6">
+		<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input asp-for="Input.Email" type="hidden" value="@Model.GuestInvite.InviteeEmail" />
+			<input asp-for="Input.FirstName" type="hidden" value="@Model.GuestInvite.InviteeFirstName" />
+			<input asp-for="Input.LastName" type="hidden" value="@Model.GuestInvite.InviteeLastName" />
+			<input asp-for="Input.CompanyId" type="hidden" value="@Model.GuestInvite.CompanyId" />
+			<input asp-for="Input.Token" type="hidden" value="@Model.GuestInvite.CompanyToken" />
+			<div class="form-floating">
+				<input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
+				<label asp-for="Input.Password"></label>
+				<span asp-validation-for="Input.Password" class="text-danger"></span>
+			</div>
+			<div class="form-floating">
+				<input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+				<label asp-for="Input.ConfirmPassword"></label>
+				<span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+			</div>
+			<button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">
+				<i class="bi bi-box-arrow-in-right"></i> Join
+			</button>
+		</form>
+	</div>
+</div>
+
+@section PageScripts {
+	<partial name="_ValidationScriptsPartial" />
+}
