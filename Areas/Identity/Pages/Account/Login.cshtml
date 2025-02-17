@@ -10,77 +10,86 @@
 	<link rel="stylesheet" href="~/vendor/css/pages/page-auth.css">
 }
 
-<div class="row">
-	<div class="col-md-4 offset-md-4">
-		<section>
-			<h4>Explore this app as demo user:</h4>
-			<hr>
-			<div class="mb-1 text-center">
-				<form id="account" method="post">
-					<div class="form-group">
-						<div class="row">
-							<div class="col-12 btn-block">
-								<button type="submit" class="w-100 btn btn-link" name="demoLoginEmail" value="DemoAdmin">Admin</button>
-							</div>
-							<div class="col-12 btn-block">
-								<button type="submit" class="w-100 btn btn-link" name="demoLoginEmail" value="DemoPM">Project Manager</button>
-							</div>
-							<div class="col-12 btn-block">
-								<button type="submit" class="w-100 btn btn-link" name="demoLoginEmail" value="DemoDev">Developer</button>
-							</div>
-							<div class="col-12 btn-block">
-								<button type="submit" class="w-100 btn btn-link" name="demoLoginEmail" value="DemoSub">Submitter</button>
-							</div>
-							@* <div class="col-12 btn-block">
-                                <button type="submit" class="w-100 btn btn-link" name="demoLoginEmail" value="DemoNew">New User</button>
-                            </div> *@
-						</div>
-					</div>
-				</form>
-			</div>
-		</section>
-		<section>
-			<form id="account" method="post">
-				<h2>@ViewData["Title"] to your account</h2>
-				<hr />
-				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-				<div class="form-floating">
-					<input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
-					<label asp-for="Input.Email" class="form-label"></label>
-					<span asp-validation-for="Input.Email" class="text-danger"></span>
-				</div>
-				<div class="form-floating">
-					<input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
-					<label asp-for="Input.Password" class="form-label"></label>
-					<span asp-validation-for="Input.Password" class="text-danger"></span>
-				</div>
-				<div>
-					<div class="checkbox">
-						<label asp-for="Input.RememberMe" class="form-label">
-							<input class="form-check-input" asp-for="Input.RememberMe" />
-							@Html.DisplayNameFor(m => m.Input.RememberMe)
-						</label>
-					</div>
-				</div>
-				<div>
-					<button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
-				</div>
-				<div>
-					<p>
-						<a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-					</p>
-					<p>
-						Don't have an account?  <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register</a>
-					</p>
-					<p>
-						<a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-					</p>
-				</div>
-			</form>
-		</section>
-	</div>
-</div>
+@* ************** Content ************** *@
 
-@section Scripts {
+<div class="container-xxl">
+	<div class="authentication-wrapper authentication-basic container-p-y">
+		<div class="authentication-inner">
+			<!-- Register -->
+			<div class="card px-sm-6 px-0">
+				<div class="card-body">
+					<section>
+						<!-- Logo -->
+						<div class="app-brand justify-content-center">
+							<span class="app-brand-text demo text-heading fw-bold">WorkFlo</span> 
+						</div>
+						<!-- /Logo -->
+						<h4>Explore this app as demo user:</h4>
+						<hr>
+						<div class="mb-1 text-center">
+							<form id="account" method="post">
+								<div class="form-group">
+									<div class="row">
+										<div class="col-12 btn-block">
+											<button type="submit" class="w-100 btn btn-link" name="demoLoginEmail" value="DemoAdmin">Admin</button>
+										</div>
+										<div class="col-12 btn-block">
+											<button type="submit" class="w-100 btn btn-link" name="demoLoginEmail" value="DemoPM">Project Manager</button>
+										</div>
+										<div class="col-12 btn-block">
+											<button type="submit" class="w-100 btn btn-link" name="demoLoginEmail" value="DemoDev">Developer</button>
+										</div>
+										<div class="col-12 btn-block">
+											<button type="submit" class="w-100 btn btn-link" name="demoLoginEmail" value="DemoSub">Submitter</button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</section>
+					<section>
+						<form id="account" method="post">
+							<h4>@ViewData["Title"] to your account</h4>
+							<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+							<div class="mb-3">
+								<input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+								<label asp-for="Input.Email" class="form-label"></label>
+								<span asp-validation-for="Input.Email" class="text-danger"></span>
+							</div>
+							<div class="mb-3">
+								<input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
+								<label asp-for="Input.Password" class="form-label"></label>
+								<span asp-validation-for="Input.Password" class="text-danger"></span>
+							</div>
+							<div class="mb-2">
+								<div class="d-flex justify-content-between mt-3">
+									<div class="checkbox">
+										<label asp-for="Input.RememberMe" class="form-label">
+											<input class="form-check-input" asp-for="Input.RememberMe" />
+											@Html.DisplayNameFor(m => m.Input.RememberMe)
+										</label>
+									</div>
+									<p>
+										<a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+									</p>
+								</div>
+							</div> 
+							<div class="mb-3">
+								<button id="login-submit" class="btn btn-primary d-grid w-100" type="submit">Login</button>
+							</div> 
+							<div>
+								<p>
+									Don't have an account?  <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register</a>
+								</p> 
+							</div>
+						</form>
+					</section>
+				</div>
+			</div>
+		</div>
+	</div>
+</div> 
+
+@section PageScripts {
     <partial name="_ValidationScriptsPartial" />
 }
