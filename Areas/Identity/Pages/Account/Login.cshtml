@@ -15,17 +15,20 @@
 <div class="container-xxl">
 	<div class="authentication-wrapper authentication-basic container-p-y">
 		<div class="authentication-inner">
-			<!-- Register -->
+
+			<!-- Login -->
 			<div class="card px-sm-6 px-0">
 				<div class="card-body">
 					<section>
 						<!-- Logo -->
 						<div class="app-brand justify-content-center">
-							<span class="app-brand-text demo text-heading fw-bold">WorkFlo</span> 
+							<a href="/" class="app-brand-link gap-2">
+								<img src="~/img/workflo logo.png" width="38" height="auto" />
+								<span class="app-brand-text demo text-heading fw-bold">WorkFlo</span>
+							</a>
 						</div>
 						<!-- /Logo -->
 						<h4>Explore this app as demo user:</h4>
-						<hr>
 						<div class="mb-1 text-center">
 							<form id="account" method="post">
 								<div class="form-group">
@@ -48,17 +51,22 @@
 						</div>
 					</section>
 					<section>
+						<hr>
+						<h4 class="mb-1">Welcome to WorkFlo! 👋</h4>
+						<p class="mb-6">Please sign-in to your account and start the adventure</p>
 						<form id="account" method="post">
-							<h4>@ViewData["Title"] to your account</h4>
 							<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 							<div class="mb-3">
-								<input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
 								<label asp-for="Input.Email" class="form-label"></label>
+								<input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" autofocus />
 								<span asp-validation-for="Input.Email" class="text-danger"></span>
 							</div>
 							<div class="mb-3">
-								<input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
 								<label asp-for="Input.Password" class="form-label"></label>
+								<div class="input-group input-group-merge">
+									<input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+									<span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+								</div>
 								<span asp-validation-for="Input.Password" class="text-danger"></span>
 							</div>
 							<div class="mb-2">
