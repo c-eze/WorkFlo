@@ -2,8 +2,7 @@
 @inject SignInManager<BTUser> SignInManager
 @inject UserManager<BTUser> UserManager
 
-@{
-
+@{ 
 	BTUser btUser = await UserManager.GetUserAsync(User);
 	bool isImage = btUser?.AvatarFileData != null;
 	string role = (await UserManager.GetRolesAsync(btUser)).FirstOrDefault();
@@ -46,7 +45,7 @@
   <ul class="navbar-nav flex-row align-items-center ms-auto">
     <!-- Place this tag where you want the button to render. -->
     <li class="nav-item lh-1 me-4">
-      <a class="github-button" href="https://github.com/themeselection/sneat-bootstrap-html-aspnet-core-mvc-admin-template-free" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star themeselection/sneat-html-admin-template-free on GitHub">Star</a>
+			<a asp-controller="Notifications" asp-action="Inbox" class="text-black"><i class='menu-icon tf-icons bx bx-bell bx-lg'></i></a>
     </li>
 
     <!-- User -->
@@ -77,7 +76,7 @@
           <div class="dropdown-divider my-1"></div>
         </li>
         <li>
-          <a class="dropdown-item" href="javascript:void(0);">
+		  <a class="dropdown-item" asp-controller="Home" asp-action="MyProfile" asp-route-userId="@btUser.Id">
             <i class="bx bx-user bx-md me-2"></i>
             <span>My Profile</span>
           </a>
