@@ -1,3 +1,14 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<BTUser> SignInManager
+@inject UserManager<BTUser> UserManager
+
+@{
+
+	BTUser btUser = await UserManager.GetUserAsync(User);
+	bool isImage = btUser?.AvatarFileData != null;
+	string role = (await UserManager.GetRolesAsync(btUser)).FirstOrDefault();
+}
+
 @* ! Brand demo (display only for navbar-full and hide on below xl) *@
 @if (ViewData["navbarFull"] != null)
 {
@@ -42,8 +53,9 @@
     <li class="nav-item navbar-dropdown dropdown-user dropdown">
       <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
         <div class="avatar avatar-online">
-          <img src="~/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle">
-        </div>
+          @* <img src="~/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle"> *@
+					<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64," + Convert.ToBase64String(btUser.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+btUser.FullName)' width='@(isImage ? "" : "50") height=' @(isImage ? "" : "auto") alt="" style="border-radius: 50%;" />
+				</div>
       </a>
       <ul class="dropdown-menu dropdown-menu-end">
         <li>
@@ -51,12 +63,12 @@
             <div class="d-flex">
               <div class="flex-shrink-0 me-3">
                 <div class="avatar avatar-online">
-                  <img src="~/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle">
+                  	<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64," + Convert.ToBase64String(btUser.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+btUser.FullName)' width='@(isImage ? "" : "50") height=' @(isImage ? "" : "auto") alt="" style="border-radius: 50%;" /> 
                 </div>
               </div>
               <div class="flex-grow-1">
-                <h6 class="mb-0">John Doe</h6>
-                <small class="text-muted">Admin</small>
+                <h6 class="mb-0">@btUser.FullName</h6>
+                <small class="text-muted">@role</small>
               </div>
             </div>
           </a>
@@ -70,7 +82,7 @@
             <span>My Profile</span>
           </a>
         </li>
-        <li>
+				@*      <li>
           <a class="dropdown-item" href="javascript:void(0);">
             <i class="bx bx-cog bx-md me-2"></i>
             <span>Settings</span>
@@ -84,12 +96,12 @@
               <span class="flex-shrink-0 badge rounded-pill bg-danger">4</span>
             </span>
           </a>
-        </li>
+        </li> *@
         <li>
           <div class="dropdown-divider my-1"></div>
         </li>
         <li>
-          <a class="dropdown-item" href="javascript:void(0);">
+		  <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Login">
             <i class="bx bx-power-off bx-md me-2"></i>
             <span>Log Out</span>
           </a>
