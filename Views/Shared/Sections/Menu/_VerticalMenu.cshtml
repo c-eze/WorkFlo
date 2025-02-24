@@ -11,7 +11,7 @@
 
 	@* ! Hide app brand if navbar-full *@
 	<div class='app-brand demo @((@ViewData["navbarFull"] != null && Convert.ToBoolean(@ViewData["navbarFull"])) ? "d-xl-none" : "")'>
-		<a asp-controller="Dashboards" asp-action="Index" class="app-brand-link">
+		<a asp-controller="Home" asp-action="Dashboard" class="app-brand-link">
 			<img src="~/img/workflo logo.png" width="38" height="auto" />
 			<span class="app-brand-text demo menu-text fw-bold ms-2">@TempData.Peek("appName")</span>
 		</a>

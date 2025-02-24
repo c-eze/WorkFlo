@@ -1,11 +1,13 @@
-﻿@page
+@page
 @model EmailModel
 @{
     ViewData["Title"] = "Manage Email";
-    ViewData["ActivePage"] = ManageNavPages.Email;
+	ViewData["ActivePage"] = ManageNavPages.Email;
+	ViewData["ParentLayout"] = "/Views/Shared/_ContentNavbarLayout.cshtml";
 }
 
 <h3>@ViewData["Title"]</h3>
+<hr />
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
     <div class="col-md-6">
@@ -39,6 +41,6 @@
     </div>
 </div>
 
-@section Scripts {
+@section PageScripts {
     <partial name="_ValidationScriptsPartial" />
 }

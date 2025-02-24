@@ -33,14 +33,15 @@
 
 <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
 
-  <!-- Search -->
+
+  <!-- Logo -->
   <div class="navbar-nav align-items-center">
     <div class="nav-item d-flex align-items-center">
-        <i class="bx bx-search bx-md"></i>
-      <input type="text" class="form-control border-0 shadow-none ps-1 ps-sm-2" placeholder="Search..." aria-label="Search...">
+			<img src="~/img/workflo logo.png" width="38" height="auto" />
+			<span class="app-brand-text demo menu-text fw-bold ms-2">@TempData.Peek("appName")</span>
     </div>
   </div>
-  <!-- /Search -->
+  <!-- /Logo -->
 
   <ul class="navbar-nav flex-row align-items-center ms-auto">
     <!-- Place this tag where you want the button to render. -->
@@ -76,9 +77,9 @@
           <div class="dropdown-divider my-1"></div>
         </li>
         <li>
-		  <a class="dropdown-item" asp-controller="Home" asp-action="MyProfile" asp-route-userId="@btUser.Id">
+					<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">
             <i class="bx bx-user bx-md me-2"></i>
-            <span>My Profile</span>
+            <span>Profile</span>
           </a>
         </li>
 				@*      <li>
