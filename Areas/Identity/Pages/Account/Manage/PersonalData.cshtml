@@ -1,8 +1,9 @@
-﻿@page
+@page
 @model PersonalDataModel
 @{
     ViewData["Title"] = "Personal Data";
-    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+	ViewData["ActivePage"] = ManageNavPages.PersonalData;
+	ViewData["ParentLayout"] = "/Views/Shared/_ContentNavbarLayout.cshtml";
 }
 
 <h3>@ViewData["Title"]</h3>
@@ -22,6 +23,6 @@
     </div>
 </div>
 
-@section Scripts {
+@section PageScripts {
     <partial name="_ValidationScriptsPartial" />
 }
