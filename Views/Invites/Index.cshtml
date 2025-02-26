@@ -98,10 +98,12 @@
 										@Html.DisplayFor(modelItem => item.Project.Name)
 									</td>
 									<td>
-										@Html.DisplayFor(modelItem => item.InviteDate.DateTime)
+										@item.InviteDate.DateTime.ToString("MM/dd/yyyy")
+										@* @Html.DisplayFor(modelItem => item.InviteDate.DateTime) *@
 									</td>
 									<td>
-										@Html.DisplayFor(modelItem => item.JoinDate)
+										@item.JoinDate.Value.ToString("MM/dd/yyyy")
+										@* @Html.DisplayFor(modelItem => item.JoinDate) *@
 									</td>
 								</tr>
 							}
@@ -136,7 +138,8 @@
 										@Html.DisplayFor(modelItem => item.Project.Name)
 									</td>
 									<td>
-										@Html.DisplayFor(modelItem => item.InviteDate.DateTime)
+										@item.InviteDate.DateTime.ToString("MM/dd/yyyy")
+										@* @Html.DisplayFor(modelItem => item.InviteDate.DateTime) *@
 									</td>
 								</tr>
 							}

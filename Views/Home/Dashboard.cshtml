@@ -50,7 +50,7 @@
 
 @*  Info Pills  *@
 <div class="row row-cols-1 row-cols-md-3 mt-2">
-	<div class="col">
+	<div class="col mb-6">
 		<a asp-action="AllProjects" asp-controller="Projects" style="text-decoration:none">
 			<div class="card text-center">
 				<div class="card-body">
@@ -62,7 +62,7 @@
 			</div>
 		</a>
 	</div>
-	<div class="col">
+	<div class="col mb-6">
 		<a asp-action="AllTickets" asp-controller="Tickets" style="text-decoration:none">
 			<div class="card text-center">
 				<div class="card-body">
@@ -75,7 +75,7 @@
 			</div>
 		</a>
 	</div>
-	<div class="col">
+	<div class="col mb-6">
 		<div class="card text-center">
 			<div class="card-body">
 				<div class="p-15">
@@ -88,8 +88,61 @@
 </div>
 @*  / Info Pills  *@
 
+@* Recent Activity *@
+<div class="row">
+	<div class="col-xxl-12 mb-6">
+		<div class="card"> 
+			<div class="card-body">
+				<h5>Recent Activity</h5>
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								@* Table header *@
+								<th>Title</th>
+								<th>Developer</th>
+								<th>Status</th> 
+								<th>Date</th> 
+							</tr>
+						</thead>
+						<tbody>
+							@* Table body *@
+							@foreach (var ticket in Model.Tickets.OrderByDescending(d => d.Created).Take(5))
+							{
+								<tr>
+									<td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id"><strong>@ticket.Title</strong></a> </td>
+									<td>
+										@if (ticket.DeveloperUserId != null)
+										{
+											@ticket.DeveloperUser?.FullName
+										}
+										else
+										{
+											<span class="badge bg-warning text-dark">Unassigned</span>
+										}
+									</td>
+									@if (ticket.TicketStatus.Name == "New")
+									{
+										<td><span class="badge bg-success rounded-pill">@ticket.TicketStatus.Name </span></td>
+									}
+									else
+									{
+										<td><span class="badge bg-secondary rounded-pill">@ticket.TicketStatus.Name </span></td>
+									}
+									<td><span style="font-size:small">@(ticket.Updated != null ? ticket.Updated.Value.ToString("MM/dd/yyyy") : ticket.Created.ToString("MM/dd/yyyy"))</span></td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+@* / Recent Activity *@
+
 @*  Info Charts  *@
-<div class="row row-cols-1 row-cols-md-2 mt-5 g-2">
+<div class="row row-cols-1 row-cols-md-2 g-2">
 	<div class="col">
 		<div class="card m-1 p-2 h-100">
 			<div class="card-body">
