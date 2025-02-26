@@ -448,7 +448,7 @@ public class TicketsController : Controller
     ticket.Archived = true;
     await _ticketService.UpdateTicketAsync(ticket);
 
-    return RedirectToAction(nameof(Index));
+    return RedirectToAction(nameof(AllTickets));
   }
 
   // GET: Tickets/Restore/5

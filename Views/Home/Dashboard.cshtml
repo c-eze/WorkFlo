@@ -23,7 +23,6 @@
 	</ol>
 </nav>
 
-
 @* Overview *@
 <div class="row">
 	<div class="col-xxl-12 mb-6 order-0">
@@ -31,7 +30,7 @@
 			<div class="d-flex align-items-start row">
 				<div class="col-sm-7">
 					<div class="card-body">
-						<h5 class="card-title text-primary mb-3">Welcome, @btUser.FullName! 🎉</h5>
+						<h5 class="card-title text-primary mb-3">Welcome, @btUser.FullName! 🎉</h5> 
 						<p>Developer for @Model.Tickets.Where(t => t.DeveloperUserId == btUser.Id).Count() Tickets</p>
 						<p>Submitted @Model.Tickets.Where(t => t.OwnerUserId == btUser.Id).Count() Tickets</p>
 						<p>Member on @Model.Projects.SelectMany(p => p.Members).Where(m => m.Id == btUser.Id).Count() Projects</p>
@@ -49,7 +48,7 @@
 @* / Overview *@
 
 @*  Info Pills  *@
-<div class="row row-cols-1 row-cols-md-3 mt-2">
+<div class="row row-cols-1 row-cols-md-4 mt-2">
 	<div class="col mb-6">
 		<a asp-action="AllProjects" asp-controller="Projects" style="text-decoration:none">
 			<div class="card text-center">
@@ -67,7 +66,6 @@
 			<div class="card text-center">
 				<div class="card-body">
 					<div class="p-15">
-
 						<h3>@Model.Tickets.Count()</h3>
 						<span>Total Tickets</span>
 					</div>
@@ -81,6 +79,16 @@
 				<div class="p-15">
 					<h3>@Model.Tickets.Where(t => string.IsNullOrEmpty(t.DeveloperUserId)).Count()</h3>
 					<span>Unassigned Tickets</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col mb-6">
+		<div class="card text-center">
+			<div class="card-body">
+				<div class="p-15">
+					<h3>@Model.Projects.SelectMany(p => p.Tickets).Where(t => t.Archived == true).Count()</h3> 
+					<span>Closed Tickets</span>
 				</div>
 			</div>
 		</div>
