@@ -5,6 +5,7 @@ using AspnetCoreMvcFull.Services.Interfaces;
 using AspnetCoreMvcFull.Extensions;
 using AspnetCoreMvcFull.Models.ViewModels;
 using AspnetCoreMvcFull.Models.Enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace AspnetCoreMvcFull.Controllers;
 
@@ -15,14 +16,16 @@ public class HomeController : Controller
   private readonly IBTProjectService _projectService;
   private readonly IBTTicketService _ticketService;
   private readonly IBTRolesService _rolesService;
+  private readonly UserManager<BTUser> _userManager;
 
-  public HomeController(ILogger<HomeController> logger, IBTCompanyInfoService companyInfoService, IBTProjectService projectService, IBTTicketService ticketService, IBTRolesService rolesService)
+  public HomeController(ILogger<HomeController> logger, IBTCompanyInfoService companyInfoService, IBTProjectService projectService, IBTTicketService ticketService, IBTRolesService rolesService, UserManager<BTUser> userManager)
   {
     _logger = logger;
     _companyInfoService = companyInfoService;
     _projectService = projectService;
     _ticketService = ticketService;
     _rolesService = rolesService;
+    _userManager = userManager;
   }
 
   public IActionResult Index()
@@ -72,7 +75,7 @@ public class HomeController : Controller
   }
 
   public async Task<IActionResult> Dashboard()
-  {
+  {    
     DashboardViewModel model = new();
     int companyId = User.Identity.GetCompanyId().Value;
 
@@ -86,7 +89,6 @@ public class HomeController : Controller
                         .ToList();
 
     model.Members = model.Company.Members.ToList();
-
     return View(model);
   }
 
