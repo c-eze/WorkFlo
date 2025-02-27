@@ -4,7 +4,7 @@
 
 @{
 	ViewData["Title"] = "Create Project";
-} 
+}
 
 @* ************** Content ************** *@
 <div class="row">
@@ -18,7 +18,7 @@
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 					<div class="mb-6">
 						<label asp-for="Project.Name" class="form-label"></label>
-						<input asp-for="Project.Name" class="form-control" placeholder="Project Management Tool"/>
+						<input asp-for="Project.Name" class="form-control" placeholder="Project Management Tool" />
 						<span asp-validation-for="Project.Name" class="text-danger"></span>
 					</div>
 					<div class="mb-6">
@@ -27,53 +27,54 @@
 						<span asp-validation-for="Project.Description" class="text-danger"></span>
 					</div>
 					<div class="row">
-					<div class="col-md-6 mb-6">
-						<label asp-for="Project.StartDate" class="form-label"></label>
-						<input asp-for="Project.StartDate" class="form-control" />
-						<span asp-validation-for="Project.StartDate" class="text-danger"></span>
+						<div class="col-md-6 mb-6">
+							<label asp-for="Project.StartDate" class="form-label"></label>
+							<input asp-for="Project.StartDate" class="form-control" />
+							<span asp-validation-for="Project.StartDate" class="text-danger"></span>
+						</div>
+						<div class="col-md-6 mb-6">
+							<label asp-for="Project.EndDate" class="form-label"></label>
+							<input asp-for="Project.EndDate" class="form-control" />
+							<span asp-validation-for="Project.EndDate" class="text-danger"></span>
+						</div>
 					</div>
-					<div class="col-md-6 mb-6">
-						<label asp-for="Project.EndDate" class="form-label"></label>
-						<input asp-for="Project.EndDate" class="form-control" />
-						<span asp-validation-for="Project.EndDate" class="text-danger"></span>
+					<div class="row">
+						<div class="col-md-6 mb-6">
+							<label class="form-label">Project Manager</label>
+							<select asp-for="PmId" class="form-select" asp-items="@Model.PMList">
+								<option>Select PM</option>
+							</select>
+						</div>
+						<div class="col-md-6 mb-6">
+							<label class="form-label">Choose a priority</label>
+							<select asp-for="Project.ProjectPriorityId" class="form-select" asp-items="@Model.PriorityList">
+								<option>Priority</option>
+							</select>
+						</div>
 					</div>
-					</div>
-					<div class="mb-6">
-						<label class="form-label">Choose a priority</label>
-						<select asp-for="Project.ProjectPriorityId" class="form-select" asp-items="@Model.PriorityList">
-							<option>Priority</option>
-						</select>
-					</div> 
 					@* Set up Image Capture *@
-			        <div class="mb-6">
+					<div class="mb-6">
 						<label class="form-label">Project Image</label>
 						<input asp-for="Project.ImageFormFile" class="form-control" type="file" accept=".png,.jpg,.jpeg,.gif"
 							   onchange="document.getElementById('imageFileData').src = window.URL.createObjectURL(this.files[0])" />
 						<span asp-validation-for="Project.ImageFormFile" class="text-danger"></span>
 					</div>
 					<label class="form-label"> Image Preview </label>
-					@if (Model.Project?.ImageFileData != null)
-					{
-						<img id="imageFileData" class="img-fluid img-thumbnail mb-6" style="width:100px;height:80px" src="data:image/*;base64,@(Convert.ToBase64String(Model.Project.ImageFileData))" />
-					}
-					else
-					{
-						<img id="imageFileData" class="img-fluid img-thumbnail mb-6" style="width:100px;height:80px" src="/img/defaultUserImage.png" />
-					}
-
-					@if (User.IsInRole(Roles.Admin.ToString()))
-					{
-						<div class="mb-6">
-							<label class="form-label">Project Manager</label>
-							<select asp-for="PmId" class="form-select" asp-items="@Model.PMList">
-								<option>Project Manager</option>
-							</select>
-						</div>
-					}
+					<div class="d-flex justify-content-center align-items-center rounded-1 p-1 border border-1 mb-3">
+						@if (Model.Project?.ImageFileData != null)
+						{
+							<img id="imageFileData" class="img-fluid img-thumbnail mb-6" style="width:100px;height:80px" src="data:image/*;base64,@(Convert.ToBase64String(Model.Project.ImageFileData))" />
+						}
+						else
+						{
+							<img id="imageFileData" class="img-fluid img-thumbnail mb-6" style="width:100px;height:80px" src="/img/defaultUserImage.png" />
+						}
+					</div>
+ 
 					<div class="d-flex justify-content-between align-items-center">
 						<div>
 							<a asp-controller="Projects" asp-action="AllProjects" class="btn btn-outline-primary">Back to Projects</a>
-						</div> 
+						</div>
 						<div class="form-group">
 							<input type="submit" value="Create" class="btn btn-primary" />
 						</div>
@@ -82,7 +83,7 @@
 			</div>
 		</div>
 	</div>
-</div> 
+</div>
 
 @section PageScripts {
 	@{
