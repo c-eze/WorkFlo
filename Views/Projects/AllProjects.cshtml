@@ -36,15 +36,15 @@
 	{
 		<div class="col mb-6">
 			<div class="card h-100">
-				@if (item.ImageFileData != null)
-				{
-					<img class="card-img-top" src="data:image/*;base64,@(Convert.ToBase64String(item.ImageFileData))" />
-				}
-				else
-				{
-					<img class="card-img-top" src="~/img/computercafe.jpg" alt="Card image cap" />
-				}
 				<div class="card-body">
+					@if (item.ImageFileData != null)
+					{
+						<img class="img-fluid d-flex mx-auto my-6 rounded" src="data:image/*;base64,@(Convert.ToBase64String(item.ImageFileData))" />
+					}
+					else
+					{
+						<img class="img-fluid d-flex mx-auto my-6 rounded" src="~/img/computercafe.jpg" alt="Card image cap" />
+					} 
 					<h5 class="card-title mb-0">@item.Name</h5>
 					<p class="card-text">@item.StartDate.ToString("MM/dd/yyyy") - @item.EndDate.ToString("MM/dd/yyyy")</p> 
 					<div class="d-flex flex-row align-items-center justify-content-center p-5">
