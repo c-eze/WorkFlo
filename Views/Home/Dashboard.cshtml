@@ -87,7 +87,7 @@
 		<div class="card text-center">
 			<div class="card-body">
 				<div class="p-15">
-					<h3>@Model.Projects.SelectMany(p => p.Tickets).Where(t => t.Archived == true).Count()</h3> 
+					<h3>@Model.Projects.SelectMany(p => p.Tickets).Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Resolved)).Count()</h3> 
 					<span>Closed Tickets</span>
 				</div>
 			</div>
