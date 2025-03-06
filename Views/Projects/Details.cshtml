@@ -211,13 +211,13 @@
 			<div class="nav-align-top nav-tabs-shadow mb-6">
 				<ul class="nav nav-tabs" role="tablist">
 					<li class="nav-item">
-						<button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-active" aria-controls="navs-top-active" aria-selected="true">Active Tickets</button>
+						<button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-active" aria-controls="navs-top-active" aria-selected="true">Active Tickets<span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-warning ms-1_5 pt-50">@Model.Tickets.Where(t => t.TicketStatus.Name != nameof(BTTicketStatus.Resolved) && t.Archived == false).Count()</span></button>
 					</li>
 					<li class="nav-item">
-						<button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-resolved" aria-controls="navs-top-resolved" aria-selected="false">Resolved Tickets</button>
+						<button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-resolved" aria-controls="navs-top-resolved" aria-selected="false">Resolved Tickets<span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-warning ms-1_5 pt-50">@Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Resolved) && t.Archived == false).Count()</span></button>
 					</li>
 					<li class="nav-item">
-						<button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-archived" aria-controls="navs-top-archived" aria-selected="false">Archived Tickets</button>
+						<button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-archived" aria-controls="navs-top-archived" aria-selected="false">Archived Tickets<span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-warning ms-1_5 pt-50">@Model.Tickets.Where(t => t.Archived == true).Count()</span></button>
 					</li>
 				</ul>
 				<div class="tab-content">
