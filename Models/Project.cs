@@ -32,7 +32,7 @@ namespace AspnetCoreMvcFull.Models
     public DateTimeOffset EndDate { get; set; }
 
 
-    [DisplayName("Priority Date")]
+    [DisplayName("Priority")]
     public int? ProjectPriorityId { get; set; }
 
     [NotMapped]

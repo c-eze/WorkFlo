@@ -461,10 +461,10 @@
 					type: 'bar',
 					label: 'Open',
 						data: [
-		@Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Low)).Count(),
-		@Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Medium)).Count(),
-		@Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.High)).Count(),
-		@Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Urgent)).Count()
+		@Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Low) && t.Archived == false).Count(),
+		@Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Medium) && t.Archived == false).Count(),
+		@Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.High) && t.Archived == false).Count(),
+		@Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Urgent) && t.Archived == false).Count()
 						],
 					backgroundColor: ['rgba(54, 162, 235, 0.5)'] //blue
 				},
@@ -472,10 +472,10 @@
 					type: 'bar',
 					label: 'Closed',
 					data: [
-		@Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Low) && t.TicketStatus.Name == nameof(BTTicketStatus.Resolved)).Count(),
-		@Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Medium) && t.TicketStatus.Name == nameof(BTTicketStatus.Resolved)).Count(),
-		@Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.High) && t.TicketStatus.Name == nameof(BTTicketStatus.Resolved)).Count(),
-		@Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Urgent) && t.TicketStatus.Name == nameof(BTTicketStatus.Resolved)).Count()
+		@Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Low) && t.TicketStatus.Name == nameof(BTTicketStatus.Resolved) && t.Archived == false).Count(),
+		@Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Medium) && t.TicketStatus.Name == nameof(BTTicketStatus.Resolved) && t.Archived == false).Count(),
+		@Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.High) && t.TicketStatus.Name == nameof(BTTicketStatus.Resolved) && t.Archived == false).Count(),
+		@Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Urgent) && t.TicketStatus.Name == nameof(BTTicketStatus.Resolved) && t.Archived == false).Count()
 					],
 					backgroundColor: ['rgba(75, 192, 192, 0.5)']  //green
 				}],
