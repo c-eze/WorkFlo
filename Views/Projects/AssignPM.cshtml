@@ -22,11 +22,8 @@
 							<option>Select PM</option>
 						</select>
 
-						<div class="d-flex  align-items-center">
-							<a href="##" onClick="history.go(-1); return false;" class="btn btn-outline-primary me-3">Back to List</a>
-
-							<input type="submit" value="Assign" class="btn btn-primary" />
-						</div>
+							<input type="submit" value="Assign" class="btn btn-primary" /> |
+							<a asp-controller="Projects" asp-action="Details" asp-route-id="@Model.Project.Id">Back to Project Details</a> 
 					</div>
 				</form>
 			</div>
