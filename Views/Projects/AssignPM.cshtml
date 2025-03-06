@@ -3,32 +3,35 @@
 @{
 	ViewData["Title"] = "Assign PM";
 }
+@* ************** Content ************** *@ 
 
-<h1>Project: @Model.Project Name</h1>
+<div class="row">
+	<div class="col-xl">
+		<div class="card mb-6">
+			<div class="card-header d-flex align-items-center">
+				<h4>Assign Project Manager</h4>
+			</div>
+			<div class="card-body">
+				<form method="post" class="" asp-action="AssignPM" asp-controller="Projects">
+					<input hidden asp-for="Project.Id" />
+					<h5>Project: @Model.Project.Name</h5>
+					<p>@Model.Project.Description</p>
+					<div class="col-sm-8 col-md-6 mb-6">
+						<label class="control-label">Project Manager</label>
+						<select asp-for="PMID" class="form-select mb-6" asp-items="@Model.PMList">
+							<option>Select PM</option>
+						</select>
 
-<div class="container">
-	<h4>Assign Project Manager</h4>
-	<hr />
-	<div class="row">
-		<div class="col-md-4">
-			<form method="post" class="" asp-action="AssignPM" asp-controller="Projects">
-				<input hidden asp-for="Project.Id" />
-				<h2>@Model.Project.Name</h2>
-				<p>@Model.Project.Description</p>
-				<div class="form-group">
-					<label class="control-label">Select Project Manager</label>
-					<select asp-for="PMID" class="form-control" asp-items="@Model.PMList">
-						<option></option>
-					</select>
+						<div class="d-flex  align-items-center">
+							<a href="##" onClick="history.go(-1); return false;" class="btn btn-outline-primary me-3">Back to List</a>
 
-					<input type="submit" value="Assign" class="btn btn-actions" />
-				</div>
-			</form>
+							<input type="submit" value="Assign" class="btn btn-primary" />
+						</div>
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
-
-	<div>
-		<a href="##" onClick="history.go(-1); return false;">Back to List</a> 
-	</div>
 </div>
+
 
