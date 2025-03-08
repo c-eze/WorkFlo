@@ -6,7 +6,7 @@ namespace AspnetCoreMvcFull.Models
   {
     public int Id { get; set; }
 
-    [DisplayName("Priority Name")]
+    [DisplayName("Priority")]
     public string Name { get; set; }
   }
 }

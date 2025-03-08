@@ -314,14 +314,14 @@ public class TicketsController : Controller
 
   [HttpPost]
   [ValidateAntiForgeryToken]
-  public async Task<IActionResult> AddTicketComment([Bind("Id,TicketId,Comment")] TicketComment ticketComment)
+  public async Task<IActionResult> AddTicketComment([Bind("Id,TicketId,Comment,UserId")] TicketComment ticketComment)
   {
     if (ModelState.IsValid)
     {
       BTUser btUser = await _userManager.GetUserAsync(User);
       try
       {
-        ticketComment.UserId = _userManager.GetUserId(User);
+        //ticketComment.UserId = _userManager.GetUserId(User);
         ticketComment.Created = DateTimeOffset.Now;
 
         await _ticketService.AddTicketCommentAsync(ticketComment);
@@ -332,17 +332,20 @@ public class TicketsController : Controller
         //ticket notification
         Ticket ticket = await _ticketService.GetTicketByIdAsync(ticketComment.TicketId);
 
-        Notification newNotification = new()
+        if (ticket.DeveloperUserId is not null)
         {
-          TicketId = ticketComment.TicketId,
-          Title = $"{btUser.FullName} added a comment",
-          Message = $"{ticket.Title}",
-          Created = DateTimeOffset.Now,
-          RecipientId = ticket.DeveloperUserId,
-          SenderId = btUser.Id
-        };
+          Notification newNotification = new()
+          {
+            TicketId = ticketComment.TicketId,
+            Title = $"{btUser.FullName} added a comment",
+            Message = $"{ticket.Title}",
+            Created = DateTimeOffset.Now,
+            RecipientId = ticket.DeveloperUserId,
+            SenderId = btUser.Id
+          };
 
-        await _notificationService.AddNotificationAsync(newNotification);
+          await _notificationService.AddNotificationAsync(newNotification);
+        }
       }
       catch (Exception)
       {
