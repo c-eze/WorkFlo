@@ -1,10 +1,79 @@
+@using AspnetCoreMvcFull.Models.Enums
+
 @model IEnumerable<AspnetCoreMvcFull.Models.Project>
 
 @{
 	ViewData["Title"] = "Unassigned Projects";
 }
 
+@* ************** Content ************** *@
+
 <h1>Unassigned Projects</h1>
+
+<nav aria-label="breadcrumb breadcrumb-style2">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">Projects</li>
+		<li class="breadcrumb-item active" aria-current="page">Unassigned Projects</li>
+	</ol>
+</nav>
+
+<div class="row row-cols-1 row-cols-md-3">
+	@foreach (Project item in Model)
+	{
+		<div class="col mb-6">
+			<div class="card h-100">
+				<div class="card-body">
+					@if (item.ImageFileData != null)
+					{
+						<img class="img-fluid d-flex mx-auto my-6 rounded" src="data:image/*;base64,@(Convert.ToBase64String(item.ImageFileData))" />
+					}
+					else
+					{
+						<img class="img-fluid d-flex mx-auto my-6 rounded" src="~/img/computercafe.jpg" alt="Card image cap" />
+					}
+					<h5 class="card-title mb-0">@item.Name</h5>
+					<p class="card-text">@item.StartDate.ToString("MM/dd/yyyy") - @item.EndDate.ToString("MM/dd/yyyy")</p>
+					<div class="d-flex flex-row align-items-center justify-content-center p-5">
+						@if (item.Members.Count == 0)
+						{
+							<p>No Project Members</p>
+						}
+						else
+						{
+							int pos_left = 0;
+							int layer = item.Members.Count();
+							@foreach (BTUser member in item.Members)
+							{
+								bool isImage = member.AvatarFileData != null;
+								<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64," + Convert.ToBase64String(member.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+member.FullName)' width='@(isImage ? "" : "40") height=' @(isImage ? "" : "auto") alt="" style="border-radius: 50%;border: 2px solid #fff;z-index:@(layer);@(pos_left<0 ? "position:relative;left:"+pos_left.ToString()+"px" : "")" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true" title='@member.FullName' />
+								pos_left -= 7;
+								layer--;
+							}
+						}
+					</div>
+					<div class="d-flex justify-content-between align-items-center">
+						<div>
+							@if (@item.ProjectPriority.Name == nameof(BTProjectPriority.Low))
+							{
+								<span class="badge bg-success-subtle text-success">Priority: @item.ProjectPriority.Name</span>
+							}
+							else if (@item.ProjectPriority.Name == nameof(BTProjectPriority.High))
+							{
+								<span class="badge bg-danger-subtle text-danger">Priority: @item.ProjectPriority.Name</span>
+							}
+							else
+							{
+								<span class="badge bg-dark-subtle text-dark">Priority: @item.ProjectPriority.Name</span>
+							}
+						</div>
+						<div><a class="btn btn-primary" asp-action="AssignPM" asp-route-projectId="@item.Id">Add PM</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+</div>
+
 
 <p>
 	<a asp-controller="Projects" asp-action="Create">Create New</a>

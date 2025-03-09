@@ -22,8 +22,8 @@
 							<option>Select PM</option>
 						</select>
 
-							<input type="submit" value="Assign" class="btn btn-primary" /> |
-							<a asp-controller="Projects" asp-action="Details" asp-route-id="@Model.Project.Id">Back to Project Details</a> 
+						<input type="submit" value="Assign" class="btn btn-primary" />  
+						<button class="btn btn-outline-secondary" onclick="history.back()">Cancel</button> 
 					</div>
 				</form>
 			</div>
