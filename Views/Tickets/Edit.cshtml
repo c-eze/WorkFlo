@@ -46,7 +46,7 @@
 						<span asp-validation-for="TicketStatusId" class="text-danger"></span>
 					</div>
 					<div class="mb-6">
-						<input type="submit" value="Submit" class="btn btn-primary" /> | <a asp-controller="Tickets" asp-action="AllTickets">Back to List</a> 
+						<input type="submit" value="Submit" class="btn btn-primary" /> | <a asp-controller="Tickets" asp-action="Details" asp-route-id="@Model.Id">Back to Ticket</a> 
 					</div>
 				</form>
 			</div>
