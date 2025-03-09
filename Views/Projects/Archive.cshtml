@@ -1,33 +1,38 @@
 @model AspnetCoreMvcFull.Models.Project
 
 @{
-	ViewData["Title"] = "Archive";
+	ViewData["Title"] = "Archive Project";
 }
 
+<h2>Archive Project</h2>
 <div class="row">
 	<div class="col-xl">
 		<div class="card mb-6">
 			<div class="card-header d-flex align-items-center">
 				<h4>Are you sure you want to archive this project?</h4>
 			</div>
-			<div class="card-body"> 
+			<div class="card-body">
 				<dl class="row">
-					<dt class="col-sm-2">					<strong>@Html.DisplayNameFor(model => model.Name)</strong>
+					<dt class="col-sm-2">
+						<strong>@Html.DisplayNameFor(model => model.Name)</strong>
 					</dt>
 					<dd class="col-sm-10">
 						@Html.DisplayFor(model => model.Name)
 					</dd>
-					<dt class="col-sm-2">					<strong>@Html.DisplayNameFor(model => model.Description)</strong>
+					<dt class="col-sm-2">
+						<strong>@Html.DisplayNameFor(model => model.Description)</strong>
 					</dt>
 					<dd class="col-sm-10">
 						@Html.DisplayFor(model => model.Description)
 					</dd>
-					<dt class="col-sm-2">					<strong>@Html.DisplayNameFor(model => model.StartDate)</strong>
+					<dt class="col-sm-2">
+						<strong>@Html.DisplayNameFor(model => model.StartDate)</strong>
 					</dt>
 					<dd class="col-sm-10">
 						@Html.DisplayFor(model => model.StartDate)
 					</dd>
-					<dt class="col-sm-2">					<strong>@Html.DisplayNameFor(model => model.EndDate)</strong>
+					<dt class="col-sm-2">
+						<strong>@Html.DisplayNameFor(model => model.EndDate)</strong>
 					</dt>
 					<dd class="col-sm-10">
 						@Html.DisplayFor(model => model.EndDate)
@@ -58,4 +63,4 @@
 
 		</div>
 	</div>
-</div> 
+</div>

@@ -55,7 +55,7 @@
 				<div class="card-body">
 					<div class="p-15">
 						<h3>@Model.Projects.Where(p => p.StartDate < DateTime.Now && p.EndDate > DateTime.Now).Count()</h3>
-						<span>Active Projects</span>
+						<span class="text-muted">Active Projects</span>
 					</div>
 				</div>
 			</div>
@@ -67,7 +67,7 @@
 				<div class="card-body">
 					<div class="p-15">
 						<h3>@Model.Tickets.Count()</h3>
-						<span>Total Tickets</span>
+						<span class="text-muted">Total Tickets</span>
 					</div>
 				</div>
 			</div>
@@ -78,7 +78,7 @@
 			<div class="card-body">
 				<div class="p-15">
 					<h3>@Model.Tickets.Where(t => string.IsNullOrEmpty(t.DeveloperUserId)).Count()</h3>
-					<span>Unassigned Tickets</span>
+					<span class="text-muted">Unassigned Tickets</span>
 				</div>
 			</div>
 		</div>
@@ -88,7 +88,7 @@
 			<div class="card-body">
 				<div class="p-15">
 					<h3>@Model.Projects.SelectMany(p => p.Tickets).Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Resolved)).Count()</h3> 
-					<span>Closed Tickets</span>
+					<span class="text-muted">Closed Tickets</span>
 				</div>
 			</div>
 		</div>

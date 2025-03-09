@@ -35,6 +35,7 @@
 <div class="row row-cols-1 row-cols-md-3">
 	@foreach (Project item in Model)
 	{
+		@if (item.Archived == true) { continue; }
 		<div class="col mb-6">
 			<div class="card h-100">
 				<div class="card-body">

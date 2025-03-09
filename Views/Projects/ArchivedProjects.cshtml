@@ -12,93 +12,80 @@
 	BTUser btUser = await UserManager.GetUserAsync(User);
 }
 
-<h1>Archived Projects</h1>
+@* ************** Content ************** *@
 
-<table class="table">
-	<thead>
-		<tr>
-			<th>
-				@Html.DisplayNameFor(model => model.Name)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Description)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.StartDate)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.EndDate)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.ImageFileName)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.ImageFileData)
-			</th>
+<h2>Archived Projects</h2>
 
-			<th>
-				@Html.DisplayNameFor(model => model.Archived)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Company)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.ProjectPriority)
-			</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var item in Model)
-		{
-			<tr>
-				<td>
-					@Html.DisplayFor(modelItem => item.Name)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Description)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.StartDate)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.EndDate)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.ImageFileName)
-				</td>
-				<td>
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb breadcrumb-style2">
+		<li class="breadcrumb-item">Projects</li>
+		<li class="breadcrumb-item active" aria-current="page">Archived Projects</li>
+	</ol>
+</nav>
 
+<div class="row row-cols-1 row-cols-md-3">
+	@foreach (Project item in Model)
+	{
+		<div class="col mb-6">
+			<div class="card h-100">
+				<div class="card-body">
 					@if (item.ImageFileData != null)
 					{
-						<img id="imageFileData" class="img-fluid img-thumbnail" style="width:100px;height:80px" src="data:image/*;base64,@(Convert.ToBase64String(item.ImageFileData))" />
+						<img class="img-fluid d-flex mx-auto my-6 rounded" src="data:image/*;base64,@(Convert.ToBase64String(item.ImageFileData))" />
 					}
-				</td>
-
-				<td>
-					@Html.DisplayFor(modelItem => item.Archived)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Company.Id)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.ProjectPriority.Name)
-				</td>
-				<td>
-					<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-
-					@{
-						bool isProjectPM = (await ProjectService.GetProjectManagerAsync(item.Id))?.Id == btUser.Id;
-					}
-
-					@if (User.IsInRole(nameof(Roles.Admin)) || isProjectPM)
+					else
 					{
-						<a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-						<a asp-action="Restore" asp-route-id="@item.Id">Restore</a>
-
+						<img class="img-fluid d-flex mx-auto my-6 rounded" src="~/img/computercafe.jpg" alt="Card image cap" />
 					}
-				</td>
-			</tr>
-		}
-	</tbody>
-</table>
+					<p class="text-bg-danger text-center">Archived</p>
+					<h5 class="card-title mb-0">@item.Name</h5>
+					<p class="card-text">@item.StartDate.ToString("MM/dd/yyyy") - @item.EndDate.ToString("MM/dd/yyyy")</p>
+					<div class="d-flex flex-row align-items-center justify-content-center p-5">
+						@if (item.Members.Count == 0)
+						{
+							<p>No Project Members</p>
+						}
+						else
+						{
+							int pos_left = 0;
+							int layer = item.Members.Count();
+							@foreach (BTUser member in item.Members)
+							{
+								bool isImage = member.AvatarFileData != null;
+								<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64," + Convert.ToBase64String(member.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+member.FullName)' width='@(isImage ? "" : "40") height=' @(isImage ? "" : "auto") alt="" style="border-radius: 50%;border: 2px solid #fff;z-index:@(layer);@(pos_left<0 ? "position:relative;left:"+pos_left.ToString()+"px" : "")" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true" title='@member.FullName' />
+								pos_left -= 7;
+								layer--;
+							}
+						}
+					</div>
+					<div class="d-flex justify-content-between align-items-center">
+						<div>
+							@if (@item.ProjectPriority.Name == nameof(BTProjectPriority.Low))
+							{
+								<span class="badge bg-success-subtle text-success">Priority: @item.ProjectPriority.Name</span>
+							}
+							else if (@item.ProjectPriority.Name == nameof(BTProjectPriority.High))
+							{
+								<span class="badge bg-danger-subtle text-danger">Priority: @item.ProjectPriority.Name</span>
+							}
+							else
+							{
+								<span class="badge bg-dark-subtle text-dark">Priority: @item.ProjectPriority.Name</span>
+							}
+						</div>
+						<div>
+							@{
+								bool isProjectPM = (await ProjectService.GetProjectManagerAsync(item.Id))?.Id == btUser.Id;
+							}
+
+							@if (User.IsInRole(nameof(Roles.Admin)) || isProjectPM)
+							{
+								<a asp-action="Restore" asp-route-id="@item.Id" class="btn btn-primary">Restore</a>
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+</div> 

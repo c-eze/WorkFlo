@@ -42,6 +42,7 @@ namespace AspnetCoreMvcFull.Models
     [DisplayName("File Name")]
     public string? ImageFileName { get; set; }
 
+    [DisplayName("Image")]
     public byte[]? ImageFileData { get; set; }
 
 
@@ -53,6 +54,8 @@ namespace AspnetCoreMvcFull.Models
 
     //navigation properties
     public virtual Company Company { get; set; }
+
+    [DisplayName("Priority")]
     public virtual ProjectPriority ProjectPriority { get; set; }
     public virtual ICollection<BTUser> Members { get; set; } = new HashSet<BTUser>();
     public virtual ICollection<Ticket> Tickets { get; set; } = new HashSet<Ticket>();

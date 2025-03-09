@@ -340,7 +340,7 @@ public class ProjectsController : Controller
 
     await _projectService.ArchiveProjectAsync(project);
 
-    return RedirectToAction(nameof(Index));
+    return RedirectToAction(nameof(AllProjects));
   }
 
   // GET: Projects/Restore/5
@@ -375,7 +375,7 @@ public class ProjectsController : Controller
 
     await _projectService.RestoreProjectAsync(project);
 
-    return RedirectToAction(nameof(Index));
+    return RedirectToAction(nameof(ArchivedProjects));
   }
 
   private async Task<bool> ProjectExists(int id)
