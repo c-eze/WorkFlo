@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace AspnetCoreMvcFull.Models.Enums
 {
   public enum BTTicketType
