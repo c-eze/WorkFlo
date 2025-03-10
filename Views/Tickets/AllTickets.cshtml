@@ -1,121 +1,105 @@
 @using Microsoft.AspNetCore.Identity
 @using AspnetCoreMvcFull.Services.Interfaces
 @using AspnetCoreMvcFull.Models.Enums
+@using X.PagedList
+@using X.PagedList.Mvc.Core
 
 @inject UserManager<BTUser> UserManager
 @inject IBTProjectService ProjectService
 
-@model IEnumerable<AspnetCoreMvcFull.Models.Ticket>
+@model IPagedList<AspnetCoreMvcFull.Models.Ticket>
 
 @{
 	ViewData["Title"] = "All Tickets";
 	BTUser btUser = await UserManager.GetUserAsync(User);
 }
 
-<div class="container">
-	<h1>All Tickets</h1>
+@* ************** Content ************** *@
 
+<h2>All Tickets</h2>
+
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb breadcrumb-style2">
+		<li class="breadcrumb-item">Tickets</li>
+		<li class="breadcrumb-item active" aria-current="page">All Tickets</li>
+	</ol>
+</nav>
+
+
+@if (User != null && (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager))))
+{
 	<p>
-		<a asp-action="Create">Create New</a>
+		<a asp-action="Create" class="btn btn-primary">Create New Ticket</a>
 	</p>
-	<table class="table">
-		<thead>
-			<tr>
-				<th>
-					@Html.DisplayNameFor(model => model.Title)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Description)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Created)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Updated)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Archived)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Project)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.TicketType)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.TicketPriority)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.TicketStatus)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.OwnerUser)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.DeveloperUser)
-				</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var item in Model)
-			{
-				<tr>
-					<td>
-						@Html.DisplayFor(modelItem => item.Title)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.Description)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.Created)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.Updated)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.Archived)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.Project.Name)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.TicketType.Name)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.TicketPriority.Name)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.TicketStatus.Name)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.OwnerUser.FullName)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => item.DeveloperUser.FullName)
-					</td>
-					<td>
-						<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-						@if (User.IsInRole(nameof(Roles.Admin)) || item.DeveloperUserId == btUser.Id || item.OwnerUserId == btUser.Id || await ProjectService.IsAssignedProjectManagerAsync(btUser.Id, item.ProjectId))
-						{
-							<a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-						}
+}
 
-						@if (User.IsInRole(nameof(Roles.Admin)) || await ProjectService.IsAssignedProjectManagerAsync(btUser.Id, item.ProjectId))
-						{
-							if (item.Archived)
+<div class="row row-cols-1">
+	<div class="col mb-6">
+		<div class="card h-100">
+			<div class="card-body">
+				<h4>Tickets</h4>
+				<div class="table-responsive" style="overflow-y:auto;height:500px;">
+					<table class="table table-hover">
+						<thead class="">
+							<tr>
+								@* Table header *@
+								<th>Title</th>
+								<th>Developer</th>
+								<th>Project</th>
+								<th>Status</th>
+								<th>Priority</th>
+								<th>Date</th> 
+							</tr>
+						</thead>
+						<tbody>
+							@* Table body *@
+							@foreach (Ticket ticket in Model.OrderByDescending(d => d.Created))
 							{
-								<a asp-action="Restore" asp-route-id="@item.Id">Restore</a>
+								<tr>
+									<td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id"><strong>@ticket.Title</strong></a> </td>
+									<td>
+										@if (ticket.DeveloperUserId != null)
+										{
+											@ticket.DeveloperUser?.FullName
+										}
+										else
+										{
+											<span class="badge bg-warning text-dark">Unassigned</span>
+										}
+									</td>
+									<td>@ticket.Project.Name</td>
+									@if (ticket.TicketStatus.Name == "New")
+									{
+										<td><span class="badge bg-success rounded-pill">@ticket.TicketStatus.Name </span></td>
+									}
+									else
+									{
+										<td><span class="badge bg-secondary rounded-pill">@ticket.TicketStatus.Name </span></td>
+									}
+									<td><span class="badge bg-dark">@ticket.TicketPriority.Name </span></td>
+									<td><span style="font-size:small">@ticket.Created.ToString("MM/dd/yyyy")</span></td> 
+								</tr>
 							}
-							else
-							{
-								<a asp-action="Archive" asp-route-id="@item.Id">Archive</a>
-							}
-						}
+						</tbody> 
+					</table>
+				</div>
 
-					</td>
-				</tr>
-			}
-		</tbody>
-	</table>
+				<div class="row">
+					<div class="col mt-2">
+						<div class="d-flex align-items-center justify-content-between">
+							<p><strong>Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount entries</strong></p>
+							@Html.PagedListPager(Model, page => Url.Action("AllTickets", new { page = page }),
+																new PagedListRenderOptions
+							{
+								LiElementClasses = new string[] { "page-item" },
+								PageClasses = new string[] { "page-link" },
+								UlElementClasses = new[] { "pagination pagination-sm" }
+							})
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
 </div>

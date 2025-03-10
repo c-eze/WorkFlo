@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
+using X.PagedList.Extensions;
 
 namespace AspnetCoreMvcFull.Controllers;
 
@@ -48,20 +49,16 @@ public class TicketsController : Controller
     return View(tickets);
   }
 
-  public async Task<IActionResult> AllTickets()
+  public async Task<IActionResult> AllTickets(int? page)
   {
     int companyId = User.Identity.GetCompanyId().Value;
 
     List<Ticket> tickets = await _ticketService.GetAllTicketsByCompanyAsync(companyId);
 
-    if (User.IsInRole(nameof(Roles.Developer)) || User.IsInRole(nameof(Roles.Submitter)))
-    {
-      return View(tickets.Where(t => t.Archived == false));
-    }
-    else
-    {
-      return View(tickets);
-    }
+    var pageNumber = page ?? 1;
+    var pageSize = 10; // number of items per page
+
+    return View(tickets.Where(t => t.Archived == false).ToPagedList(pageNumber, pageSize)); 
   }
 
   public async Task<IActionResult> ArchivedTickets()
