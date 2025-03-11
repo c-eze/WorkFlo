@@ -1,87 +1,91 @@
 @model AspnetCoreMvcFull.Models.Ticket
 
 @{
-	ViewData["Title"] = "Restore";
+	ViewData["Title"] = "Restore Ticket";
 }
 
-<h1>Archive</h1>
+<h2>Restore Ticket</h2>
+<div class="row">
+	<div class="col-xl">
+		<div class="card mb-6">
+			<div class="card-header d-flex align-items-center">
+				<h4>Are you sure you want to restore this ticket?</h4>
+			</div>
+			<div class="card-body">
+				<dl class="row">
+					<dt class="col-sm-2">
+						<strong>@Html.DisplayNameFor(model => model.Title)</strong>
+					</dt>
+					<dd class="col-sm-10">
+						@Html.DisplayFor(model => model.Title)
+					</dd>
+					<dt class="col-sm-2">
+						<strong>@Html.DisplayNameFor(model => model.Description)</strong>
+					</dt>
+					<dd class="col-sm-10">
+						@Html.DisplayFor(model => model.Description)
+					</dd>
+					<dt class="col-sm-2">
+						<strong>@Html.DisplayNameFor(model => model.Created)</strong>
+					</dt>
+					<dd class="col-sm-10">
+						@Html.DisplayFor(model => model.Created)
+					</dd>
+					<dt class="col-sm-2">
+						<strong>@Html.DisplayNameFor(model => model.Updated)</strong>
+					</dt>
+					<dd class="col-sm-10">
+						@Html.DisplayFor(model => model.Updated)
+					</dd>
+					<dt class="col-sm-2">
+						<strong>@Html.DisplayNameFor(model => model.Archived)</strong>
+					</dt>
+					<dd class="col-sm-10">
+						@Html.DisplayFor(model => model.Archived)
+					</dd>
+					<dt class="col-sm-2">
+						<strong>@Html.DisplayNameFor(model => model.Project)</strong>
+					</dt>
+					<dd class="col-sm-10">
+						@Html.DisplayFor(model => model.Project.Name)
+					</dd>
+					<dt class="col-sm-2">
+						<strong>@Html.DisplayNameFor(model => model.TicketType)</strong>
+					</dt>
+					<dd class="col-sm-10">
+						@Html.DisplayFor(model => model.TicketType.Name)
+					</dd>
+					<dt class="col-sm-2">
+						<strong>@Html.DisplayNameFor(model => model.TicketPriority)</strong>
+					</dt>
+					<dd class="col-sm-10">
+						@Html.DisplayFor(model => model.TicketPriority.Name)
+					</dd>
+					<dt class="col-sm-2">
+						<strong>@Html.DisplayNameFor(model => model.TicketStatus)</strong>
+					</dt>
+					<dd class="col-sm-10">
+						@Html.DisplayFor(model => model.TicketStatus.Name)
+					</dd>
+					<dt class="col-sm-2">
+						<strong>@Html.DisplayNameFor(model => model.OwnerUser)</strong>
+					</dt>
+					<dd class="col-sm-10">
+						@Html.DisplayFor(model => model.OwnerUser.FullName)
+					</dd>
+					<dt class="col-sm-2">
+						<strong>@Html.DisplayNameFor(model => model.DeveloperUser)</strong>
+					</dt>
+					<dd class="col-sm-10">
+						@Html.DisplayFor(model => model.DeveloperUser.FullName)
+					</dd>
+				</dl>
 
-<h3>Are you sure you want to restore this ticket?</h3>
-<div>
-	<h4>Ticket</h4>
-	<hr />
-	<dl class="row">
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Title)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Title)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Description)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Description)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Created)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Created)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Updated)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Updated)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Archived)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Archived)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Project)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Project.Name)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.TicketType)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.TicketType.Name)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.TicketPriority)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.TicketPriority.Name)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.TicketStatus)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.TicketStatus.Name)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.OwnerUser)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.OwnerUser.FullName)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.DeveloperUser)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.DeveloperUser.FullName)
-		</dd>
-	</dl>
-
-	<form asp-action="Restore">
-		<input type="hidden" asp-for="Id" />
-		<input type="submit" value="Restore" class="btn btn-success" /> |
-		<a asp-controller="Tickets" asp-action="AllTickets">Back to List</a>
-	</form>
+				<form asp-action="Restore">
+					<input type="hidden" asp-for="Id" />
+					<input type="submit" value="Restore" class="btn btn-success" /> <a class="btn btn-outline-secondary" onclick="history.back()">Cancel</a>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
