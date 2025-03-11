@@ -1,17 +1,11 @@
-@using Microsoft.AspNetCore.Identity
-@using AspnetCoreMvcFull.Services.Interfaces
 @using AspnetCoreMvcFull.Models.Enums
 @using X.PagedList
 @using X.PagedList.Mvc.Core
-
-@inject UserManager<BTUser> UserManager
-@inject IBTProjectService ProjectService
 
 @model IPagedList<AspnetCoreMvcFull.Models.Ticket>
 
 @{
 	ViewData["Title"] = "All Tickets";
-	BTUser btUser = await UserManager.GetUserAsync(User);
 }
 
 @* ************** Content ************** *@
@@ -25,7 +19,6 @@
 	</ol>
 </nav>
 
-
 @if (User != null && (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager))))
 {
 	<p>
@@ -38,6 +31,15 @@
 		<div class="card h-100">
 			<div class="card-body">
 				<h4>Tickets</h4>
+				<form asp-action="AllTickets" method="get">
+					<p>
+						<div class="input-group input-group-merge">
+							<span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+							<input type="text" class="form-control" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon-search31" />
+							<input type="submit" value="Search" class="btn btn-primary" />
+						</div>
+					</p>
+				</form>
 				<div class="table-responsive" style="overflow-y:auto;height:500px;">
 					<table class="table table-hover">
 						<thead class="">
@@ -48,7 +50,7 @@
 								<th>Project</th>
 								<th>Status</th>
 								<th>Priority</th>
-								<th>Date</th> 
+								<th>Date</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -77,10 +79,10 @@
 										<td><span class="badge bg-secondary rounded-pill">@ticket.TicketStatus.Name </span></td>
 									}
 									<td><span class="badge bg-dark">@ticket.TicketPriority.Name </span></td>
-									<td><span style="font-size:small">@ticket.Created.ToString("MM/dd/yyyy")</span></td> 
+									<td><span style="font-size:small">@ticket.Created.ToString("MM/dd/yyyy")</span></td>
 								</tr>
 							}
-						</tbody> 
+						</tbody>
 					</table>
 				</div>
 
@@ -88,7 +90,7 @@
 					<div class="col mt-2">
 						<div class="d-flex align-items-center justify-content-between">
 							<p><strong>Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount entries</strong></p>
-							@Html.PagedListPager(Model, page => Url.Action("AllTickets", new { page = page }),
+							@Html.PagedListPager(Model, page => Url.Action("AllTickets", new { page = page, currentFilter = ViewData["CurrentFilter"] }),
 																new PagedListRenderOptions
 							{
 								LiElementClasses = new string[] { "page-item" },

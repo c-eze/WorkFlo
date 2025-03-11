@@ -89,7 +89,7 @@
 								<h5 class="text-muted mb-0">Not Assigned</h5>
 								@if (User.IsInRole(nameof(Roles.Admin)))
 								{
-									<span><a asp-action="AssignPM" asp-controller="Projects" asp-route-projectId="@Model.Id" class="btn btn-xs btn-outline-info">Assign PM</a></span>
+									<span><a asp-action="AssignPM" asp-controller="Projects" asp-route-projectId="@Model.Id" class="btn btn-xs btn-info">Assign PM</a></span>
 								}
 							</div>
 						}

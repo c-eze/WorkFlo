@@ -85,50 +85,18 @@
 								<div class="me-2">
 									<img class="rounded-circle" style="width:30px;height:30px;" src="/img/defaultUserImage.png" alt="" />
 								</div>
-								<span>
-									<strong>Unassigned</strong>
-								</span>
-							}
-						</div>
-					</dd>
-					<dt class="col-sm-3 text-muted mt-4" style="font-size:small;">
-						Assigned To
-					</dt>
-					<dd class="col-sm-9 mt-2">
-						<div class="d-flex align-items-center">
-							@if (!string.IsNullOrEmpty(Model.OwnerUserId))
-							{
-								<div class="me-2">
-									@if (Model.OwnerUser?.AvatarFileData != null)
-									{
-										<img class="rounded-circle" style="width:30px;height:30px;" src="data:image/*;base64,@(Convert.ToBase64String(Model.OwnerUser.AvatarFileData))" alt="" />
-									}
-									else
-									{
-										<img class="rounded-circle" style="width:30px;height:30px;" src="https://api.dicebear.com/9.x/initials/svg?seed=@projectManager.FullName" alt="" />
-									}
-								</div>
-								<span>
-									<strong>@projectManager.FullName</strong>
-								</span>
-							}
-							else
-							{
-								<div class="me-2">
-									<img class="rounded-circle" style="width:30px;height:30px;" src="/img/defaultUserImage.png" alt="" />
-								</div>
 								<span class="me-2">
 									<strong>Unassigned</strong>
 								</span>
 								@if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
 								{
-									<div><a asp-action="AssignDeveloper" asp-controller="Tickets" asp-route-projectId="@Model.Id" class="btn btn-xs btn-outline-info">Assign Developer</a></div>
+									<div><a asp-action="AssignPM" asp-controller="Projects" asp-route-projectId="@Model.ProjectId" class="btn btn-xs btn-info">Add PM</a></div>
 								}
 							}
 						</div>
 					</dd>
 					<dt class="col-sm-3 text-muted mt-4" style="font-size:small;">
-						Submitted By
+						Assigned To
 					</dt>
 					<dd class="col-sm-9 mt-2">
 						<div class="d-flex align-items-center">
@@ -146,6 +114,42 @@
 								</div>
 								<span>
 									<strong>@Model.DeveloperUser?.FullName</strong>
+								</span>
+							}
+							else
+							{
+								<div class="me-2">
+									<img class="rounded-circle" style="width:30px;height:30px;" src="/img/defaultUserImage.png" alt="" />
+								</div>
+								<span class="me-2">
+									<strong>Unassigned</strong>
+								</span>
+								@if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
+								{
+									<div><a asp-action="AssignDeveloper" asp-controller="Tickets" asp-route-id="@Model.Id" class="btn btn-xs btn-info">Assign Developer</a></div>
+								}
+							}
+						</div>
+					</dd>
+					<dt class="col-sm-3 text-muted mt-4" style="font-size:small;">
+						Submitted By
+					</dt>
+					<dd class="col-sm-9 mt-2">
+						<div class="d-flex align-items-center">
+							@if (!string.IsNullOrEmpty(Model.OwnerUserId))
+							{
+								<div class="me-2">
+									@if (Model.OwnerUser?.AvatarFileData != null)
+									{
+										<img class="rounded-circle" style="width:30px;height:30px;" src="data:image/*;base64,@(Convert.ToBase64String(Model.OwnerUser.AvatarFileData))" alt="" />
+									}
+									else
+									{
+										<img class="rounded-circle" style="width:30px;height:30px;" src="https://api.dicebear.com/9.x/initials/svg?seed=@Model.OwnerUser.FullName" alt="" />
+									}
+								</div>
+								<span>
+									<strong>@Model.OwnerUser.FullName</strong>
 								</span>
 							}
 							else

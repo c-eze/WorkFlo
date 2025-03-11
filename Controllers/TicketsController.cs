@@ -49,11 +49,27 @@ public class TicketsController : Controller
     return View(tickets);
   }
 
-  public async Task<IActionResult> AllTickets(int? page)
+  public async Task<IActionResult> AllTickets(int? page, string currentFilter, string searchString)
   {
+    if (searchString != null)
+    {
+      page = 1;
+    }
+    else
+    {
+      searchString = currentFilter;
+    }
+
+    ViewData["CurrentFilter"] = searchString;
+
     int companyId = User.Identity.GetCompanyId().Value;
 
     List<Ticket> tickets = await _ticketService.GetAllTicketsByCompanyAsync(companyId);
+
+    if (!String.IsNullOrEmpty(searchString))
+    {
+      tickets = tickets.FindAll(t => t.Title.ToLower().Contains(searchString) || t.Project.Name.ToLower().Contains(searchString));
+    }
 
     var pageNumber = page ?? 1;
     var pageSize = 10; // number of items per page
@@ -71,16 +87,35 @@ public class TicketsController : Controller
   }
 
   [Authorize(Roles = "Admin, ProjectManager")]
-  public async Task<IActionResult> UnassignedTickets()
+  public async Task<IActionResult> UnassignedTickets(int? page, string currentFilter, string searchString)
   {
+    if (searchString != null)
+    {
+      page = 1;
+    }
+    else
+    {
+      searchString = currentFilter;
+    }
+
+    ViewData["CurrentFilter"] = searchString;
+
     int companyId = User.Identity.GetCompanyId().Value;
     string btUserId = _userManager.GetUserId(User);
 
     List<Ticket> tickets = await _ticketService.GetUnassignedTicketsAsync(companyId);
 
+    if (!String.IsNullOrEmpty(searchString))
+    {
+      tickets = tickets.FindAll(t => t.Title.ToLower().Contains(searchString) || t.Project.Name.ToLower().Contains(searchString));
+    }
+
+    var pageNumber = page ?? 1;
+    var pageSize = 10; // number of items per page
+
     if (User.IsInRole(nameof(Roles.Admin)))
     {
-      return View(tickets);
+      return View(tickets.Where(t => t.Archived == false).ToPagedList(pageNumber, pageSize));
     }
     else
     {
@@ -93,7 +128,7 @@ public class TicketsController : Controller
           pmTickets.Add(ticket);
         }
       }
-      return View(pmTickets);
+      return View(pmTickets.Where(t => t.Archived == false).ToPagedList(pageNumber, pageSize));
     }
   }
 

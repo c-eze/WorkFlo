@@ -3,13 +3,14 @@
 @{
 	ViewData["Title"] = "Assign PM";
 }
+
 @* ************** Content ************** *@ 
 
 <div class="row">
 	<div class="col-xl">
 		<div class="card mb-6">
-			<div class="card-header d-flex align-items-center">
-				<h4>Assign Project Manager</h4>
+			<div class="card-header">
+				<h4>Assign Project Manager For</h4>
 			</div>
 			<div class="card-body">
 				<form method="post" class="" asp-action="AssignPM" asp-controller="Projects">
@@ -19,7 +20,7 @@
 					<div class="col-sm-8 col-md-6 mb-6">
 						<label class="form-label">Project Manager</label>
 						<select asp-for="PMID" class="form-select mb-6" asp-items="@Model.PMList">
-							<option>Select PM</option>
+							<option></option>
 						</select>
 
 						<input type="submit" value="Assign" class="btn btn-primary" />  

@@ -1,34 +1,58 @@
 @using AspnetCoreMvcFull.Models.Enums
+@using X.PagedList
+@using X.PagedList.Mvc.Core
 
-@model IEnumerable<AspnetCoreMvcFull.Models.Ticket>
+@model IPagedList<AspnetCoreMvcFull.Models.Ticket>
 
-<div class="col-md-12 col">
-	<div class="mt-5 bg-secondary">
-		<div class="card m-1 p-2">
-			<div class="header">
-				<h2>Unassigned Tickets</h2>
-			</div>
-			<div class="body">
-				<div class="table-responsive" style="overflow-y:auto;height:600px;">
+@{
+	ViewData["Title"] = "All Tickets"; 
+}
+
+@* ************** Content ************** *@
+
+<h2>Unassigned Tickets</h2>
+
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb breadcrumb-style2">
+		<li class="breadcrumb-item">Tickets</li>
+		<li class="breadcrumb-item active" aria-current="page">Unassigned Tickets</li>
+	</ol>
+</nav> 
+
+<div class="row row-cols-1">
+	<div class="col mb-6">
+		<div class="card h-100">
+			<div class="card-body">
+				<h4>Tickets</h4>
+				<form asp-action="UnassignedTickets" method="get">
+					<p>
+						<div class="input-group input-group-merge">
+							<span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+							<input type="text" class="form-control" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon-search31" />
+							<input type="submit" value="Search" class="btn btn-primary" />
+						</div>
+					</p>
+				</form>
+				<div class="table-responsive" style="overflow-y:auto;height:500px;">
 					<table class="table table-hover">
 						<thead class="">
 							<tr>
 								@* Table header *@
 								<th>Title</th>
 								<th>Developer</th>
+								<th>Project</th>
 								<th>Status</th>
 								<th>Priority</th>
 								<th>Date</th>
-								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
 							@* Table body *@
-							@foreach (var ticket in Model.OrderByDescending(d => d.Created))
+							@foreach (Ticket ticket in Model.OrderByDescending(d => d.Created))
 							{
 								<tr>
-									<td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id" style="color:black"><strong>@ticket.Title</strong></a> </td>
-									<td>
+									<td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id"><strong>@ticket.Title</strong></a> </td>
+									<td>										
 										@if (ticket.DeveloperUserId != null)
 										{
 											@ticket.DeveloperUser?.FullName
@@ -42,30 +66,41 @@
 
 										}
 									</td>
+									<td>@ticket.Project.Name</td>
 									@if (ticket.TicketStatus.Name == "New")
 									{
-										<td><span class="badge-success">@ticket.TicketStatus.Name </span></td>
-
+										<td><span class="badge bg-success rounded-pill">@ticket.TicketStatus.Name </span></td>
 									}
 									else
 									{
-										<td><span class="badge-primary">@ticket.TicketStatus.Name </span></td>
+										<td><span class="badge bg-secondary rounded-pill">@ticket.TicketStatus.Name </span></td>
 									}
-									<td><span class="badge-warning">@ticket.TicketPriority.Name </span></td>
-									<td>@ticket.Created.ToString("MM-dd-yyyy")</td>
-									<td>
-										<a class="btn btn-sm btn-outline-info" asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id"><i class="fs-5 bi-justify"></i></a>
-
-									</td>
+									<td><span class="badge bg-dark">@ticket.TicketPriority.Name </span></td>
+									<td><span style="font-size:small">@ticket.Created.ToString("MM/dd/yyyy")</span></td>
 								</tr>
 							}
 						</tbody>
 					</table>
 				</div>
 
+				<div class="row">
+					<div class="col mt-2">
+						<div class="d-flex align-items-center justify-content-between">
+							<p><strong>Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount entries</strong></p>
+							@Html.PagedListPager(Model, page => Url.Action("UnassignedTickets", new { page = page, currentFilter = ViewData["CurrentFilter"] }),
+																new PagedListRenderOptions
+							{
+								LiElementClasses = new string[] { "page-item" },
+								PageClasses = new string[] { "page-link" },
+								UlElementClasses = new[] { "pagination pagination-sm" }
+							})
+						</div>
+					</div>
+				</div>
+
 			</div>
 		</div>
-
 	</div>
 </div>
+
 
