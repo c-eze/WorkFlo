@@ -27,217 +27,231 @@
 	</ol>
 </nav>
 
-<div class="d-flex flex-row mb-6">
-	<div class="me-auto">
-		<a asp-controller="Projects" asp-action="Details" asp-route-id="@Model.Project.Id" class="btn btn-outline-primary">Back To Project</a>
-	</div>
-
-	@if ((User.IsInRole(nameof(Roles.Admin)) || await ProjectService.IsAssignedProjectManagerAsync(btUser.Id, Model.ProjectId)) && Model.Archived == false)
-	{
-		<div>
-			<a asp-controller="Tickets" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary me-2">Edit</a>
-		</div>
-		<div>
-			<a asp-controller="Tickets" asp-action="Archive" asp-route-id="@Model.Id" class="btn btn-danger">Archive</a>
-		</div>
-	}
-</div>
-
 <div class="row row-cols-1 row-cols-md-2">
 
 	@* Ticket Overview *@
 	<div class="col mb-6">
 		<div class="card h-100">
+			<div class="card-header">
+				<div class="d-flex align-items-center">
+					<h4 class="me-auto">@Model.Title</h4>
+					@if ((User.IsInRole(nameof(Roles.Admin)) || await ProjectService.IsAssignedProjectManagerAsync(btUser.Id, Model.ProjectId)) && Model.Archived == false)
+					{
+						<a asp-controller="Tickets" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true" title="Edit"><i class='bx bx-pencil'></i></a>
+						<a asp-controller="Tickets" asp-action="Archive" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-secondary" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true" title="Archive"><i class='bx bx-box'></i></a>
+					}
+				</div>
+				<hr />
+			</div>
 			<div class="card-body">
-				<h4 class="mb-4">@Model.Title</h4>
 				<dl class="row">
-					<dt class="col-sm-3 text-muted" style="font-size:small;">
-						@Html.DisplayNameFor(model => model.Description)
-					</dt>
-					<dd class="col-sm-9">
-						@Html.DisplayFor(model => model.Description)
-					</dd>
-					<dt class="col-sm-3 text-muted mt-2" style="font-size:small;">
-						@Html.DisplayNameFor(model => model.Project.Name)
-					</dt>
-					<dd class="col-sm-9 mt-2">
-						@Html.DisplayFor(model => model.Project.Name)
-					</dd>
-					<dt class="col-sm-3 text-muted mt-4" style="font-size:small;">
-						Project Manager
-					</dt>
-					<dd class="col-sm-9 mt-2">
-						<div class="d-flex align-items-center">
-							@if (projectManager is not null)
-							{
-								<div class="me-2">
-									@if (projectManager.AvatarFileData != null)
-									{
-										<img class="rounded-circle" style="width:30px;height:30px;" src="data:image/*;base64,@(Convert.ToBase64String(projectManager.AvatarFileData))" alt="" />
-									}
-									else
-									{
-										<img class="rounded-circle" style="width:30px;height:30px;" src="https://api.dicebear.com/9.x/initials/svg?seed=@projectManager.FullName" alt="" />
-									}
-								</div>
-								<span>
-									<strong>@projectManager.FullName</strong>
-								</span>
-							}
-							else
-							{
-								<div class="me-2">
-									<img class="rounded-circle" style="width:30px;height:30px;" src="/img/defaultUserImage.png" alt="" />
-								</div>
-								<span class="me-2">
-									<strong>Unassigned</strong>
-								</span>
-								@if ((User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager))) && Model.Archived == false)
+					<div class="d-flex">
+						<dt class="text-muted me-auto" style="font-size:small;">
+							@Html.DisplayNameFor(model => model.Description)
+						</dt>
+						<dd class="">
+							@Html.DisplayFor(model => model.Description)
+						</dd>
+					</div>
+					<div class="d-flex">
+						<dt class="text-muted mt-2 me-auto" style="font-size:small;">
+							@Html.DisplayNameFor(model => model.Project.Name)
+						</dt>
+						<dd class="mt-2">
+							@Html.DisplayFor(model => model.Project.Name)
+						</dd>
+					</div>
+					<div class="d-flex">
+						<dt class="text-muted mt-4 me-auto" style="font-size:small;">
+							Project Manager
+						</dt>
+						<dd class="mt-2">
+							<div class="d-flex align-items-center">
+								@if (projectManager is not null)
 								{
-									<div><a asp-action="AssignPM" asp-controller="Projects" asp-route-projectId="@Model.ProjectId" class="btn btn-xs btn-info">Add PM</a></div>
+									<div class="me-2">
+										@if (projectManager.AvatarFileData != null)
+										{
+											<img class="rounded-circle" style="width:30px;height:30px;" src="data:image/*;base64,@(Convert.ToBase64String(projectManager.AvatarFileData))" alt="" />
+										}
+										else
+										{
+											<img class="rounded-circle" style="width:30px;height:30px;" src="https://api.dicebear.com/9.x/initials/svg?seed=@projectManager.FullName" alt="" />
+										}
+									</div>
+									<span>
+										<strong>@projectManager.FullName</strong>
+									</span>
 								}
-							}
-						</div>
-					</dd>
-					<dt class="col-sm-3 text-muted mt-4" style="font-size:small;">
-						Assigned To
-					</dt>
-					<dd class="col-sm-9 mt-2">
-						<div class="d-flex align-items-center">
-							@if (!string.IsNullOrEmpty(Model.DeveloperUserId))
-							{
-								<div class="me-2">
-									@if (Model.DeveloperUser?.AvatarFileData != null)
-									{
-										<img class="rounded-circle" style="width:30px;height:30px;" src="data:image/*;base64,@(Convert.ToBase64String(Model.DeveloperUser.AvatarFileData))" alt="" />
-									}
-									else
-									{
-										<img class="rounded-circle" style="width:30px;height:30px;" src="https://api.dicebear.com/9.x/initials/svg?seed=@Model.DeveloperUser?.FullName" alt="" />
-									}
-								</div>
-								<span>
-									<strong>@Model.DeveloperUser?.FullName</strong>
-								</span>
-							}
-							else
-							{
-								<div class="me-2">
-									<img class="rounded-circle" style="width:30px;height:30px;" src="/img/defaultUserImage.png" alt="" />
-								</div>
-								<span class="me-2">
-									<strong>Unassigned</strong>
-								</span>
-								@if ((User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager))) && Model.Archived == false)
+								else
 								{
-									<div><a asp-action="AssignDeveloper" asp-controller="Tickets" asp-route-id="@Model.Id" class="btn btn-xs btn-info">Assign Developer</a></div>
+									@if ((User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager))) && Model.Archived == false)
+									{
+										<div class="me-2"><a asp-action="AssignPM" asp-controller="Projects" asp-route-projectId="@Model.ProjectId" class="btn btn-xs btn-info">Add PM</a></div>
+									}
+									<div class="me-2">
+										<img class="rounded-circle" style="width:30px;height:30px;" src="/img/defaultUserImage.png" alt="" />
+									</div>
+									<span>
+										<strong>Unassigned</strong>
+									</span>
 								}
-							}
-						</div>
-					</dd>
-					<dt class="col-sm-3 text-muted mt-4" style="font-size:small;">
-						Submitted By
-					</dt>
-					<dd class="col-sm-9 mt-2">
-						<div class="d-flex align-items-center">
-							@if (!string.IsNullOrEmpty(Model.OwnerUserId))
+							</div>
+						</dd>
+					</div>
+					<div class="d-flex">
+						<dt class="text-muted mt-4 me-auto" style="font-size:small;">
+							Assigned To
+						</dt>
+						<dd class="mt-2">
+							<div class="d-flex align-items-center">
+								@if (!string.IsNullOrEmpty(Model.DeveloperUserId))
+								{
+									<div class="me-2">
+										@if (Model.DeveloperUser?.AvatarFileData != null)
+										{
+											<img class="rounded-circle" style="width:30px;height:30px;" src="data:image/*;base64,@(Convert.ToBase64String(Model.DeveloperUser.AvatarFileData))" alt="" />
+										}
+										else
+										{
+											<img class="rounded-circle" style="width:30px;height:30px;" src="https://api.dicebear.com/9.x/initials/svg?seed=@Model.DeveloperUser?.FullName" alt="" />
+										}
+									</div>
+									<span>
+										<strong>@Model.DeveloperUser?.FullName</strong>
+									</span>
+								}
+								else
+								{
+									@if ((User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager))) && Model.Archived == false)
+									{
+										<div class="me-2"><a asp-action="AssignDeveloper" asp-controller="Tickets" asp-route-id="@Model.Id" class="btn btn-xs btn-info">Assign Developer</a></div>
+									}
+									<div class="me-2">
+										<img class="rounded-circle" style="width:30px;height:30px;" src="/img/defaultUserImage.png" alt="" />
+									</div>
+									<span>
+										<strong>Unassigned</strong>
+									</span>
+								}
+							</div>
+						</dd>
+					</div>
+					<div class="d-flex">
+						<dt class="text-muted mt-4 me-auto" style="font-size:small;">
+							Submitted By
+						</dt>
+						<dd class="mt-2">
+							<div class="d-flex align-items-center">
+								@if (!string.IsNullOrEmpty(Model.OwnerUserId))
+								{
+									<div class="me-2">
+										@if (Model.OwnerUser?.AvatarFileData != null)
+										{
+											<img class="rounded-circle" style="width:30px;height:30px;" src="data:image/*;base64,@(Convert.ToBase64String(Model.OwnerUser.AvatarFileData))" alt="" />
+										}
+										else
+										{
+											<img class="rounded-circle" style="width:30px;height:30px;" src="https://api.dicebear.com/9.x/initials/svg?seed=@Model.OwnerUser.FullName" alt="" />
+										}
+									</div>
+									<span>
+										<strong>@Model.OwnerUser.FullName</strong>
+									</span>
+								}
+								else
+								{
+									<div class="me-2">
+										<img class="rounded-circle" style="width:30px;height:30px;" src="/img/defaultUserImage.png" alt="" />
+									</div>
+									<span>
+										<strong>Unassigned</strong>
+									</span>
+								}
+							</div>
+						</dd>
+					</div>
+					<div class="d-flex">
+						<dt class="text-muted mt-4 me-auto" style="font-size:small;">
+							@Html.DisplayNameFor(model => model.TicketType.Name)
+						</dt>
+						<dd class="mt-2">
+							@if (@Model.TicketType.Name == nameof(BTTicketType.NewDevelopment))
 							{
-								<div class="me-2">
-									@if (Model.OwnerUser?.AvatarFileData != null)
-									{
-										<img class="rounded-circle" style="width:30px;height:30px;" src="data:image/*;base64,@(Convert.ToBase64String(Model.OwnerUser.AvatarFileData))" alt="" />
-									}
-									else
-									{
-										<img class="rounded-circle" style="width:30px;height:30px;" src="https://api.dicebear.com/9.x/initials/svg?seed=@Model.OwnerUser.FullName" alt="" />
-									}
-								</div>
-								<span>
-									<strong>@Model.OwnerUser.FullName</strong>
-								</span>
+								<span class="badge rounded-pill bg-success">@Model.TicketType.Name</span>
+							}
+							else if (@Model.TicketType.Name == nameof(BTTicketType.Defect))
+							{
+								<span class="badge rounded-pill bg-danger">@Model.TicketType.Name</span>
+							}
+							else if (@Model.TicketType.Name == nameof(BTTicketType.ChangeRequest))
+							{
+								<span class="badge rounded-pill bg-warning">@Model.TicketType.Name</span>
+							}
+							else if (@Model.TicketType.Name == nameof(BTTicketType.Enhancement))
+							{
+								<span class="badge rounded-pill bg-primary">@Model.TicketType.Name</span>
 							}
 							else
 							{
-								<div class="me-2">
-									<img class="rounded-circle" style="width:30px;height:30px;" src="/img/defaultUserImage.png" alt="" />
-								</div>
-								<span>
-									<strong>Unassigned</strong>
-								</span>
+								<span class="badge rounded-pill bg-dark">@Model.TicketType.Name</span>
 							}
-						</div>
-					</dd>
-					<dt class="col-sm-3 text-muted mt-4" style="font-size:small;">
-						@Html.DisplayNameFor(model => model.TicketType.Name)
-					</dt>
-					<dd class="col-sm-9 mt-2">
-						@if (@Model.TicketType.Name == nameof(BTTicketType.NewDevelopment))
-						{
-							<span class="badge rounded-pill bg-success">@Model.TicketType.Name</span>
-						}
-						else if (@Model.TicketType.Name == nameof(BTTicketType.Defect))
-						{
-							<span class="badge rounded-pill bg-danger">@Model.TicketType.Name</span>
-						}
-						else if (@Model.TicketType.Name == nameof(BTTicketType.ChangeRequest))
-						{
-							<span class="badge rounded-pill bg-warning">@Model.TicketType.Name</span>
-						}
-						else if (@Model.TicketType.Name == nameof(BTTicketType.Enhancement))
-						{
-							<span class="badge rounded-pill bg-primary">@Model.TicketType.Name</span>
-						}
-						else
-						{
-							<span class="badge rounded-pill bg-dark">@Model.TicketType.Name</span>
-						}
-					</dd>
-					<dt class="col-sm-3 text-muted mt-4" style="font-size:small;">
-						@Html.DisplayNameFor(model => model.TicketPriority.Name)
-					</dt>
-					<dd class="col-sm-9 mt-2">
-						@if (@Model.TicketPriority?.Name == nameof(BTTicketPriority.Low))
-						{
-							<span class="badge bg-success-subtle text-success">@Model.TicketPriority.Name</span>
-						}
-						else if (@Model.TicketPriority?.Name == nameof(BTTicketPriority.High))
-						{
-							<span class="badge bg-danger-subtle text-danger">@Model.TicketPriority.Name</span>
-						}
-						else
-						{
-							<span class="badge bg-dark-subtle text-dark">@Model.TicketPriority?.Name</span>
-						}
-					</dd>
-					<dt class="col-sm-3 text-muted mt-4" style="font-size:small;">
-						@Html.DisplayNameFor(model => model.TicketStatus.Name)
-					</dt>
-					<dd class="col-sm-9 mt-2">
-						@if (@Model.TicketStatus.Name == nameof(BTTicketStatus.New))
-						{
-							<span class="badge rounded-pill bg-primary">@Model.TicketStatus.Name</span>
-						}
-						else if (@Model.TicketStatus.Name == nameof(BTTicketStatus.Resolved))
-						{
-							<span class="badge rounded-pill bg-success">@Model.TicketStatus.Name</span>
-						}
-						else
-						{
-							<span class="badge rounded-pill bg-dark">@Model.TicketStatus.Name</span>
-						}
-					</dd>
-					<dt class="col-sm-3 text-muted mt-2" style="font-size:small;">
-						Date Submitted
-					</dt>
-					<dd class="col-sm-9 mt-2">
-						@Model.Created.ToString("MM/dd/yyyy")
-					</dd>
-					<dt class="col-sm-3 text-muted mt-2" style="font-size:small;">
-						Project End Date
-					</dt>
-					<dd class="col-sm-9 mt-2">
-						@Model.Project.EndDate.ToString("MM/dd/yyyy")
-					</dd>
+						</dd>
+					</div>
+					<div class="d-flex">
+						<dt class="text-muted mt-4 me-auto" style="font-size:small;">
+							@Html.DisplayNameFor(model => model.TicketPriority.Name)
+						</dt>
+						<dd class="mt-2">
+							@if (@Model.TicketPriority?.Name == nameof(BTTicketPriority.Low))
+							{
+								<span class="badge bg-success-subtle text-success">@Model.TicketPriority.Name</span>
+							}
+							else if (@Model.TicketPriority?.Name == nameof(BTTicketPriority.High))
+							{
+								<span class="badge bg-danger-subtle text-danger">@Model.TicketPriority.Name</span>
+							}
+							else
+							{
+								<span class="badge bg-dark-subtle text-dark">@Model.TicketPriority?.Name</span>
+							}
+						</dd>
+					</div>
+					<div class="d-flex">
+						<dt class="text-muted mt-4 me-auto" style="font-size:small;">
+							@Html.DisplayNameFor(model => model.TicketStatus.Name)
+						</dt>
+						<dd class="mt-2">
+							@if (@Model.TicketStatus.Name == nameof(BTTicketStatus.New))
+							{
+								<span class="badge rounded-pill bg-primary">@Model.TicketStatus.Name</span>
+							}
+							else if (@Model.TicketStatus.Name == nameof(BTTicketStatus.Resolved))
+							{
+								<span class="badge rounded-pill bg-success">@Model.TicketStatus.Name</span>
+							}
+							else
+							{
+								<span class="badge rounded-pill bg-dark">@Model.TicketStatus.Name</span>
+							}
+						</dd>
+					</div>
+					<div class="d-flex">
+						<dt class="text-muted mt-2 me-auto" style="font-size:small;">
+							Date Submitted
+						</dt>
+						<dd class="mt-2">
+							@Model.Created.ToString("MM/dd/yyyy")
+						</dd>
+					</div>
+					<div class="d-flex">
+						<dt class="text-muted mt-2 me-auto" style="font-size:small;">
+							Project End Date
+						</dt>
+						<dd class="mt-2">
+							@Model.Project.EndDate.ToString("MM/dd/yyyy")
+						</dd>
+					</div>
 				</dl>
 			</div>
 		</div>
@@ -249,9 +263,10 @@
 		<div class="card m-1 p-2">
 			<div class="card-header">
 				<h4>Comments</h4>
+				<hr />
 			</div>
 			<div class="card-body">
-				<div style="overflow-y:auto;height:200px;">
+				<div style="overflow-y:auto;height:250px;">
 					<ul class="right_chat list-unstyled mb-0">
 						@*Loop to show comments made for the Ticket*@
 						@foreach (TicketComment comment in Model.Comments)
@@ -323,8 +338,11 @@
 	@* Attachments *@
 	<div class="col mb-6">
 		<div class="card h-100">
+			<div class="card-header">
+				<h4>Add File</h4>
+				<hr />
+			</div>
 			<div class="card-body">
-				<h4 class="mb-4">Add File</h4>
 				<div class="row clearfix">
 					<div>
 						<form asp-action="AddTicketAttachment" asp-controller="Tickets" enctype="multipart/form-data" method="post">
@@ -433,5 +451,11 @@
 		</div>
 	</div>
 	@* / History *@ 
+</div>
+
+<div class="d-flex flex-row mb-6">
+	<div class="me-auto">
+		<a asp-controller="Projects" asp-action="Details" asp-route-id="@Model.Project.Id" class="btn btn-outline-primary">Back To Project</a>
+	</div>
 </div>
 
