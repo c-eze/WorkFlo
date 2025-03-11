@@ -30,102 +30,106 @@
 </nav>
 
 <div class="row row-cols-1">
-	<div class="col d-flex flex-row mb-6">
-		<div class="me-auto">
-			<a asp-controller="Projects" asp-action="AllProjects" class="btn btn-outline-primary">Back To Projects</a>
-		</div>
-		<div>
-			<a asp-controller="Projects" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary me-2">Edit</a>
-		</div>
-		<div>
-			<a asp-controller="Projects" asp-action="Archive" asp-route-id="@Model.Id" class="btn btn-danger">Archive</a>
-		</div>
-	</div>
-	<div class="row row-cols-1">
-		@* Project Overview *@
-		<div class="col col-md-6 mb-6">
-			<div class="card h-100">
-				<div class="card-body">
-					<h4 class="mb-4">@Model.Name</h4>
-					<div class="mb-4">
-						@if (@Model.ProjectPriority.Name == nameof(BTProjectPriority.Low))
-						{
-							<span class="badge bg-success-subtle text-success">Priority: @Model.ProjectPriority.Name</span>
-						}
-						else if (@Model.ProjectPriority.Name == nameof(BTProjectPriority.High))
-						{
-							<span class="badge bg-danger-subtle text-danger">Priority: @Model.ProjectPriority.Name</span>
-						}
-						else
-						{
-							<span class="badge bg-dark-subtle text-dark">Priority: @Model.ProjectPriority.Name</span>
-						}
-						<span class="badge bg-warning text-dark  ms-1">@Model.StartDate.ToString("MM/dd/yyyy") - @Model.EndDate.ToString("MM/dd/yyyy")</span>
-					</div>
-					<div class="d-flex align-content-center">
-						@if (projectManager != null)
-						{
-							<div class="me-2">
-								@if (projectManager.AvatarFileData != null)
-								{
-									<img class="rounded-circle" src="data:image/*;base64,@(Convert.ToBase64String(projectManager.AvatarFileData))" alt="" />
-								}
-								else
-								{
-									<img class="rounded-circle" style="width:60px;height:60px;" src="https://api.dicebear.com/9.x/initials/svg?seed=@projectManager.FullName" width="50" height="auto">
-								}
-							</div>
-							<div>
-								<h5 class="mb-0">@projectManager.FullName</h5>
-								<p class="text-muted mb-0">Project Manager</p>
-							</div>
-						}
-						else
-						{
-							<div class="me-2">
-								<img class="rounded-circle" style="width:60px;height:60px;" src="/img/defaultUserImage.png" alt="" />
-							</div>
-							<div class="wid-u-info">
-								<h5 class="text-muted mb-0">Not Assigned</h5>
-								@if (User.IsInRole(nameof(Roles.Admin)))
-								{
-									<span><a asp-action="AssignPM" asp-controller="Projects" asp-route-projectId="@Model.Id" class="btn btn-xs btn-info">Assign PM</a></span>
-								}
-							</div>
-						}
-					</div>
+	@* Project Overview *@
+	<div class="col col-md-6 mb-6">
+		<div class="card h-100">
+			<div class="card-header">
+				<div class="d-flex align-items-center">
+					<h4 class="me-auto">@Model.Name</h4>
+					@if ((User.IsInRole(nameof(Roles.Admin)) || await ProjectService.IsAssignedProjectManagerAsync(btUser.Id, Model.Id)) && Model.Archived == false)
+					{
+						<a asp-controller="Projects" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true" title="Edit"><i class='bx bx-pencil'></i></a>
+						<a asp-controller="Projects" asp-action="Archive" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-secondary" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true" title="Archive"><i class='bx bx-box'></i></a>
+					}
 				</div>
+				<hr />
 			</div>
-		</div>
-		@* / Project Overview *@
-		@* Project Description *@
-		<div class="col col-md-6 mb-6">
-			<div class="card ">
-				<div class="card-body">
-					<h4>Description</h4>
-					<p>@Model.Description</p>
-					<div class="progress-container progress-info mb-2">
-						<div class="text-light small fw-medium">Project Status</div>
-						<div class="progress" style="height: 16px;">
-							@{
-								var start = Model.StartDate.DateTime;
-								var end = Model.EndDate.DateTime;
-								var today = DateTime.Now;
-								var percent = today >= end ? 100 : today < start ? 0 : Math.Round((today.Subtract(start)) / (end.Subtract(start)) * 100);
+			<div class="card-body">
+				<div class="mb-4">
+					@if (@Model.ProjectPriority.Name == nameof(BTProjectPriority.Low))
+					{
+						<span class="badge bg-success-subtle text-success">Priority: @Model.ProjectPriority.Name</span>
+					}
+					else if (@Model.ProjectPriority.Name == nameof(BTProjectPriority.High))
+					{
+						<span class="badge bg-danger-subtle text-danger">Priority: @Model.ProjectPriority.Name</span>
+					}
+					else
+					{
+						<span class="badge bg-dark-subtle text-dark">Priority: @Model.ProjectPriority.Name</span>
+					}
+					<span class="badge bg-warning text-dark  ms-1">@Model.StartDate.ToString("MM/dd/yyyy") - @Model.EndDate.ToString("MM/dd/yyyy")</span>
+				</div>
+				<div class="d-flex align-content-center">
+					@if (projectManager != null)
+					{
+						<div class="me-2">
+							@if (projectManager.AvatarFileData != null)
+							{
+								<img class="rounded-circle" src="data:image/*;base64,@(Convert.ToBase64String(projectManager.AvatarFileData))" alt="" />
 							}
-							<div class="progress-bar" role="progressbar" style="width: @percent%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">@percent%</div>
+							else
+							{
+								<img class="rounded-circle" style="width:60px;height:60px;" src="https://api.dicebear.com/9.x/initials/svg?seed=@projectManager.FullName" width="50" height="auto">
+							}
 						</div>
+						<div>
+							<h5 class="mb-0">@projectManager.FullName</h5>
+							<p class="text-muted mb-0">Project Manager</p>
+						</div>
+					}
+					else
+					{
+						<div class="me-2">
+							<img class="rounded-circle" style="width:60px;height:60px;" src="/img/defaultUserImage.png" alt="" />
+						</div>
+						<div class="wid-u-info">
+							<h5 class="text-muted mb-0">Not Assigned</h5>
+							@if (User.IsInRole(nameof(Roles.Admin)))
+							{
+								<span><a asp-action="AssignPM" asp-controller="Projects" asp-route-projectId="@Model.Id" class="btn btn-xs btn-info">Assign PM</a></span>
+							}
+						</div>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+	@* / Project Overview *@
+	@* Project Description *@
+	<div class="col col-md-6 mb-6">
+		<div class="card ">
+			<div class="card-header">
+				<h4>Description</h4>
+				<hr />
+			</div>
+			<div class="card-body">
+				<p>@Model.Description</p>
+				<div class="progress-container progress-info mb-2">
+					<div class="text-light small fw-medium">Project Status</div>
+					<div class="progress" style="height: 16px;">
+						@{
+							var start = Model.StartDate.DateTime;
+							var end = Model.EndDate.DateTime;
+							var today = DateTime.Now;
+							var percent = today >= end ? 100 : today < start ? 0 : Math.Round((today.Subtract(start)) / (end.Subtract(start)) * 100);
+						}
+						<div class="progress-bar" role="progressbar" style="width: @percent%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">@percent%</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		@* / Project Description *@
 	</div>
+	@* / Project Description *@
+
 	@* Project Team *@
 	<div class="col">
 		<div class="card mb-6">
-			<div class="card-body">
+			<div class="card-header">
 				<h4>Project Team</h4>
+				<hr />
+			</div>
+			<div class="card-body">
 				@if ((await ProjectService.GetAllProjectMembersExceptPMAsync(Model.Id)).Count == 0)
 				{
 
@@ -157,22 +161,26 @@
 						}
 					</div>
 				}
+			</div>
+			<div class="card-footer">
 				@if (User.IsInRole(nameof(Roles.Admin)) || (btUser.Id == projectManager?.Id))
 				{
 					<div>
 						<a class="btn btn-primary" asp-action="AssignMembers" asp-controller="Projects" asp-route-id="@Model.Id">Manage Team</a>
 					</div>
 				}
-
 			</div>
 		</div>
 	</div>
 	@* / Project Team *@
 	@* Project Activity *@
-	<div class="col-md-6">
+	<div class="col col-md-6">
 		<div class="card mb-6">
-			<div class="card-body">
+			<div class="card-header">
 				<h4>Project Activity</h4>
+				<hr />
+			</div>
+			<div class="card-body">
 				<div class="border border-1 rounded ps-2 pe-2" style="overflow-y:auto;height:300px;">
 					@* Project Activity loop *@
 					@foreach (TicketHistory history in await HistoryService.GetProjectTicketsHistoriesAsync(Model.Id, btUser.CompanyId))
@@ -194,10 +202,13 @@
 	</div>
 	@* / Project Activity *@
 	@* Tickets by Priority chart *@
-	<div class="col-md-6">
+	<div class="col col-md-6">
 		<div class="card mb-6">
-			<div class="card-body">
+			<div class="card-header">
 				<h4>Tickets By Priority</h4>
+				<hr />
+			</div>
+			<div class="card-body">
 				@*  ChartJS: Bar  *@
 				<div class="col" style="height:300px;">
 					<canvas id="ticketsPriorityChart"></canvas>
@@ -209,250 +220,260 @@
 	@* Tickets *@
 	<div class="col">
 		<div class="card mb-6 p-4">
-			<div class="nav-align-top nav-tabs-shadow mb-6">
-				<ul class="nav nav-tabs" role="tablist">
-					<li class="nav-item">
-						<button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-active" aria-controls="navs-top-active" aria-selected="true">Active Tickets<span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-warning ms-1_5 pt-50">@Model.Tickets.Where(t => t.TicketStatus.Name != nameof(BTTicketStatus.Resolved) && t.Archived == false).Count()</span></button>
-					</li>
-					<li class="nav-item">
-						<button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-resolved" aria-controls="navs-top-resolved" aria-selected="false">Resolved Tickets<span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-warning ms-1_5 pt-50">@Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Resolved) && t.Archived == false).Count()</span></button>
-					</li>
-					<li class="nav-item">
-						<button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-archived" aria-controls="navs-top-archived" aria-selected="false">Archived Tickets<span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-warning ms-1_5 pt-50">@Model.Tickets.Where(t => t.Archived == true).Count()</span></button>
-					</li>
-				</ul>
-				<div class="tab-content">
-					<div class="tab-pane fade show active" id="navs-top-active" role="tabpanel">
-						@if (Model.Tickets.Where(t => t.TicketStatus.Name != nameof(BTTicketStatus.Resolved) && t.Archived == false).Count() == 0)
-						{
-							<div class="d-flex align-items-center justify-content-center p-5">
-								<p>No Tickets Found</p>
-							</div>
-						}
-						else
-						{
-							<div class="table-responsive" style="overflow-y:auto;height:300px;">
-								<table class="table table-hover">
-									<thead class="">
-										<tr>
-											@* Table header *@
-											<th>Title</th>
-											<th>Developer</th>
-											<th>Status</th>
-											<th>Priority</th>
-											<th>Date</th>
-										</tr>
-									</thead>
-									<tbody>
-										@* Table body *@
-										@foreach (var ticket in Model.Tickets.Where(t => t.TicketStatus.Name != nameof(BTTicketStatus.Resolved) && t.Archived == false).OrderByDescending(d => d.Created))
-										{
+			<div class="card-body">
+				<div class="nav-align-top nav-tabs-shadow mb-6">
+					<ul class="nav nav-tabs" role="tablist">
+						<li class="nav-item">
+							<button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-active" aria-controls="navs-top-active" aria-selected="true">Active Tickets<span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-warning ms-1_5 pt-50">@Model.Tickets.Where(t => t.TicketStatus.Name != nameof(BTTicketStatus.Resolved) && t.Archived == false).Count()</span></button>
+						</li>
+						<li class="nav-item">
+							<button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-resolved" aria-controls="navs-top-resolved" aria-selected="false">Resolved Tickets<span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-warning ms-1_5 pt-50">@Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Resolved) && t.Archived == false).Count()</span></button>
+						</li>
+						<li class="nav-item">
+							<button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-archived" aria-controls="navs-top-archived" aria-selected="false">Archived Tickets<span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-warning ms-1_5 pt-50">@Model.Tickets.Where(t => t.Archived == true).Count()</span></button>
+						</li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane fade show active" id="navs-top-active" role="tabpanel">
+							@if (Model.Tickets.Where(t => t.TicketStatus.Name != nameof(BTTicketStatus.Resolved) && t.Archived == false).Count() == 0)
+							{
+								<div class="d-flex align-items-center justify-content-center p-5">
+									<p>No Tickets Found</p>
+								</div>
+							}
+							else
+							{
+								<div class="table-responsive" style="overflow-y:auto;height:300px;">
+									<table class="table table-hover">
+										<thead class="">
 											<tr>
-												<td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id" class="btn btn-link"><strong>@ticket.Title</strong></a> </td>
-												<td>
-													@if (ticket.DeveloperUserId != null)
-													{
-														@ticket.DeveloperUser?.FullName
-													}
-													else
-													{
-														<span class="badge bg-warning text-dark">Unassigned</span>
-													}
-												</td>
-												<td>
-													@if (ticket.TicketStatus.Name == nameof(BTTicketStatus.New))
-													{
-														<span class="badge rounded-pill bg-primary">@ticket.TicketStatus.Name </span>
-													}
-													else if (ticket.TicketStatus.Name == nameof(BTTicketStatus.Resolved))
-													{
-														<span class="badge rounded-pill bg-success">@ticket.TicketStatus.Name</span>
-													}
-													else
-													{
-														<span class="badge rounded-pill bg-dark">@ticket.TicketStatus.Name </span>
-													}
-												</td>
-												<td>
-													@if (ticket.TicketPriority.Name == nameof(BTTicketPriority.Low))
-													{
-														<span class="badge rounded-pill bg-success">@ticket.TicketPriority.Name </span>
-													}
-													else if (ticket.TicketPriority.Name == nameof(BTTicketPriority.High))
-													{
-														<span class="badge rounded-pill text-bg-warning">@ticket.TicketPriority.Name </span>
-													}
-													else if (ticket.TicketPriority.Name == nameof(BTTicketPriority.Urgent))
-													{
-														<span class="badge rounded-pill text-bg-danger">@ticket.TicketPriority.Name </span>
-													}
-													else
-													{
-														<span class="badge rounded-pill bg-primary">@ticket.TicketPriority.Name </span>
-													}
-												</td>
-												<td>@ticket.Created.ToString("MM/dd/yyyy")</td>
+												@* Table header *@
+												<th>Title</th>
+												<th>Developer</th>
+												<th>Status</th>
+												<th>Priority</th>
+												<th>Date</th>
 											</tr>
-										}
-									</tbody>
-								</table>
-							</div>
-						}
-					</div>
-					<div class="tab-pane fade" id="navs-top-resolved" role="tabpanel">
-						@if (Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Resolved) && t.Archived == false).Count() == 0)
-						{
-							<div class="d-flex align-items-center justify-content-center p-5">
-								<p>No Tickets Found</p>
-							</div>
-						}
-						else
-						{
-							<div class="table-responsive" style="overflow-y:auto;height:300px;">
-								<table class="table table-hover">
-									<thead class="">
-										<tr>
-											@* Table header *@
-											<th>Title</th>
-											<th>Developer</th>
-											<th>Status</th>
-											<th>Priority</th>
-											<th>Date</th>
-										</tr>
-									</thead>
-									<tbody>
-										@* Table body *@
-										@foreach (var ticket in Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Resolved) && t.Archived == false).OrderByDescending(d => d.Created))
-										{
+										</thead>
+										<tbody>
+											@* Table body *@
+											@foreach (var ticket in Model.Tickets.Where(t => t.TicketStatus.Name != nameof(BTTicketStatus.Resolved) && t.Archived == false).OrderByDescending(d => d.Created))
+											{
+												<tr>
+													<td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id" class="btn btn-link"><strong>@ticket.Title</strong></a> </td>
+													<td>
+														@if (ticket.DeveloperUserId != null)
+														{
+															@ticket.DeveloperUser?.FullName
+														}
+														else
+														{
+															<span class="badge bg-warning text-dark">Unassigned</span>
+														}
+													</td>
+													<td>
+														@if (ticket.TicketStatus.Name == nameof(BTTicketStatus.New))
+														{
+															<span class="badge rounded-pill bg-primary">@ticket.TicketStatus.Name </span>
+														}
+														else if (ticket.TicketStatus.Name == nameof(BTTicketStatus.Resolved))
+														{
+															<span class="badge rounded-pill bg-success">@ticket.TicketStatus.Name</span>
+														}
+														else
+														{
+															<span class="badge rounded-pill bg-dark">@ticket.TicketStatus.Name </span>
+														}
+													</td>
+													<td>
+														@if (ticket.TicketPriority.Name == nameof(BTTicketPriority.Low))
+														{
+															<span class="badge rounded-pill bg-success">@ticket.TicketPriority.Name </span>
+														}
+														else if (ticket.TicketPriority.Name == nameof(BTTicketPriority.High))
+														{
+															<span class="badge rounded-pill text-bg-warning">@ticket.TicketPriority.Name </span>
+														}
+														else if (ticket.TicketPriority.Name == nameof(BTTicketPriority.Urgent))
+														{
+															<span class="badge rounded-pill text-bg-danger">@ticket.TicketPriority.Name </span>
+														}
+														else
+														{
+															<span class="badge rounded-pill bg-primary">@ticket.TicketPriority.Name </span>
+														}
+													</td>
+													<td>@ticket.Created.ToString("MM/dd/yyyy")</td>
+												</tr>
+											}
+										</tbody>
+									</table>
+								</div>
+							}
+						</div>
+						<div class="tab-pane fade" id="navs-top-resolved" role="tabpanel">
+							@if (Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Resolved) && t.Archived == false).Count() == 0)
+							{
+								<div class="d-flex align-items-center justify-content-center p-5">
+									<p>No Tickets Found</p>
+								</div>
+							}
+							else
+							{
+								<div class="table-responsive" style="overflow-y:auto;height:300px;">
+									<table class="table table-hover">
+										<thead class="">
 											<tr>
-												<td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id" class="btn btn-link"><strong>@ticket.Title</strong></a> </td>
-												<td>
-													@if (ticket.DeveloperUserId != null)
-													{
-														@ticket.DeveloperUser?.FullName
-													}
-													else
-													{
-														<span class="badge bg-warning text-dark">Unassigned</span>
-													}
-												</td>
-												<td>
-													@if (ticket.TicketStatus.Name == nameof(BTTicketStatus.New))
-													{
-														<span class="badge rounded-pill bg-primary">@ticket.TicketStatus.Name </span>
-													}
-													else
-													{
-														<span class="badge rounded-pill bg-dark">@ticket.TicketStatus.Name </span>
-													}
-												</td>
-												<td>
-													@if (ticket.TicketPriority.Name == nameof(BTTicketPriority.Low))
-													{
-														<span class="badge rounded-pill bg-success">@ticket.TicketPriority.Name </span>
-													}
-													else if (ticket.TicketPriority.Name == nameof(BTTicketPriority.High))
-													{
-														<span class="badge rounded-pill text-bg-warning">@ticket.TicketPriority.Name </span>
-													}
-													else if (ticket.TicketPriority.Name == nameof(BTTicketPriority.Urgent))
-													{
-														<span class="badge rounded-pill text-bg-danger">@ticket.TicketPriority.Name </span>
-													}
-													else
-													{
-														<span class="badge rounded-pill bg-primary">@ticket.TicketPriority.Name </span>
-													}
-												</td>
-												<td>@ticket.Created.ToString("MM/dd/yyyy")</td>
+												@* Table header *@
+												<th>Title</th>
+												<th>Developer</th>
+												<th>Status</th>
+												<th>Priority</th>
+												<th>Date</th>
 											</tr>
-										}
-									</tbody>
-								</table>
-							</div>
-						}
-					</div>
-					<div class="tab-pane fade" id="navs-top-archived" role="tabpanel">
-						@if (Model.Tickets.Where(t => t.Archived == true).Count() == 0)
-						{
-							<div class="d-flex align-items-center justify-content-center p-5">
-								<p>No Tickets Found</p>
-							</div>
-						}
-						else
-						{
-							<div class="table-responsive" style="overflow-y:auto;height:300px;">
-								<table class="table table-hover">
-									<thead class="">
-										<tr>
-											@* Table header *@
-											<th>Title</th>
-											<th>Developer</th>
-											<th>Status</th>
-											<th>Priority</th>
-											<th>Date</th>
-										</tr>
-									</thead>
-									<tbody>
-										@* Table body *@
-										@foreach (var ticket in Model.Tickets.Where(t => t.Archived == true).OrderByDescending(d => d.Created))
-										{
+										</thead>
+										<tbody>
+											@* Table body *@
+											@foreach (var ticket in Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Resolved) && t.Archived == false).OrderByDescending(d => d.Created))
+											{
+												<tr>
+													<td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id" class="btn btn-link"><strong>@ticket.Title</strong></a> </td>
+													<td>
+														@if (ticket.DeveloperUserId != null)
+														{
+															@ticket.DeveloperUser?.FullName
+														}
+														else
+														{
+															<span class="badge bg-warning text-dark">Unassigned</span>
+														}
+													</td>
+													<td>
+														@if (ticket.TicketStatus.Name == nameof(BTTicketStatus.New))
+														{
+															<span class="badge rounded-pill bg-primary">@ticket.TicketStatus.Name </span>
+														}
+														else
+														{
+															<span class="badge rounded-pill bg-dark">@ticket.TicketStatus.Name </span>
+														}
+													</td>
+													<td>
+														@if (ticket.TicketPriority.Name == nameof(BTTicketPriority.Low))
+														{
+															<span class="badge rounded-pill bg-success">@ticket.TicketPriority.Name </span>
+														}
+														else if (ticket.TicketPriority.Name == nameof(BTTicketPriority.High))
+														{
+															<span class="badge rounded-pill text-bg-warning">@ticket.TicketPriority.Name </span>
+														}
+														else if (ticket.TicketPriority.Name == nameof(BTTicketPriority.Urgent))
+														{
+															<span class="badge rounded-pill text-bg-danger">@ticket.TicketPriority.Name </span>
+														}
+														else
+														{
+															<span class="badge rounded-pill bg-primary">@ticket.TicketPriority.Name </span>
+														}
+													</td>
+													<td>@ticket.Created.ToString("MM/dd/yyyy")</td>
+												</tr>
+											}
+										</tbody>
+									</table>
+								</div>
+							}
+						</div>
+						<div class="tab-pane fade" id="navs-top-archived" role="tabpanel">
+							@if (Model.Tickets.Where(t => t.Archived == true).Count() == 0)
+							{
+								<div class="d-flex align-items-center justify-content-center p-5">
+									<p>No Tickets Found</p>
+								</div>
+							}
+							else
+							{
+								<div class="table-responsive" style="overflow-y:auto;height:300px;">
+									<table class="table table-hover">
+										<thead class="">
 											<tr>
-												<td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id" class="btn btn-link"><strong>@ticket.Title</strong></a> </td>
-												<td>
-													@if (ticket.DeveloperUserId != null)
-													{
-														@ticket.DeveloperUser?.FullName
-													}
-													else
-													{
-														<span class="badge bg-warning text-dark">Unassigned</span>
-													}
-												</td>
-												<td>
-													@if (ticket.TicketStatus.Name == nameof(BTTicketStatus.New))
-													{
-														<span class="badge rounded-pill bg-primary">@ticket.TicketStatus.Name </span>
-													}
-													else
-													{
-														<span class="badge rounded-pill bg-dark">@ticket.TicketStatus.Name </span>
-													}
-												</td>
-												<td>
-													@if (ticket.TicketPriority.Name == nameof(BTTicketPriority.Low))
-													{
-														<span class="badge rounded-pill bg-success">@ticket.TicketPriority.Name </span>
-													}
-													else if (ticket.TicketPriority.Name == nameof(BTTicketPriority.High))
-													{
-														<span class="badge rounded-pill text-bg-warning">@ticket.TicketPriority.Name </span>
-													}
-													else if (ticket.TicketPriority.Name == nameof(BTTicketPriority.Urgent))
-													{
-														<span class="badge rounded-pill text-bg-danger">@ticket.TicketPriority.Name </span>
-													}
-													else
-													{
-														<span class="badge rounded-pill bg-primary">@ticket.TicketPriority.Name </span>
-													}
-												</td>
-												<td>@ticket.Created.ToString("MM/dd/yyyy")</td>
+												@* Table header *@
+												<th>Title</th>
+												<th>Developer</th>
+												<th>Status</th>
+												<th>Priority</th>
+												<th>Date</th>
 											</tr>
-										}
-									</tbody>
-								</table>
-							</div>
-						}
+										</thead>
+										<tbody>
+											@* Table body *@
+											@foreach (var ticket in Model.Tickets.Where(t => t.Archived == true).OrderByDescending(d => d.Created))
+											{
+												<tr>
+													<td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id" class="btn btn-link"><strong>@ticket.Title</strong></a> </td>
+													<td>
+														@if (ticket.DeveloperUserId != null)
+														{
+															@ticket.DeveloperUser?.FullName
+														}
+														else
+														{
+															<span class="badge bg-warning text-dark">Unassigned</span>
+														}
+													</td>
+													<td>
+														@if (ticket.TicketStatus.Name == nameof(BTTicketStatus.New))
+														{
+															<span class="badge rounded-pill bg-primary">@ticket.TicketStatus.Name </span>
+														}
+														else
+														{
+															<span class="badge rounded-pill bg-dark">@ticket.TicketStatus.Name </span>
+														}
+													</td>
+													<td>
+														@if (ticket.TicketPriority.Name == nameof(BTTicketPriority.Low))
+														{
+															<span class="badge rounded-pill bg-success">@ticket.TicketPriority.Name </span>
+														}
+														else if (ticket.TicketPriority.Name == nameof(BTTicketPriority.High))
+														{
+															<span class="badge rounded-pill text-bg-warning">@ticket.TicketPriority.Name </span>
+														}
+														else if (ticket.TicketPriority.Name == nameof(BTTicketPriority.Urgent))
+														{
+															<span class="badge rounded-pill text-bg-danger">@ticket.TicketPriority.Name </span>
+														}
+														else
+														{
+															<span class="badge rounded-pill bg-primary">@ticket.TicketPriority.Name </span>
+														}
+													</td>
+													<td>@ticket.Created.ToString("MM/dd/yyyy")</td>
+												</tr>
+											}
+										</tbody>
+									</table>
+								</div>
+							}
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-3">
+			<div class="card-footer">
 				<a asp-controller="Tickets" asp-action="Create" class="btn btn-primary">New Ticket</a>
 			</div>
 		</div>
 	</div>
 	@* / Tickets *@
+</div>
+
+<div class="row row-cols-1">
+	<div class="col d-flex flex-row mb-6">
+		<div class="me-auto">
+			<a asp-controller="Projects" asp-action="AllProjects" class="btn btn-outline-primary">Back To Projects</a>
+		</div>
+	</div>
 </div>
 
 @section PageScripts {
