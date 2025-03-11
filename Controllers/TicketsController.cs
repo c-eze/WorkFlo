@@ -41,13 +41,32 @@ public class TicketsController : Controller
     _notificationService = notificationService;
   }
 
-  public async Task<IActionResult> MyTickets()
+  public async Task<IActionResult> MyTickets(int? page, string currentFilter, string searchString)
   {
+    if (searchString != null)
+    {
+      page = 1;
+    }
+    else
+    {
+      searchString = currentFilter;
+    }
+
+    ViewData["CurrentFilter"] = searchString;
+
     BTUser bTUser = await _userManager.GetUserAsync(User);
 
     List<Ticket> tickets = await _ticketService.GetTicketsByUserIdAsync(bTUser.Id, bTUser.CompanyId);
 
-    return View(tickets);
+    if (!String.IsNullOrEmpty(searchString))
+    {
+      tickets = tickets.FindAll(t => t.Title.ToLower().Contains(searchString) || t.Project.Name.ToLower().Contains(searchString));
+    }
+
+    var pageNumber = page ?? 1;
+    var pageSize = 10; // number of items per page
+
+    return View(tickets.Where(t => t.Archived == false).ToPagedList(pageNumber, pageSize));
   }
 
   public async Task<IActionResult> AllTickets(int? page, string currentFilter, string searchString)

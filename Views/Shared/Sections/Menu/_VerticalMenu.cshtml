@@ -85,7 +85,7 @@
 						</a>
 					</li>
 				}
-				@if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
+				@if (User.IsInRole(nameof(Roles.Admin)))
 				{
 					<li class='menu-item@(currentPage == "/Projects/UnassignedProjects" ? " active" : "")'>
 						<a asp-controller="Projects" asp-action="UnassignedProjects" class="menu-link">

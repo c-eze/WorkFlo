@@ -331,7 +331,7 @@
 							<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 							<input type="hidden" asp-for="@Model.Id" name="TicketId">
 							<div class="media-body ml-3">
-								@if (Model.Archived == false)
+								@if ((Model.DeveloperUserId == btUser.Id || Model.OwnerUserId == btUser.Id || projectManager?.Id == btUser.Id || User.IsInRole(nameof(Roles.Admin))) && Model.Archived == false)
 								{
 									<label class="form-label mb-3">
 										Description

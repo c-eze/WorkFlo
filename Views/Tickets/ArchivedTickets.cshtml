@@ -96,7 +96,7 @@
 					<div class="col mt-2">
 						<div class="d-flex align-items-center justify-content-between">
 							<p><strong>Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount entries</strong></p>
-							@Html.PagedListPager(Model, page => Url.Action("AllTickets", new { page = page, currentFilter = ViewData["CurrentFilter"] }),
+							@Html.PagedListPager(Model, page => Url.Action("ArchivedTickets", new { page = page, currentFilter = ViewData["CurrentFilter"] }),
 																new PagedListRenderOptions
 							{
 								LiElementClasses = new string[] { "page-item" },

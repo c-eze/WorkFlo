@@ -1,10 +1,112 @@
-@model IEnumerable<AspnetCoreMvcFull.Models.Ticket>
+@using AspnetCoreMvcFull.Models.Enums
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+
+@model IPagedList<AspnetCoreMvcFull.Models.Ticket>
 
 @{
-	ViewData["Title"] = "MyTickets";
+	ViewData["Title"] = "My Tickets";
 }
 
-<h1>My Tickets</h1>
+@* ************** Content ************** *@
+
+<h2>My Tickets</h2>
+
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb breadcrumb-style2">
+		<li class="breadcrumb-item">Tickets</li>
+		<li class="breadcrumb-item active" aria-current="page">My Tickets</li>
+	</ol>
+</nav>
+
+@if (User != null && (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager))))
+{
+	<p>
+		<a asp-action="Create" class="btn btn-primary">Create New Ticket</a>
+	</p>
+}
+
+<div class="row row-cols-1">
+	<div class="col mb-6">
+		<div class="card h-100">
+			<div class="card-body">
+				<h4>Tickets</h4>
+				<form asp-action="MyTickets" method="get">
+					<p>
+						<div class="input-group input-group-merge">
+							<span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+							<input type="text" class="form-control" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon-search31" />
+							<input type="submit" value="Search" class="btn btn-primary" />
+						</div>
+					</p>
+				</form>
+				<div class="table-responsive" style="overflow-y:auto;height:500px;">
+					<table class="table table-hover">
+						<thead class="">
+							<tr>
+								@* Table header *@
+								<th>Title</th>
+								<th>Developer</th>
+								<th>Project</th>
+								<th>Status</th>
+								<th>Priority</th>
+								<th>Date</th>
+							</tr>
+						</thead>
+						<tbody>
+							@* Table body *@
+							@foreach (Ticket ticket in Model.OrderByDescending(d => d.Created))
+							{
+								<tr>
+									<td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id"><strong>@ticket.Title</strong></a> </td>
+									<td>
+										@if (ticket.DeveloperUserId != null)
+										{
+											@ticket.DeveloperUser?.FullName
+										}
+										else
+										{
+											<span class="badge bg-warning text-dark">Unassigned</span>
+										}
+									</td>
+									<td>@ticket.Project.Name</td>
+									@if (ticket.TicketStatus.Name == "New")
+									{
+										<td><span class="badge bg-success rounded-pill">@ticket.TicketStatus.Name </span></td>
+									}
+									else
+									{
+										<td><span class="badge bg-secondary rounded-pill">@ticket.TicketStatus.Name </span></td>
+									}
+									<td><span class="badge bg-dark">@ticket.TicketPriority.Name </span></td>
+									<td><span style="font-size:small">@ticket.Created.ToString("MM/dd/yyyy")</span></td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+
+				<div class="row">
+					<div class="col mt-2">
+						<div class="d-flex align-items-center justify-content-between">
+							<p><strong>Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount entries</strong></p>
+							@Html.PagedListPager(Model, page => Url.Action("MyTickets", new { page = page, currentFilter = ViewData["CurrentFilter"] }),
+																new PagedListRenderOptions
+							{
+								LiElementClasses = new string[] { "page-item" },
+								PageClasses = new string[] { "page-link" },
+								UlElementClasses = new[] { "pagination pagination-sm" }
+							})
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+@* <h1>My Tickets</h1>
 
 <p>
 	<a asp-action="Create">Create New</a>
@@ -93,3 +195,4 @@
 		}
 	</tbody>
 </table>
+ *@

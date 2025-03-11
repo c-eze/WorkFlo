@@ -157,12 +157,13 @@
 						}
 					</div>
 				}
-				@if (User.IsInRole(nameof(Roles.Admin)) || (btUser.Id == projectManager.Id))
+				@if (User.IsInRole(nameof(Roles.Admin)) || (btUser.Id == projectManager?.Id))
 				{
 					<div>
 						<a class="btn btn-primary" asp-action="AssignMembers" asp-controller="Projects" asp-route-id="@Model.Id">Manage Team</a>
 					</div>
 				}
+
 			</div>
 		</div>
 	</div>
