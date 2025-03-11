@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList.Extensions;
+using System.Drawing.Printing;
 
 namespace AspnetCoreMvcFull.Controllers;
 
@@ -77,13 +78,32 @@ public class TicketsController : Controller
     return View(tickets.Where(t => t.Archived == false).ToPagedList(pageNumber, pageSize)); 
   }
 
-  public async Task<IActionResult> ArchivedTickets()
+  public async Task<IActionResult> ArchivedTickets(int? page, string currentFilter, string searchString)
   {
+    if (searchString != null)
+    {
+      page = 1;
+    }
+    else
+    {
+      searchString = currentFilter;
+    }
+
+    ViewData["CurrentFilter"] = searchString;
+
     int companyId = User.Identity.GetCompanyId().Value;
 
     List<Ticket> tickets = await _ticketService.GetArchivedTicketsAsync(companyId);
 
-    return View(tickets);
+    if (!String.IsNullOrEmpty(searchString))
+    {
+      tickets = tickets.FindAll(t => t.Title.ToLower().Contains(searchString) || t.Project.Name.ToLower().Contains(searchString));
+    }
+
+    var pageNumber = page ?? 1;
+    var pageSize = 10; // number of items per page
+
+    return View(tickets.ToPagedList(pageNumber, pageSize));
   }
 
   [Authorize(Roles = "Admin, ProjectManager")]

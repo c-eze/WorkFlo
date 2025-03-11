@@ -31,12 +31,16 @@
 	<div class="me-auto">
 		<a asp-controller="Projects" asp-action="Details" asp-route-id="@Model.Project.Id" class="btn btn-outline-primary">Back To Project</a>
 	</div>
-	<div>
-		<a asp-controller="Tickets" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary me-2">Edit</a>
-	</div>
-	<div>
-		<a asp-controller="Tickets" asp-action="Archive" asp-route-id="@Model.Id" class="btn btn-danger">Archive</a>
-	</div>
+
+	@if ((User.IsInRole(nameof(Roles.Admin)) || await ProjectService.IsAssignedProjectManagerAsync(btUser.Id, Model.ProjectId)) && Model.Archived == false)
+	{
+		<div>
+			<a asp-controller="Tickets" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary me-2">Edit</a>
+		</div>
+		<div>
+			<a asp-controller="Tickets" asp-action="Archive" asp-route-id="@Model.Id" class="btn btn-danger">Archive</a>
+		</div>
+	}
 </div>
 
 <div class="row row-cols-1 row-cols-md-2">
@@ -88,7 +92,7 @@
 								<span class="me-2">
 									<strong>Unassigned</strong>
 								</span>
-								@if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
+								@if ((User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager))) && Model.Archived == false)
 								{
 									<div><a asp-action="AssignPM" asp-controller="Projects" asp-route-projectId="@Model.ProjectId" class="btn btn-xs btn-info">Add PM</a></div>
 								}
@@ -124,7 +128,7 @@
 								<span class="me-2">
 									<strong>Unassigned</strong>
 								</span>
-								@if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
+								@if ((User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager))) && Model.Archived == false)
 								{
 									<div><a asp-action="AssignDeveloper" asp-controller="Tickets" asp-route-id="@Model.Id" class="btn btn-xs btn-info">Assign Developer</a></div>
 								}
@@ -251,7 +255,7 @@
 					<ul class="right_chat list-unstyled mb-0">
 						@*Loop to show comments made for the Ticket*@
 						@foreach (TicketComment comment in Model.Comments)
-						{							
+						{
 							<li class="online mb-4">
 								<div class="media">
 									<div class="d-flex">
@@ -263,8 +267,8 @@
 											else
 											{
 												@* @if (@comment.User is null) { continue; } *@
-												
-														<img class="rounded-circle" style="width:40px;height:40px;" src="https://api.dicebear.com/9.x/initials/svg?seed=@((await UserManager.FindByIdAsync(comment.UserId)).FullName)" alt="" />
+
+												<img class="rounded-circle" style="width:40px;height:40px;" src="https://api.dicebear.com/9.x/initials/svg?seed=@((await UserManager.FindByIdAsync(comment.UserId)).FullName)" alt="" />
 											}
 										</div>
 										<div class="media-body">
@@ -297,9 +301,8 @@
 							}
 						</div>
 						<div class="">
-							@if (Model.DeveloperUserId == btUser.Id || Model.OwnerUserId == btUser.Id || projectManager?.Id == btUser.Id || User.IsInRole(nameof(Roles.Admin)))
+							@if ((Model.DeveloperUserId == btUser.Id || Model.OwnerUserId == btUser.Id || projectManager?.Id == btUser.Id || User.IsInRole(nameof(Roles.Admin))) && Model.Archived == false)
 							{
-
 								<textarea asp-for="@(new TicketComment().Comment)" rows="4" cols="100" class="form-control mb-3" required placeholder="Add comment ..."></textarea>
 								<button class="btn btn-sm btn-primary">Submit</button>
 							}
@@ -328,14 +331,31 @@
 							<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 							<input type="hidden" asp-for="@Model.Id" name="TicketId">
 							<div class="media-body ml-3">
-								<label class="form-label mb-3">
-									Description
-									<input name="Description" type="text" class="form-control" />
-								</label><br />
-								<label class="btn btn-outline-primary btn-sm mb-3">
-									<input name="FormFile" type="file" class="form-control" />
-								</label>
-								<button type="submit" class="btn btn-outline-secondary btn-sm md-btn-flat">Submit</button>
+								@if (Model.Archived == false)
+								{
+									<label class="form-label mb-3">
+										Description
+										<input name="Description" type="text" class="form-control" />
+									</label>
+
+									<br />
+									<label class="btn btn-outline-primary btn-sm mb-3">
+										<input name="FormFile" type="file" class="form-control" />
+									</label>
+									<button type="submit" class="btn btn-outline-secondary btn-sm md-btn-flat">Submit</button>
+								}
+								else
+								{
+									<label class="form-label mb-3">
+										Description
+										<input name="Description" type="text" class="form-control" disabled/>
+									</label>
+
+									<br />
+									<label class="btn btn-outline-primary btn-sm mb-3">
+										<input name="FormFile" type="file" class="form-control" disabled/>
+									</label> 
+								}
 							</div>
 						</form>
 					</div>
