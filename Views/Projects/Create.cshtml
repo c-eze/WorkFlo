@@ -7,6 +7,7 @@
 }
 
 @* ************** Content ************** *@
+
 <div class="row">
 	<div class="col-xl">
 		<div class="card mb-6">
@@ -18,12 +19,12 @@
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 					<div class="mb-6">
 						<label asp-for="Project.Name" class="form-label"></label>
-						<input asp-for="Project.Name" class="form-control" placeholder="Project Management Tool" />
+						<input asp-for="Project.Name" class="form-control" placeholder="Name" />
 						<span asp-validation-for="Project.Name" class="text-danger"></span>
 					</div>
 					<div class="mb-6">
 						<label asp-for="Project.Description" class="form-label"></label>
-						<textarea asp-for="Project.Description" class="form-control" placeholder="Design and implement a project management tool that..."></textarea>
+						<textarea asp-for="Project.Description" class="form-control" placeholder="Description"></textarea>
 						<span asp-validation-for="Project.Description" class="text-danger"></span>
 					</div>
 					<div class="row">
@@ -42,13 +43,13 @@
 						<div class="col-md-6 mb-6">
 							<label class="form-label">Project Manager</label>
 							<select asp-for="PmId" class="form-select" asp-items="@Model.PMList">
-								<option>Select PM</option>
+								<option></option>
 							</select>
 						</div>
 						<div class="col-md-6 mb-6">
 							<label class="form-label">Priority</label>
 							<select asp-for="Project.ProjectPriorityId" class="form-select" asp-items="@Model.PriorityList">
-								<option>Choose Priority</option>
+								<option></option>
 							</select>
 						</div>
 					</div>
