@@ -188,11 +188,11 @@
 						@* Project Activity loop *@
 						@foreach (TicketHistory history in await HistoryService.GetProjectTicketsHistoriesAsync(Model.Id, btUser.CompanyId))
 						{
-							<div class="border-bottom pt-4" style="display:flex;">
-								<div style="margin-left: -10px; z-index: 1; margin-right:10px;"><i class='bx bx-radio-circle-marked'></i></div>
+							<div class="pt-4" style="display:flex;">
+								<div class="text-muted" style="margin-left: -10px; z-index: 1; margin-right:10px;"><i class='bx bx-radio-circle-marked'></i></div>
 								<div class="">
-									<h6>@history.Created.ToString("dd MMM yyyy")</h6>
-									<p>@history.Description</p>
+									<span class="date fw-bold">@history.Created.ToString("dd MMM yyyy")</span>
+									<h6>@history.Description</h6>
 									<span>By:<a href="" title="@history.User.FullName"> @history.User.FullName</a></span>
 									<div class=" mb-3">
 										<p>The ticket <b>@history.Property</b> was edited</p>

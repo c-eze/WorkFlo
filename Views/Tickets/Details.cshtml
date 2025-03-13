@@ -422,10 +422,10 @@
 						@*Loop to show the history entries for the Ticket*@
 						@foreach (TicketHistory history in Model.History.Reverse())
 						{
-							<div class="border-bottom pt-4" style="display:flex;">
-								<div style="margin-left: -10px; z-index: 1; margin-right:10px;"><i class='bx bx-radio-circle-marked'></i></div>
+							<div class="pt-4" style="display:flex;">
+								<div  class="text-muted" style="margin-left: -10px; z-index: 1; margin-right:10px;"><i class='bx bx-radio-circle-marked'></i></div>
 								<div>
-									<span class="date" style="font-weight:bold">@history.Created.ToString("dd MMM yyyy")</span>
+									<span class="date fw-bold">@history.Created.ToString("dd MMM yyyy")</span>
 									<h6>@history.Description</h6>
 									@if (@history.User != null)
 									{
