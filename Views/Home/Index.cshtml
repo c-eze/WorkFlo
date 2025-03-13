@@ -2,19 +2,116 @@
 	ViewData["Title"] = "Home";
 	Layout = "_BlankLayout";
 }
-<div class="container-fluid">
-	<div class="row row-cols-md-2">
-		<div class="col">
-			<div class="text-center">
-				<h1>Task management made easy</h1>
-				<p>The #1 solution for tracking your tickets and managing your projects</p>
-				<a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Try Workflo Now!</a>
-			</div>
+
+@section PageStyles {
+	<style>
+		.b-example-divider {
+			width: 100%;
+			height: 6rem;
+		}
+
+		.feature-icon {
+			width: 4rem;
+			height: 4rem;
+			border-radius: .75rem;
+		}
+	</style>
+}
+
+<nav class="navbar navbar-expand bg-primary-subtle" aria-label="Home navbar">
+	<div class="container">
+		<a class="navbar-brand text-primary" href="#">WorkFlo</a>
+		<button class="navbar-toggler me-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHome" aria-controls="navbarHome" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse justify-content-end" id="navbarHome">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link me-2" aria-current="page" asp-area="Identity" asp-page="/Account/Register">Register</a>
+				</li>
+				<li class="nav-item">
+					<a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Login</a>
+				</li>
+			</ul> 
 		</div>
-		<div class="col">
+	</div>
+</nav>
+
+<div class="container col-xl-10 col-xxl-8 px-4 py-5 mt-5 mb-8">
+	<div class="row align-items-center g-lg-5 py-5">
+		<div class="col-lg-7 text-center text-lg-start mb-5">
+			<h3>Welcome to <span class="text-primary">WorkFlo</span>!👋</h3>
+			<h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3">Task management made easy</h1>
+			<p class="col-lg-10 fs-4">The ultimate ticketing software used for organizing and tracking all  tasks or issues for your team on any project.</p>
+			<a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Try WorkFlo Now!</a>
+		</div>
+		<div class="col-md-10 mx-auto col-lg-5">
 			<div class="p-5">
-				<img class="" src="~/img/home image.jpeg" width="500" height="500" />
+				<img class="img-fluid" src="~/img/home image.png"  />
 			</div>
 		</div>
 	</div>
+</div>
+
+<div class="b-example-divider"></div>
+
+<div class="container-fluid px-4 py-5 mt-5" id="featured-3">
+	<div class="container py-5 ">
+		<h2 class="border-bottom">Features</h2>
+		<div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+			<div class="feature col mb-5">
+				<div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+					<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;"><path d="M20 5h-8.586L9.707 3.293A.997.997 0 0 0 9 3H4c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V7c0-1.103-.897-2-2-2zM4 19V7h16l.002 12H4z"></path></svg> 
+				</div>
+				<h3 class="text-body-emphasis">Projects</h3>
+				<p>See project overview at a glance as well as history tracking and ticket actions.</p> 
+			</div>
+			<div class="feature col mb-5">
+				<div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+					<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;"><path d="M11.707 2.293A.997.997 0 0 0 11 2H6a.997.997 0 0 0-.707.293l-3 3A.996.996 0 0 0 2 6v5c0 .266.105.52.293.707l10 10a.997.997 0 0 0 1.414 0l8-8a.999.999 0 0 0 0-1.414l-10-10zM13 19.586l-9-9V6.414L6.414 4h4.172l9 9L13 19.586z"></path><circle cx="8.353" cy="8.353" r="1.647"></circle></svg>
+				</div>
+				<h3 class="text-body-emphasis">Tickets</h3>
+				<p>Change ticket priority, status, and type. Leave comments and add attachments.</p> 
+			</div>
+			<div class="feature col mb-5">
+				<div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+					<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+						<path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
+					</svg>
+				</div>
+				<h3 class="text-body-emphasis">Members</h3>
+				<p>Assign members as assign project managers, developers, and submitters in your company.</p>
+			</div>
+		</div>
+		<div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+			<div class="feature col mb-5">
+				<div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+					<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;"><path d="M19 3H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h8a.996.996 0 0 0 .707-.293l7-7a.997.997 0 0 0 .196-.293c.014-.03.022-.061.033-.093a.991.991 0 0 0 .051-.259c.002-.021.013-.041.013-.062V5c0-1.103-.897-2-2-2zM5 5h14v7h-6a1 1 0 0 0-1 1v6H5V5zm9 12.586V14h3.586L14 17.586z"></path></svg>
+				</div>
+				<h3 class="text-body-emphasis">Notifications</h3>
+				<p>Receive timely updates to stay informed on latest project and ticket changes.</p> 
+			</div>
+			<div class="feature col mb-5">
+				<div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+					<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;"><path d="M20 4H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm0 2v.511l-8 6.223-8-6.222V6h16zM4 18V9.044l7.386 5.745a.994.994 0 0 0 1.228 0L20 9.044 20.002 18H4z"></path></svg>
+				</div>
+				<h3 class="text-body-emphasis">Invites</h3>
+				<p>Email invites to other users to become members on your project team in the company. </p> 
+			</div>
+			<div class="feature col mb-5">
+				<div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+					<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;"><path d="M12 2C9.243 2 7 4.243 7 7v3H6c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-8c0-1.103-.897-2-2-2h-1V7c0-2.757-2.243-5-5-5zm6 10 .002 8H6v-8h12zm-9-2V7c0-1.654 1.346-3 3-3s3 1.346 3 3v3H9z"></path></svg>
+				</div>
+				<h3 class="text-body-emphasis">Security</h3>
+				<p>All tickets under one company and managed by one admin through authorization.</p> 
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid bg-light">
+	<footer class="py-3 my-4">
+		<p class="text-center text-body-secondary">© 2024 WorkFlo. Designed by Chikere</p>
+	</footer>
 </div>
