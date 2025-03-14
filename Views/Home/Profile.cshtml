@@ -22,9 +22,10 @@
 </nav>
 
 @* Company Details *@
-<div class="row my-2">
+<div class="row my-5">
 	<div class="col">
 		<div class="card p-3">
+			<div class="card-body">
 			<div class="d-flex flex-wrap">
 				<img class="rounded" src="https://api.dicebear.com/9.x/initials/svg?seed=@Model.Company.Name" width="50" height="auto">
 				<div class="ms-2">
@@ -34,118 +35,123 @@
 			</div>
 		</div>
 	</div>
+	</div>
 </div>
 
 @* Members Area *@
 <div class="row my-2">
 	<div class="col">
-		<div class="card p-3">
-			<div class="mb-3">
-				<h5 class="flex-grow-1">Members</h5>
+		<div class="card">
+			<div class="card-header">
+				<h5>Members</h5>
+			</div>
+			<div class="card-body">
+				<div class="mb-3">
+					<h6 class="text-uppercase">Administrators</h6>
+					<div class="d-flex flex-wrap">
+						@{
+							List<BTUser> admininistrators = await RolesService.GetUsersInRoleAsync(nameof(Roles.Admin), Model.Company.Id);
+							foreach (BTUser admin in admininistrators)
+							{
+								<div class="d-flex flex-row align-items-center mb-3">
+									<div class="me-1">
+										@{
+											bool isImage = admin?.AvatarFileData != null;
+										}
+										<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64," + Convert.ToBase64String(admin.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+admin.FullName)' width='@(isImage ? "" : "50") height=' @(isImage ? "" : "auto") alt="" style="border-radius: 50%;" />
+									</div>
+									<div class="me-3">
+										<a asp-controller="Home" asp-action="MemberProfile" asp-route-userId="@admin.Id">
+											<div>@admin.FullName</div>
+										</a>
+										<div style="font-size:small;">Admin</div>
+									</div>
+								</div>
+							}
+						}
+					</div>
+				</div>
+				<div class="my-3">
+					<h6 class="text-uppercase">Project Managers</h6>
+					<div class="d-flex flex-wrap">
+						@{
+							List<BTUser> pms = await RolesService.GetUsersInRoleAsync(nameof(Roles.ProjectManager), Model.Company.Id);
+							foreach (BTUser pm in pms)
+							{
+								<div class="d-flex flex-row align-items-center mb-3">
+									<div class="me-1">
+										@{
+											bool isImage = pm?.AvatarFileData != null;
+										}
+										<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64,"+Convert.ToBase64String(pm.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+pm.FullName)' width='@(isImage ? "" : "50") height=' @(isImage ? "" : "auto") alt="" style="border-radius: 50%;" />
+									</div>
+									<div class="me-3">
+										<a asp-controller="Home" asp-action="MemberProfile" asp-route-userId="@pm.Id">
+											<div>@pm.FullName</div>
+										</a>
+										<div style="font-size:small;">Project Manager</div>
+									</div>
+								</div>
+							}
+						}
+					</div>
+				</div>
+				<div class="my-3">
+					<h6 class="text-uppercase">Developers</h6>
+					<div class="d-flex flex-wrap">
+						@{
+							List<BTUser> developers = await RolesService.GetUsersInRoleAsync(nameof(Roles.Developer), Model.Company.Id);
+							foreach (BTUser developer in developers)
+							{
+								<div class="d-flex flex-row align-items-center mb-3">
+									<div class="me-1">
+										@{
+											bool isImage = developer?.AvatarFileData != null;
+										}
+										<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64,"+Convert.ToBase64String(developer.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+developer.FullName)' width='@(isImage ? "" : "50") height=' @(isImage ? "" : "auto") alt="" style="border-radius: 50%;" />
+									</div>
+									<div class="me-3">
+										<a asp-controller="Home" asp-action="MemberProfile" asp-route-userId="@developer.Id">
+											<div>@developer.FullName</div>
+										</a>
+										<div style="font-size:small;">Developer</div>
+									</div>
+								</div>
+							}
+						}
+					</div>
+				</div>
+				<div class="my-3">
+					<h6 class="text-uppercase">Submitters</h6>
+					<div class="d-flex flex-wrap">
+						@{
+							List<BTUser> submitters = await RolesService.GetUsersInRoleAsync(nameof(Roles.Submitter), Model.Company.Id);
+							foreach (BTUser submitter in submitters)
+							{
+								<div class="d-flex flex-row align-items-center mb-3">
+									<div class="me-1">
+										@{
+											bool isImage = submitter?.AvatarFileData != null;
+										}
+										<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64,"+Convert.ToBase64String(submitter.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+submitter.FullName)' width='@(isImage ? "" : "50") height=' @(isImage ? "" : "auto") alt="" style="border-radius: 50%;" />
+									</div>
+									<div class="me-3">
+										<a asp-controller="Home" asp-action="MemberProfile" asp-route-userId="@submitter.Id">
+											<div>@submitter.FullName</div>
+										</a>
+										<div style="font-size:small;">Submitter</div>
+									</div>
+								</div>
+							}
+						}
+					</div>
+				</div>
+			</div>
+			<div class="card-footer">
 				@if (User.IsInRole(nameof(Roles.Admin)))
 				{
-					<a class="text-decoration-none" style="font-size: .875rem;font-weight: 500;" asp-controller="UserRoles" asp-action="ManageUserRoles"><i class='bx bxs-cog'></i><span class="text-uppercase"> Manage Roles</span></a>
+					<a class="btn btn-primary" style="font-size: .875rem;font-weight: 500;" asp-controller="UserRoles" asp-action="ManageUserRoles"><span class="text-uppercase"> Manage Roles</span></a>
 				}
-			</div>
-			<div class="my-2">
-				<h6 class="text-uppercase">Administrators</h6>
-				<div class="d-flex flex-wrap">
-					@{
-						List<BTUser> admininistrators = await RolesService.GetUsersInRoleAsync(nameof(Roles.Admin), Model.Company.Id);
-						foreach (BTUser admin in admininistrators)
-						{
-							<div class="d-flex flex-row align-items-center mb-3">
-								<div class="me-1">
-								@{
-										bool isImage = admin?.AvatarFileData != null;
-								}
-									<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64," + Convert.ToBase64String(admin.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+admin.FullName)' width='@(isImage ? "" : "50") height=' @(isImage ? "" : "auto") alt="" style="border-radius: 50%;" />  
-								</div>
-								<div class="me-3">
-									<a asp-controller="Home" asp-action="MemberProfile" asp-route-userId="@admin.Id">
-										<div>@admin.FullName</div>
-									</a>
-									<div style="font-size:small;">Admin</div>
-								</div>
-							</div>
-						}
-					}
-				</div>
-			</div>
-			<div class="my-2">
-				<h6 class="text-uppercase">Project Managers</h6>
-				<div class="d-flex flex-wrap">
-					@{
-						List<BTUser> pms = await RolesService.GetUsersInRoleAsync(nameof(Roles.ProjectManager), Model.Company.Id);
-						foreach (BTUser pm in pms)
-						{
-							<div class="d-flex flex-row align-items-center mb-3">
-								<div class="me-1">
-									@{
-										bool isImage = pm?.AvatarFileData != null;
-									}
-									<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64,"+Convert.ToBase64String(pm.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+pm.FullName)' width='@(isImage ? "" : "50") height=' @(isImage ? "" : "auto") alt="" style="border-radius: 50%;" /> 
-								</div>
-								<div class="me-3">
-									<a asp-controller="Home" asp-action="MemberProfile" asp-route-userId="@pm.Id">
-										<div>@pm.FullName</div>
-									</a>
-									<div style="font-size:small;">Project Manager</div>
-								</div>
-							</div>
-						}
-					}
-				</div>
-			</div>
-			<div class="my-2">
-				<h6 class="text-uppercase">Developers</h6>
-				<div class="d-flex flex-wrap">
-					@{
-						List<BTUser> developers = await RolesService.GetUsersInRoleAsync(nameof(Roles.Developer), Model.Company.Id);
-						foreach (BTUser developer in developers)
-						{
-							<div class="d-flex flex-row align-items-center mb-3">
-								<div class="me-1">
-									@{
-										bool isImage = developer?.AvatarFileData != null;
-									}
-									<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64,"+Convert.ToBase64String(developer.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+developer.FullName)' width='@(isImage ? "" : "50") height=' @(isImage ? "" : "auto") alt="" style="border-radius: 50%;" /> 
-								</div>
-								<div class="me-3">
-									<a asp-controller="Home" asp-action="MemberProfile" asp-route-userId="@developer.Id">
-										<div>@developer.FullName</div>
-									</a>
-									<div style="font-size:small;">Developer</div>
-								</div>
-							</div>
-						}
-					}
-				</div>
-			</div>
-			<div class="my-2">
-				<h6 class="text-uppercase">Submitters</h6>
-				<div class="d-flex flex-wrap">
-					@{
-						List<BTUser> submitters = await RolesService.GetUsersInRoleAsync(nameof(Roles.Submitter), Model.Company.Id);
-						foreach (BTUser submitter in submitters)
-						{
-							<div class="d-flex flex-row align-items-center mb-3">
-								<div class="me-1">
-									@{
-										bool isImage = submitter?.AvatarFileData != null;
-									}
-									<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64,"+Convert.ToBase64String(submitter.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+submitter.FullName)' width='@(isImage ? "" : "50") height=' @(isImage ? "" : "auto") alt="" style="border-radius: 50%;" />  
-								</div>
-								<div class="me-3">
-									<a asp-controller="Home" asp-action="MemberProfile" asp-route-userId="@submitter.Id">
-										<div>@submitter.FullName</div>
-									</a>
-									<div style="font-size:small;">Submitter</div>
-								</div>
-							</div>
-						}
-					}
-				</div>
 			</div>
 		</div>
 	</div>
