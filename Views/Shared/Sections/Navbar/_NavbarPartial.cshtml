@@ -48,7 +48,9 @@
 	<ul class="navbar-nav flex-row align-items-center ms-auto">
 		<!-- Place this tag where you want the button to render. -->
 		<li class="nav-item lh-1 me-4">
-			<a asp-controller="Notifications" asp-action="Inbox" class="text-black"><i class='menu-icon tf-icons bx bx-bell bx-lg'></i></a>
+			<a asp-controller="Notifications" asp-action="Inbox" class="text-black">
+				<i class='menu-icon tf-icons bx bx-bell bx-lg'></i>
+			</a>
 		</li>
 
 		<!-- User -->
@@ -56,7 +58,7 @@
 			<a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
 				<div class="avatar avatar-online">
 					@* <img src="~/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle"> *@
-					<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64," + Convert.ToBase64String(btUser.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+btUser.FullName)' width='@(isImage ? "" : "50") height=' @(isImage ? "" : "auto") alt="" style="border-radius: 50%;" />
+					<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64," + Convert.ToBase64String(btUser.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+btUser.FullName)' width='@(isImage ? "" : "50")' height='@(isImage ? "" : "auto")' alt="" style="border-radius: 50%;" />
 				</div>
 			</a>
 			<ul class="dropdown-menu dropdown-menu-end">
@@ -65,7 +67,7 @@
 						<div class="d-flex">
 							<div class="flex-shrink-0 me-3">
 								<div class="avatar avatar-online">
-									<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64," + Convert.ToBase64String(btUser.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+btUser.FullName)' width='@(isImage ? "" : "50") height=' @(isImage ? "" : "auto") alt="" style="border-radius: 50%;" />
+									<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64," + Convert.ToBase64String(btUser.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+btUser.FullName)' width='@(isImage ? "" : "50")' height='@(isImage ? "" : "auto")' alt="" style="border-radius: 50%;" />
 								</div>
 							</div>
 							<div class="flex-grow-1">

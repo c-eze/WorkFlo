@@ -15,142 +15,143 @@
 <div class="row my-2">
 	<div class="col">
 		<div class="card p-3">
-			<ul class="nav nav-tabs" role="tablist">
-				<li class="nav-item" role="presentation">
-					<button class="nav-link active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="true">Pending Invites</button>
-				</li>
-				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="accepted-tab" data-bs-toggle="tab" data-bs-target="#accepted" type="button" role="tab" aria-controls="accepted" aria-selected="false">Accepted Invites</button>
-				</li>
-				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="expired-tab" data-bs-toggle="tab" data-bs-target="#expired" type="button" role="tab" aria-controls="expired" aria-selected="false">Canceled & Expired Invites</button>
-				</li>
-			</ul>
-			@* Pending Invites *@
-			<div class="tab-content">
-				<div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>
-									Invitee
-								</th>
-								<th>
-									@Html.DisplayNameFor(model => model.Project)
-								</th>
-								<th>
-									Sent
-								</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody> 
-							@foreach (var item in Model.Where(i => i.JoinDate is null && i.Archived == false && (DateTime.Now - i.InviteDate.DateTime).TotalDays <= 7))
-							{
+			<div class="card-body">
+				<ul class="nav nav-tabs" role="tablist">
+					<li class="nav-item" role="presentation">
+						<button class="nav-link active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="true">Pending Invites</button>
+					</li>
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" id="accepted-tab" data-bs-toggle="tab" data-bs-target="#accepted" type="button" role="tab" aria-controls="accepted" aria-selected="false">Accepted Invites</button>
+					</li>
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" id="expired-tab" data-bs-toggle="tab" data-bs-target="#expired" type="button" role="tab" aria-controls="expired" aria-selected="false">Canceled & Expired Invites</button>
+					</li>
+				</ul>
+				@* Pending Invites *@
+				<div class="tab-content">
+					<div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+						<table class="table">
+							<thead>
 								<tr>
-									<td>
-										<div>@Html.DisplayFor(modelItem => item.InviteeFirstName) @Html.DisplayFor(modelItem => item.InviteeLastName)</div>
-										<div>@Html.DisplayFor(modelItem => item.InviteeEmail)</div>
-									</td>
-									<td>
-										@Html.DisplayFor(modelItem => item.Project.Name)
-									</td>
-									<td>
-										@Html.DisplayFor(modelItem => item.InviteDate.DateTime)
-									</td>
-									<td>
-										<a asp-action="Resend" asp-route-id="@item.Id">Resend</a> |
-										<a asp-action="Archive" asp-route-id="@item.Id">Cancel</a>
-									</td>
+									<th>
+										Invitee
+									</th>
+									<th>
+										@Html.DisplayNameFor(model => model.Project)
+									</th>
+									<th>
+										Sent
+									</th>
+									<th></th>
 								</tr>
-							}
-						</tbody>
-					</table>
-				</div>
-				@* Accepted Invites *@
-				<div class="tab-pane fade" id="accepted" role="tabpanel" aria-labelledby="accepted-tab">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>
-									Invitee
-								</th>
-								<th>
-									@Html.DisplayNameFor(model => model.Project)
-								</th>
-								<th>
-									Sent
-								</th>
-								<th>
-									Joined
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach (var item in Model.Where(i => i.JoinDate is not null))
-							{
+							</thead>
+							<tbody>
+								@foreach (var item in Model.Where(i => i.JoinDate is null && i.Archived == false && (DateTime.Now - i.InviteDate.DateTime).TotalDays <= 7))
+								{
+									<tr>
+										<td>
+											<div>@Html.DisplayFor(modelItem => item.InviteeFirstName) @Html.DisplayFor(modelItem => item.InviteeLastName)</div>
+											<div>@Html.DisplayFor(modelItem => item.InviteeEmail)</div>
+										</td>
+										<td>
+											@Html.DisplayFor(modelItem => item.Project.Name)
+										</td>
+										<td>
+											@Html.DisplayFor(modelItem => item.InviteDate.DateTime)
+										</td>
+										<td>
+											<a asp-action="Resend" asp-route-id="@item.Id">Resend</a> |
+											<a asp-action="Archive" asp-route-id="@item.Id">Cancel</a>
+										</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+					@* Accepted Invites *@
+					<div class="tab-pane fade" id="accepted" role="tabpanel" aria-labelledby="accepted-tab">
+						<table class="table">
+							<thead>
 								<tr>
-									<td>
-										<div>@Html.DisplayFor(modelItem => item.InviteeFirstName) @Html.DisplayFor(modelItem => item.InviteeLastName)</div>
-										<div>@Html.DisplayFor(modelItem => item.InviteeEmail)</div>
-									</td>
-									<td>
-										@Html.DisplayFor(modelItem => item.Project.Name)
-									</td>
-									<td>
-										@item.InviteDate.DateTime.ToString("MM/dd/yyyy")
-										@* @Html.DisplayFor(modelItem => item.InviteDate.DateTime) *@
-									</td>
-									<td>
-										@item.JoinDate.Value.ToString("MM/dd/yyyy")
-										@* @Html.DisplayFor(modelItem => item.JoinDate) *@
-									</td>
+									<th>
+										Invitee
+									</th>
+									<th>
+										@Html.DisplayNameFor(model => model.Project)
+									</th>
+									<th>
+										Sent
+									</th>
+									<th>
+										Joined
+									</th>
 								</tr>
-							}
-						</tbody>
-					</table>
-				</div>
-				@* Canceled & Expired Invites *@
-				<div class="tab-pane fade" id="expired" role="tabpanel" aria-labelledby="expired-tab">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>
-									Invitee
-								</th>
-								<th>
-									@Html.DisplayNameFor(model => model.Project)
-								</th>
-								<th>
-									Sent
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach (var item in Model.Where(i => i.Archived == true || ((DateTime.Now - i.InviteDate.DateTime).TotalDays >= 7) && i.JoinDate is null))
-							{
+							</thead>
+							<tbody>
+								@foreach (var item in Model.Where(i => i.JoinDate is not null))
+								{
+									<tr>
+										<td>
+											<div>@Html.DisplayFor(modelItem => item.InviteeFirstName) @Html.DisplayFor(modelItem => item.InviteeLastName)</div>
+											<div>@Html.DisplayFor(modelItem => item.InviteeEmail)</div>
+										</td>
+										<td>
+											@Html.DisplayFor(modelItem => item.Project.Name)
+										</td>
+										<td>
+											@item.InviteDate.DateTime.ToString("MM/dd/yyyy")
+											@* @Html.DisplayFor(modelItem => item.InviteDate.DateTime) *@
+										</td>
+										<td>
+											@item.JoinDate.Value.ToString("MM/dd/yyyy")
+											@* @Html.DisplayFor(modelItem => item.JoinDate) *@
+										</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+					@* Canceled & Expired Invites *@
+					<div class="tab-pane fade" id="expired" role="tabpanel" aria-labelledby="expired-tab">
+						<table class="table">
+							<thead>
 								<tr>
-									<td>
-										<div>@Html.DisplayFor(modelItem => item.InviteeFirstName) @Html.DisplayFor(modelItem => item.InviteeLastName)</div>
-										<div>@Html.DisplayFor(modelItem => item.InviteeEmail)</div>
-									</td>
-									<td>
-										@Html.DisplayFor(modelItem => item.Project.Name)
-									</td>
-									<td>
-										@item.InviteDate.DateTime.ToString("MM/dd/yyyy")
-										@* @Html.DisplayFor(modelItem => item.InviteDate.DateTime) *@
-									</td>
+									<th>
+										Invitee
+									</th>
+									<th>
+										@Html.DisplayNameFor(model => model.Project)
+									</th>
+									<th>
+										Sent
+									</th>
 								</tr>
-							}
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								@foreach (var item in Model.Where(i => i.Archived == true || ((DateTime.Now - i.InviteDate.DateTime).TotalDays >= 7) && i.JoinDate is null))
+								{
+									<tr>
+										<td>
+											<div>@Html.DisplayFor(modelItem => item.InviteeFirstName) @Html.DisplayFor(modelItem => item.InviteeLastName)</div>
+											<div>@Html.DisplayFor(modelItem => item.InviteeEmail)</div>
+										</td>
+										<td>
+											@Html.DisplayFor(modelItem => item.Project.Name)
+										</td>
+										<td>
+											@item.InviteDate.DateTime.ToString("MM/dd/yyyy")
+											@* @Html.DisplayFor(modelItem => item.InviteDate.DateTime) *@
+										</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
 				</div>
+				<a asp-controller="Invites" asp-action="Create" class="btn btn-primary" style="font-size: .875rem;font-weight: 500;">
+					<span>Invite New User</span>
+				</a>
 			</div>
-			<a asp-controller="Invites" asp-action="Create" class="text-uppercase text-decoration-none" style="font-size: .875rem;font-weight: 500;">
-				<i class='bx bxs-plus-circle'></i>
-				<span> Invite New User</span>
-			</a>
 		</div>
 	</div>
 </div>
