@@ -87,7 +87,7 @@
 								}
 								else
 								{
-									@if ((User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager))) && Model.Archived == false)
+									@if ((User.IsInRole(nameof(Roles.Admin)) || (btUser.Id == projectManager?.Id)) && Model.Archived == false)
 									{
 										<div class="me-2"><a asp-action="AssignPM" asp-controller="Projects" asp-route-projectId="@Model.ProjectId" class="btn btn-xs btn-info">Add PM</a></div>
 									}
@@ -125,7 +125,7 @@
 								}
 								else
 								{
-									@if ((User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager))) && Model.Archived == false)
+									@if ((User.IsInRole(nameof(Roles.Admin)) || (btUser.Id == projectManager?.Id)) && Model.Archived == false)
 									{
 										<div class="me-2"><a asp-action="AssignDeveloper" asp-controller="Tickets" asp-route-id="@Model.Id" class="btn btn-xs btn-info">Assign Developer</a></div>
 									}

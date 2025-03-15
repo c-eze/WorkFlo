@@ -6,7 +6,7 @@ using Npgsql;
 using static System.Collections.Specialized.BitVector32;
 using System.Reflection.Metadata;
 using AspnetCoreMvcFull.Services.Interfaces;
-using AspnetCoreMvcFull.Services;
+using AspnetCoreMvcFull.Services;  
 
 namespace AspnetCoreMvcFull.Data;
 
@@ -73,6 +73,7 @@ public static class DataUtility
     await SeedDefaultProjectPriorityAsync(dbContextSvc);
     await SeedDefautProjectsAsync(dbContextSvc);
     await SeedDefautTicketsAsync(dbContextSvc);
+    await SeedDefaultProjectMembersAsync(dbContextSvc);
   }
 
 
@@ -215,6 +216,34 @@ public static class DataUtility
       Console.WriteLine(ex.Message);
       Console.WriteLine("***********************************");
       throw;
+    }
+  }
+
+  public static async Task SeedDefaultProjectMembersAsync(ApplicationDbContext context)
+  {
+    //Get project Ids
+    int portfolioId = context.Projects.FirstOrDefault(p => p.Name == "Build a Personal Porfolio Website").Id;
+    int blogId = context.Projects.FirstOrDefault(p => p.Name == "Build a Supplemental Blog Web Application").Id;
+    int bugtrackerId = context.Projects.FirstOrDefault(p => p.Name == "Build an Issue Tracking Web Application").Id;
+    int movieId = context.Projects.FirstOrDefault(p => p.Name == "Build a Movie Information Web Application").Id;
+
+    //Get user Ids
+    BTUser pm1 = await context.Users.FirstOrDefaultAsync(u => u.UserName == "ProjectManager1@bugtracker.com");
+
+    Project bugTracker = await context.Projects
+      .Include(p => p.Members)
+      .FirstOrDefaultAsync(p => p.Id == bugtrackerId);
+
+    if(!bugTracker.Members.Any(m => m.Id == pm1.Id)) {
+      try
+      {
+        bugTracker.Members.Add(pm1);
+        await context.SaveChangesAsync();
+      }
+      catch (Exception)
+      {
+        throw;
+      }
     }
   }
 
