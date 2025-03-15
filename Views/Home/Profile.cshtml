@@ -59,7 +59,7 @@
 										@{
 											bool isImage = admin?.AvatarFileData != null;
 										}
-										<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64," + Convert.ToBase64String(admin.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+admin.FullName)' width='@(isImage ? "" : "50") height=' @(isImage ? "" : "auto") alt="" style="border-radius: 50%;" />
+										<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64," + Convert.ToBase64String(admin.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+admin.FullName)' width="40" height="40" alt="" style="border-radius: 50%;" />
 									</div>
 									<div class="me-3">
 										<a asp-controller="Home" asp-action="MemberProfile" asp-route-userId="@admin.Id">
@@ -84,7 +84,7 @@
 										@{
 											bool isImage = pm?.AvatarFileData != null;
 										}
-										<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64,"+Convert.ToBase64String(pm.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+pm.FullName)' width='@(isImage ? "" : "50") height=' @(isImage ? "" : "auto") alt="" style="border-radius: 50%;" />
+										<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64,"+Convert.ToBase64String(pm.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+pm.FullName)' width="40" height="40" alt="" style="border-radius: 50%;" />
 									</div>
 									<div class="me-3">
 										<a asp-controller="Home" asp-action="MemberProfile" asp-route-userId="@pm.Id">
@@ -109,7 +109,7 @@
 										@{
 											bool isImage = developer?.AvatarFileData != null;
 										}
-										<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64,"+Convert.ToBase64String(developer.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+developer.FullName)' width='@(isImage ? "" : "50") height=' @(isImage ? "" : "auto") alt="" style="border-radius: 50%;" />
+										<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64,"+Convert.ToBase64String(developer.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+developer.FullName)' width="40" height="40" alt="" style="border-radius: 50%;" />
 									</div>
 									<div class="me-3">
 										<a asp-controller="Home" asp-action="MemberProfile" asp-route-userId="@developer.Id">
@@ -134,7 +134,7 @@
 										@{
 											bool isImage = submitter?.AvatarFileData != null;
 										}
-										<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64,"+Convert.ToBase64String(submitter.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+submitter.FullName)' width='@(isImage ? "" : "50") height=' @(isImage ? "" : "auto") alt="" style="border-radius: 50%;" />
+										<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64,"+Convert.ToBase64String(submitter.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+submitter.FullName)' width="40" height="40" alt="" style="border-radius: 50%;" />
 									</div>
 									<div class="me-3">
 										<a asp-controller="Home" asp-action="MemberProfile" asp-route-userId="@submitter.Id">

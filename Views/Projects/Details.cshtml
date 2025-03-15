@@ -68,11 +68,11 @@
 						<div class="me-2">
 							@if (projectManager.AvatarFileData != null)
 							{
-								<img class="rounded-circle" src="data:image/*;base64,@(Convert.ToBase64String(projectManager.AvatarFileData))" alt="" />
+								<img class="rounded-circle" style="width:40px;height:40px;" src="data:image/*;base64,@(Convert.ToBase64String(projectManager.AvatarFileData))" alt="" />
 							}
 							else
 							{
-								<img class="rounded-circle" style="width:60px;height:60px;" src="https://api.dicebear.com/9.x/initials/svg?seed=@projectManager.FullName" width="50" height="auto">
+								<img class="rounded-circle" style="width:40px;height:40px;" src="https://api.dicebear.com/9.x/initials/svg?seed=@projectManager.FullName">
 							}
 						</div>
 						<div>
@@ -83,7 +83,7 @@
 					else
 					{
 						<div class="me-2">
-							<img class="rounded-circle" style="width:60px;height:60px;" src="/img/defaultUserImage.png" alt="" />
+							<img class="rounded-circle" style="width:40px;height:40px;" src="/img/defaultUserImage.png" alt="" />
 						</div>
 						<div class="wid-u-info">
 							<h5 class="text-muted mb-0">Not Assigned</h5>
@@ -146,13 +146,13 @@
 						{
 							<div class="d-flex align-content-center me-3 mb-3">
 								<div class="me-3">
-									@if (projectManager.AvatarFileData != null)
+									@if (member.AvatarFileData != null)
 									{
-										<img class="rounded-circle" src="data:image/*;base64,@(Convert.ToBase64String(projectManager.AvatarFileData))" alt="" />
+										<img class="rounded-circle" style="width:40px;height:40px;" src="data:image/*;base64,@(Convert.ToBase64String(member.AvatarFileData))" alt="" />
 									}
 									else
 									{
-										<img class="rounded-circle" style="width:60px;height:60px;" src="https://api.dicebear.com/9.x/initials/svg?seed=@member.FullName" width="50" height="auto">
+										<img class="rounded-circle" style="width:40px;height:40px;" src="https://api.dicebear.com/9.x/initials/svg?seed=@member.FullName">
 									}
 								</div>
 								<div>
