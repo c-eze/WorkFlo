@@ -19,7 +19,7 @@ var configuration = builder.Configuration;
 services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(DataUtility.GetConnectionString(configuration),
     o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
-services.AddDatabaseDeveloperPageExceptionFilter(); 
+services.AddDatabaseDeveloperPageExceptionFilter();
 
 //builder.Services.AddDefaultIdentity<BTUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
 services.AddIdentity<BTUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)

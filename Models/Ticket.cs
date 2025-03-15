@@ -9,7 +9,7 @@ namespace AspnetCoreMvcFull.Models
     public int Id { get; set; }
 
     [Required]
-    [StringLength(50)]
+    [StringLength(100)]
     [DisplayName("Title")]
     public string Title { get; set; }
 

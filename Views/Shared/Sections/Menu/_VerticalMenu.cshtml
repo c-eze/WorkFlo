@@ -145,7 +145,7 @@
 		</li>
 
 		<!-- Dashboards -->
-		<li class='menu-item@(currentPage.EndsWith("/") || currentPage.StartsWith("/Dashboards/") ? " active open" : "")'>
+		@* <li class='menu-item@(currentPage.EndsWith("/") || currentPage.StartsWith("/Dashboards/") ? " active open" : "")'>
 			<a href="javascript:void(0);" class="menu-link menu-toggle">
 				<i class="menu-icon tf-icons bx bx-home-smile"></i>
 				<div class="text-truncate" data-i18n="Dashboards">Dashboards</div>
@@ -158,10 +158,10 @@
 					</a>
 				</li>
 			</ul>
-		</li>
+		</li> *@
 
 		<!-- Layouts -->
-		<li class='menu-item@(currentPage.StartsWith("/LayoutExamples") ? " active open" : "")'>
+		@* <li class='menu-item@(currentPage.StartsWith("/LayoutExamples") ? " active open" : "")'>
 			<a href="javascript:void(0);" class="menu-link menu-toggle">
 				<i class="menu-icon tf-icons bx bx-layout"></i>
 				<div>Layouts</div>
@@ -195,14 +195,14 @@
 					</a>
 				</li>
 			</ul>
-		</li>
+		</li> *@
 
 		<!-- Apps & Pages -->
-		<li class="menu-header small text-uppercase">
+		@* <li class="menu-header small text-uppercase">
 			<span class="menu-header-text">Apps &amp; Pages</span>
-		</li>
+		</li> *@
 		<!-- Pages -->
-		<li class='menu-item@(currentPage.StartsWith("/Pages/Account") ? " active open" : "")'>
+		@* <li class='menu-item@(currentPage.StartsWith("/Pages/Account") ? " active open" : "")'>
 			<a href="javascript:void(0);" class="menu-link menu-toggle">
 				<i class="menu-icon tf-icons bx bx-dock-top"></i>
 				<div>Account Settings</div>
@@ -265,18 +265,18 @@
 					</a>
 				</li>
 			</ul>
-		</li>
+		</li> *@
 		<!-- Components -->
-		<li class="menu-header small text-uppercase"><span class="menu-header-text">Components</span></li>
+		@* <li class="menu-header small text-uppercase"><span class="menu-header-text">Components</span></li> *@
 		<!-- Cards -->
-		<li class='menu-item@(currentPage == "/Cards/Basic" ? " active" : "")'>
+		@* <li class='menu-item@(currentPage == "/Cards/Basic" ? " active" : "")'>
 			<a asp-controller="Cards" asp-action="Basic" class="menu-link">
 				<i class="menu-icon tf-icons bx bx-collection"></i>
 				<div class="text-truncate" data-i18n="Cards">Cards</div>
 			</a>
-		</li>
+		</li> *@
 		<!-- User interface -->
-		<li class='menu-item@(currentPage.StartsWith("/Ui") ? " active open" : "")'>
+		@* <li class='menu-item@(currentPage.StartsWith("/Ui") ? " active open" : "")'>
 			<a href="javascript:void(0)" class="menu-link menu-toggle">
 				<i class="menu-icon tf-icons bx bx-box"></i>
 				<div>User interface</div>
@@ -378,10 +378,10 @@
 					</a>
 				</li>
 			</ul>
-		</li>
+		</li> *@
 
 		<!-- Extended components -->
-		<li class='menu-item@(currentPage.StartsWith("/ExtendedUi") ? " active open" : "")'>
+		@* <li class='menu-item@(currentPage.StartsWith("/ExtendedUi") ? " active open" : "")'>
 			<a href="javascript:void(0)" class="menu-link menu-toggle">
 				<i class="menu-icon tf-icons bx bx-copy"></i>
 				<div>Extended UI</div>
@@ -398,20 +398,20 @@
 					</a>
 				</li>
 			</ul>
-		</li>
+		</li> *@
 
 		<!-- Icons -->
-		<li class='menu-item@(currentPage == "/Icons/Boxicons" ? " active" : "")'>
+		@* <li class='menu-item@(currentPage == "/Icons/Boxicons" ? " active" : "")'>
 			<a asp-controller="Icons" asp-action="Boxicons" class="menu-link">
 				<i class="menu-icon tf-icons bx bx-crown"></i>
 				<div>Boxicons</div>
 			</a>
-		</li>
+		</li> *@
 
 		<!-- Forms & Tables -->
-		<li class="menu-header small text-uppercase"><span class="menu-header-text">Forms &amp; Tables</span></li>
+		@* <li class="menu-header small text-uppercase"><span class="menu-header-text">Forms &amp; Tables</span></li> *@
 		<!-- Forms -->
-		<li class='menu-item@(currentPage.StartsWith("/Forms") ? " active open" : "")'>
+		@* <li class='menu-item@(currentPage.StartsWith("/Forms") ? " active open" : "")'>
 			<a href="javascript:void(0);" class="menu-link menu-toggle">
 				<i class="menu-icon tf-icons bx bx-detail"></i>
 				<div>Form Elements</div>
@@ -446,17 +446,17 @@
 					</a>
 				</li>
 			</ul>
-		</li>
+		</li> *@
 
 		<!-- Tables -->
-		<li class='menu-item@(currentPage == "/Tables/Basic" ? " active" : "")'>
+		@* <li class='menu-item@(currentPage == "/Tables/Basic" ? " active" : "")'>
 			<a asp-controller="Tables" asp-action="Basic" class="menu-link">
 				<i class="menu-icon tf-icons bx bx-table"></i>
 				<div>Tables</div>
 			</a>
-		</li>
+		</li> *@
 		<!-- Misc -->
-		<li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
+		@* <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
 		<li class="menu-item">
 			<a href='@TempData.Peek("support")' target="_blank" class="menu-link">
 				<i class="menu-icon tf-icons bx bx-support"></i>
@@ -468,7 +468,7 @@
 				<i class="menu-icon tf-icons bx bx-file"></i>
 				<div>Documentation</div>
 			</a>
-		</li>
+		</li> *@
 	</ul>
 
 </aside>
