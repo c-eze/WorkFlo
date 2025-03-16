@@ -39,8 +39,8 @@ namespace AspnetCoreMvcFull.Services.Interfaces
       try
       {
         using var smtp = new SmtpClient();
-        smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-        smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
+        smtp.Connect(_mailSettings.MailHost, _mailSettings.MailPort, SecureSocketOptions.StartTls);
+        smtp.Authenticate(_mailSettings.Mail, _mailSettings.MailPassword);
 
         await smtp.SendAsync(email);
 
