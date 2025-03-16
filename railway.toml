@@ -1,0 +1,8 @@
+[build]
+builder = "dockerfile"
+dockerfilePath = "./Workflo/Dockerfile"
+
+[deploy]
+startCommand = "./Workflo"
+restartPolicyType = "always"
+healthcheckPath = "/health"
