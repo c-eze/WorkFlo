@@ -38,7 +38,7 @@
 				<i class='menu-icon tf-icons bx bx-buildings'></i>
 				<div>Company</div>
 			</a>
-			<ul class="menu-sub"> 
+			<ul class="menu-sub">
 				<li class='menu-item@(currentPage == "/Home/Profile" ? " active" : "")'>
 					<a asp-controller="Home" asp-action="Profile" class="menu-link">
 						<div>Profile</div>
@@ -120,14 +120,11 @@
 						<div>All Tickets</div>
 					</a>
 				</li>
-				@if (!User.IsInRole(nameof(Roles.Admin)))
-				{
-					<li class='menu-item@(currentPage == "/Tickets/MyTickets" ? " active" : "")'>
-						<a asp-controller="Tickets" asp-action="MyTickets" class="menu-link">
-							<div>My Tickets</div>
-						</a>
-					</li>
-				}
+				<li class='menu-item@(currentPage == "/Tickets/MyTickets" ? " active" : "")'>
+					<a asp-controller="Tickets" asp-action="MyTickets" class="menu-link">
+						<div>My Tickets</div>
+					</a>
+				</li>
 				@if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
 				{
 					<li class='menu-item@(currentPage == "/Tickets/UnassignedTickets" ? " active" : "")'>

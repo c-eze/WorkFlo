@@ -34,7 +34,7 @@
 				<div>
 					@foreach (string role in (await RolesService.GetUserRolesAsync(Model)))
 					{
-						<span class="badge bg-dark">@role</span>
+						<span class="badge bg-dark mb-3">@role</span>
 					}
 				</div>
 				<p class="card-text"><strong>Company: </strong>@Model.Company.Name - @Model.Company.Description</p>

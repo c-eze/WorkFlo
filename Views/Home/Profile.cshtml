@@ -26,15 +26,15 @@
 	<div class="col">
 		<div class="card p-3">
 			<div class="card-body">
-			<div class="d-flex flex-wrap">
-				<img class="rounded" src="https://api.dicebear.com/9.x/initials/svg?seed=@Model.Company.Name" width="50" height="auto">
-				<div class="ms-2">
-					<h5>@Model.Company.Name</h5>
-					<div>@Model.Company.Description</div>
+				<div class="d-flex flex-wrap">
+					<img class="rounded" src="https://api.dicebear.com/9.x/initials/svg?seed=@Model.Company.Name" width="50" height="auto">
+					<div class="ms-2">
+						<h5>@Model.Company.Name</h5>
+						<div>@Model.Company.Description</div>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 </div>
 
@@ -62,10 +62,18 @@
 										<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64," + Convert.ToBase64String(admin.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+admin.FullName)' width="40" height="40" alt="" style="border-radius: 50%;" />
 									</div>
 									<div class="me-3">
-										<a asp-controller="Home" asp-action="MemberProfile" asp-route-userId="@admin.Id">
+										@if (btUser == admin)
+										{
 											<div>@admin.FullName</div>
-										</a>
-										<div style="font-size:small;">Admin</div>
+											<div style="font-size:small;">Admin</div>
+										}
+										else
+										{
+											<a asp-controller="Home" asp-action="MemberProfile" asp-route-userId="@admin.Id">
+												<div>@admin.FullName</div>
+											</a>
+											<div style="font-size:small;">Admin</div>
+										}
 									</div>
 								</div>
 							}
@@ -87,10 +95,18 @@
 										<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64,"+Convert.ToBase64String(pm.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+pm.FullName)' width="40" height="40" alt="" style="border-radius: 50%;" />
 									</div>
 									<div class="me-3">
-										<a asp-controller="Home" asp-action="MemberProfile" asp-route-userId="@pm.Id">
+										@if (btUser == pm)
+										{
 											<div>@pm.FullName</div>
-										</a>
-										<div style="font-size:small;">Project Manager</div>
+											<div style="font-size:small;">Project Manager</div>
+										}
+										else
+										{
+											<a asp-controller="Home" asp-action="MemberProfile" asp-route-userId="@pm.Id">
+												<div>@pm.FullName</div>
+											</a>
+											<div style="font-size:small;">Project Manager</div>
+										}
 									</div>
 								</div>
 							}
@@ -112,10 +128,18 @@
 										<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64,"+Convert.ToBase64String(developer.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+developer.FullName)' width="40" height="40" alt="" style="border-radius: 50%;" />
 									</div>
 									<div class="me-3">
-										<a asp-controller="Home" asp-action="MemberProfile" asp-route-userId="@developer.Id">
+										@if (btUser == developer)
+										{
 											<div>@developer.FullName</div>
-										</a>
-										<div style="font-size:small;">Developer</div>
+											<div style="font-size:small;">Developer</div>
+										}
+										else
+										{
+											<a asp-controller="Home" asp-action="MemberProfile" asp-route-userId="@developer.Id">
+												<div>@developer.FullName</div>
+											</a>
+											<div style="font-size:small;">Developer</div>
+										}
 									</div>
 								</div>
 							}
@@ -137,10 +161,18 @@
 										<img class='@(isImage ? "media-object" : "")' src='@(isImage ? "data:image/*;base64,"+Convert.ToBase64String(submitter.AvatarFileData) : "https://api.dicebear.com/9.x/initials/svg?seed="+submitter.FullName)' width="40" height="40" alt="" style="border-radius: 50%;" />
 									</div>
 									<div class="me-3">
-										<a asp-controller="Home" asp-action="MemberProfile" asp-route-userId="@submitter.Id">
+										@if (btUser == submitter)
+										{
 											<div>@submitter.FullName</div>
-										</a>
-										<div style="font-size:small;">Submitter</div>
+											<div style="font-size:small;">Submitter</div>
+										}
+										else
+										{
+											<a asp-controller="Home" asp-action="MemberProfile" asp-route-userId="@submitter.Id">
+												<div>@submitter.FullName</div>
+											</a>
+											<div style="font-size:small;">Submitter</div>
+										}
 									</div>
 								</div>
 							}
