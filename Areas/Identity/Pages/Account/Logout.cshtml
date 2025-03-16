@@ -8,18 +8,21 @@
 	Layout = "_BlankLayout";
 }
 
-<header>
-    <h1>@ViewData["Title"]</h1>
-    @{
-        if (User.Identity?.IsAuthenticated ?? false)
-        {
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home")" method="post">
-                <button type="submit" class="nav-link btn btn-link text-dark">Click here to Logout</button>
-            </form>
-        }
-        else
-        {
-            <p>You have successfully logged out of the application.</p>
-        }
-    }
-</header>
+<main class="w-100 m-auto" style="max-width:330px;padding:1rem;">
+	<img class="mb-4" src="~/img/WorkFlo-logo.png" alt="" width="72" height="57">
+	<h1>Logged Out</h1>
+	<p class="mb-4">Thank you for using WorkFlo</p>
+	@{
+		if (User.Identity?.IsAuthenticated ?? false)
+		{
+			<form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home")" method="post">
+				<button type="submit" class="btn btn-primary">Click here to Logout</button>
+			</form>
+		}
+		else
+		{
+			<p>You have successfully logged out of the application.</p>
+		}
+	}
+</main>
+
