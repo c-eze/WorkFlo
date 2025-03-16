@@ -67,7 +67,7 @@ else
   app.UseMigrationsEndPoint();
 }
 
-app.UseHealthChecks("/health");
+//app.UseHealthChecks("/health");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
