@@ -1,8 +1,8 @@
 [build]
 builder = "dockerfile"
-dockerfilePath = "./Workflo/Dockerfile"
+dockerfilePath = "./Dockerfile"
 
 [deploy]
-startCommand = "./Workflo"
+startCommand = "dotnet"
 restartPolicyType = "always"
 healthcheckPath = "/health"
