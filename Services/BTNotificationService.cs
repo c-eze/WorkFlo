@@ -10,13 +10,13 @@ namespace AspnetCoreMvcFull.Services
   {
     #region Properties
     private readonly ApplicationDbContext _context;
-    private readonly BTEmailService _emailSender;
+    private readonly IEmailSender _emailSender;
     private readonly IBTRolesService _rolesService;
     #endregion
 
     #region Constructor
     public BTNotificationService(ApplicationDbContext context,
-                          BTEmailService emailSender,
+                          IEmailSender emailSender,
                           IBTRolesService rolesService)
     {
       _context = context;

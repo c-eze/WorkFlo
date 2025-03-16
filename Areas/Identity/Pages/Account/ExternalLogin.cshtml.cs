@@ -29,7 +29,7 @@ namespace AspnetCoreMvcFull.Areas.Identity.Pages.Account
         private readonly UserManager<BTUser> _userManager;
         private readonly IUserStore<BTUser> _userStore;
         private readonly IUserEmailStore<BTUser> _emailStore;
-        private readonly BTEmailService _emailSender;
+        private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
 
         public ExternalLoginModel(
@@ -37,7 +37,7 @@ namespace AspnetCoreMvcFull.Areas.Identity.Pages.Account
             UserManager<BTUser> userManager,
             IUserStore<BTUser> userStore,
             ILogger<ExternalLoginModel> logger,
-            BTEmailService emailSender)
+            IEmailSender emailSender)
         {
             _signInManager = signInManager;
             _userManager = userManager;

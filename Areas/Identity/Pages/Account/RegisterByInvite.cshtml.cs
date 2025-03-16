@@ -21,7 +21,7 @@ public class RegisterByInviteModel : PageModel
   private readonly IUserStore<BTUser> _userStore;
   private readonly IUserEmailStore<BTUser> _emailStore;
   private readonly ILogger<RegisterByInviteModel> _logger;
-  private readonly BTEmailService _emailSender;
+  private readonly IEmailSender _emailSender;
   private readonly IBTInviteService _inviteService;
 
   public RegisterByInviteModel(
@@ -29,7 +29,7 @@ public class RegisterByInviteModel : PageModel
     IUserStore<BTUser> userStore,
     SignInManager<BTUser> signInManager,
     ILogger<RegisterByInviteModel> logger,
-    BTEmailService emailSender,
+    IEmailSender emailSender,
     IBTInviteService inviteService)
   {
     _userManager = userManager;

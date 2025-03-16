@@ -38,9 +38,8 @@ services.AddScoped<IBTInviteService, BTInviteService>();
 services.AddScoped<IBTFileService, BTFileService>();
 services.AddScoped<IBTLookupService, BTLookupService>();
 
-services.AddScoped<IEmailSender, BTEmailService>();
-
 services.Configure<MailSettings>(configuration.GetSection("MailSettings"));
+services.AddScoped<IEmailSender, BTEmailService>();
 
 services.AddSingleton<DataProtectionPurposeStrings>();
 
@@ -61,9 +60,9 @@ await DataUtility.ManageDataAsync(app);
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+  app.UseExceptionHandler("/Home/Error");
+  // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+  app.UseHsts();
 }
 else
 {

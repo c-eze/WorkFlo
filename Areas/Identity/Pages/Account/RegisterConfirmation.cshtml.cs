@@ -20,9 +20,9 @@ namespace AspnetCoreMvcFull.Areas.Identity.Pages.Account
     public class RegisterConfirmationModel : PageModel
     {
         private readonly UserManager<BTUser> _userManager;
-        private readonly BTEmailService _sender;
+        private readonly IEmailSender _sender;
 
-        public RegisterConfirmationModel(UserManager<BTUser> userManager, BTEmailService sender)
+        public RegisterConfirmationModel(UserManager<BTUser> userManager, IEmailSender sender)
         {
             _userManager = userManager;
             _sender = sender;

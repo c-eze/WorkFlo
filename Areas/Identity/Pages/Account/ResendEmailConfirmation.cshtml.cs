@@ -22,9 +22,9 @@ namespace AspnetCoreMvcFull.Areas.Identity.Pages.Account
     public class ResendEmailConfirmationModel : PageModel
     {
         private readonly UserManager<BTUser> _userManager;
-        private readonly BTEmailService _emailSender;
+        private readonly IEmailSender _emailSender;
 
-        public ResendEmailConfirmationModel(UserManager<BTUser> userManager, BTEmailService emailSender)
+        public ResendEmailConfirmationModel(UserManager<BTUser> userManager, IEmailSender emailSender)
         {
             _userManager = userManager;
             _emailSender = emailSender;

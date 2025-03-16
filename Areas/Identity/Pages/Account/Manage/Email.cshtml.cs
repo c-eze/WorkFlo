@@ -21,12 +21,12 @@ namespace AspnetCoreMvcFull.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<BTUser> _userManager;
         private readonly SignInManager<BTUser> _signInManager;
-        private readonly BTEmailService _emailSender;
+        private readonly IEmailSender _emailSender;
 
         public EmailModel(
             UserManager<BTUser> userManager,
             SignInManager<BTUser> signInManager,
-            BTEmailService emailSender)
+            IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;

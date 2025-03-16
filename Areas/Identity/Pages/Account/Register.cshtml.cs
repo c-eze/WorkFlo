@@ -32,7 +32,7 @@ namespace AspnetCoreMvcFull.Areas.Identity.Pages.Account;
       private readonly IUserStore<BTUser> _userStore;
       private readonly IUserEmailStore<BTUser> _emailStore;
       private readonly ILogger<RegisterModel> _logger;
-      private readonly BTEmailService _emailSender;
+      private readonly IEmailSender _emailSender;
       private readonly ApplicationDbContext _context;
 
   public RegisterModel(
@@ -40,7 +40,7 @@ namespace AspnetCoreMvcFull.Areas.Identity.Pages.Account;
        IUserStore<BTUser> userStore,
        SignInManager<BTUser> signInManager,
        ILogger<RegisterModel> logger,
-       BTEmailService emailSender,
+       IEmailSender emailSender,
        ApplicationDbContext context)
   {
     _userManager = userManager;
