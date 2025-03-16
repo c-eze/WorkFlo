@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using AspnetCoreMvcFull.Services.Interfaces;
 
 namespace AspnetCoreMvcFull.Areas.Identity.Pages.Account
 {
@@ -19,9 +20,9 @@ namespace AspnetCoreMvcFull.Areas.Identity.Pages.Account
     public class RegisterConfirmationModel : PageModel
     {
         private readonly UserManager<BTUser> _userManager;
-        private readonly IEmailSender _sender;
+        private readonly BTEmailService _sender;
 
-        public RegisterConfirmationModel(UserManager<BTUser> userManager, IEmailSender sender)
+        public RegisterConfirmationModel(UserManager<BTUser> userManager, BTEmailService sender)
         {
             _userManager = userManager;
             _sender = sender;

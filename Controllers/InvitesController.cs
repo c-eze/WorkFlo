@@ -17,14 +17,14 @@ public class InvitesController : Controller
   private readonly ApplicationDbContext _context;
   private readonly IBTInviteService _inviteService;
   private readonly IBTProjectService _projectService;
-  private readonly IEmailSender _emailService;
+  private readonly BTEmailService _emailService;
   private readonly IDataProtector _protector;
 
   public InvitesController(ApplicationDbContext context,
                IDataProtectionProvider dataProtectionProvider,
                DataProtectionPurposeStrings dataProtectionPurposeStrings,
                IBTInviteService inviteService,
-               IEmailSender emailService,
+               BTEmailService emailService,
                IBTProjectService projectService)
   {
     _context = context;

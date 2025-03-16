@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using AspnetCoreMvcFull.Services.Interfaces;
 
 namespace AspnetCoreMvcFull.Areas.Identity.Pages.Account
 {
@@ -28,7 +29,7 @@ namespace AspnetCoreMvcFull.Areas.Identity.Pages.Account
         private readonly UserManager<BTUser> _userManager;
         private readonly IUserStore<BTUser> _userStore;
         private readonly IUserEmailStore<BTUser> _emailStore;
-        private readonly IEmailSender _emailSender;
+        private readonly BTEmailService _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
 
         public ExternalLoginModel(
@@ -36,7 +37,7 @@ namespace AspnetCoreMvcFull.Areas.Identity.Pages.Account
             UserManager<BTUser> userManager,
             IUserStore<BTUser> userStore,
             ILogger<ExternalLoginModel> logger,
-            IEmailSender emailSender)
+            BTEmailService emailSender)
         {
             _signInManager = signInManager;
             _userManager = userManager;

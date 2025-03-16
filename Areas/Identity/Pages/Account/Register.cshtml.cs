@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using AspnetCoreMvcFull.Data;
+using AspnetCoreMvcFull.Services.Interfaces;
 
 namespace AspnetCoreMvcFull.Areas.Identity.Pages.Account;
 
@@ -31,7 +32,7 @@ namespace AspnetCoreMvcFull.Areas.Identity.Pages.Account;
       private readonly IUserStore<BTUser> _userStore;
       private readonly IUserEmailStore<BTUser> _emailStore;
       private readonly ILogger<RegisterModel> _logger;
-      private readonly IEmailSender _emailSender;
+      private readonly BTEmailService _emailSender;
       private readonly ApplicationDbContext _context;
 
   public RegisterModel(
@@ -39,7 +40,7 @@ namespace AspnetCoreMvcFull.Areas.Identity.Pages.Account;
        IUserStore<BTUser> userStore,
        SignInManager<BTUser> signInManager,
        ILogger<RegisterModel> logger,
-       IEmailSender emailSender,
+       BTEmailService emailSender,
        ApplicationDbContext context)
   {
     _userManager = userManager;
