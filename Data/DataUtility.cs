@@ -350,7 +350,7 @@ public static class DataUtility
       LastName = "Tucker",
       EmailConfirmed = true,
       CompanyId = company1Id,
-      AvatarFormFile = GetImageAsFormFile("./workflo/wwwroot/img/avatars/4.png")
+      AvatarFormFile = GetImageAsFormFile("./wwwroot/img/avatars/4.png")
     };
 
     defaultUser.AvatarFileData = await ConvertFileToByteArrayAsync(defaultUser.AvatarFormFile);
@@ -384,7 +384,7 @@ public static class DataUtility
       LastName = "Johnson",
       EmailConfirmed = true,
       CompanyId = company2Id,
-      AvatarFormFile = GetImageAsFormFile("./workflo/wwwroot/img/avatars/1.png")
+      AvatarFormFile = GetImageAsFormFile("./wwwroot/img/avatars/1.png")
     };
 
     defaultUser.AvatarFileData = await ConvertFileToByteArrayAsync(defaultUser.AvatarFormFile);
@@ -419,7 +419,7 @@ public static class DataUtility
       LastName = "Williams",
       EmailConfirmed = true,
       CompanyId = company1Id,
-      AvatarFormFile = GetImageAsFormFile("./workflo/wwwroot/img/avatars/2.png")
+      AvatarFormFile = GetImageAsFormFile("./wwwroot/img/avatars/2.png")
     };
 
     defaultUser.AvatarFileData = await ConvertFileToByteArrayAsync(defaultUser.AvatarFormFile);
@@ -454,7 +454,7 @@ public static class DataUtility
       LastName = "Smith",
       EmailConfirmed = true,
       CompanyId = company2Id,
-      AvatarFormFile = GetImageAsFormFile("./workflo/wwwroot/img/avatars/11.png")
+      AvatarFormFile = GetImageAsFormFile("./wwwroot/img/avatars/11.png")
     };
 
     defaultUser.AvatarFileData = await ConvertFileToByteArrayAsync(defaultUser.AvatarFormFile);
@@ -489,7 +489,7 @@ public static class DataUtility
       LastName = "Brown",
       EmailConfirmed = true,
       CompanyId = company1Id,
-      AvatarFormFile = GetImageAsFormFile("./workflo/wwwroot/img/avatars/5.png")
+      AvatarFormFile = GetImageAsFormFile("./wwwroot/img/avatars/5.png")
     };
 
     defaultUser.AvatarFileData = await ConvertFileToByteArrayAsync(defaultUser.AvatarFormFile);
@@ -524,7 +524,7 @@ public static class DataUtility
       LastName = "Garcia",
       EmailConfirmed = true,
       CompanyId = company2Id,
-      AvatarFormFile = GetImageAsFormFile("./workflo/wwwroot/img/avatars/9.png")
+      AvatarFormFile = GetImageAsFormFile("./wwwroot/img/avatars/9.png")
     };
 
     defaultUser.AvatarFileData = await ConvertFileToByteArrayAsync(defaultUser.AvatarFormFile);
@@ -559,7 +559,7 @@ public static class DataUtility
       LastName = "Jones",
       EmailConfirmed = true,
       CompanyId = company1Id,
-      AvatarFormFile = GetImageAsFormFile("./workflo/wwwroot/img/avatars/6.png")
+      AvatarFormFile = GetImageAsFormFile("./wwwroot/img/avatars/6.png")
     };
 
     defaultUser.AvatarFileData = await ConvertFileToByteArrayAsync(defaultUser.AvatarFormFile);
@@ -594,7 +594,7 @@ public static class DataUtility
       LastName = "Miller",
       EmailConfirmed = true,
       CompanyId = company2Id,
-      AvatarFormFile = GetImageAsFormFile("./workflo/wwwroot/img/avatars/8.png")
+      AvatarFormFile = GetImageAsFormFile("./wwwroot/img/avatars/8.png")
     };
 
     defaultUser.AvatarFileData = await ConvertFileToByteArrayAsync(defaultUser.AvatarFormFile);
@@ -629,7 +629,7 @@ public static class DataUtility
       LastName = "Davis",
       EmailConfirmed = true,
       CompanyId = company1Id,
-      AvatarFormFile = GetImageAsFormFile("./workflo/wwwroot/img/avatars/7.png")
+      AvatarFormFile = GetImageAsFormFile("./wwwroot/img/avatars/7.png")
     };
 
     defaultUser.AvatarFileData = await ConvertFileToByteArrayAsync(defaultUser.AvatarFormFile);
@@ -663,7 +663,7 @@ public static class DataUtility
       LastName = "Rodriguez",
       EmailConfirmed = true,
       CompanyId = company2Id,
-      AvatarFormFile = GetImageAsFormFile("./workflo/wwwroot/img/avatars/3.png")
+      AvatarFormFile = GetImageAsFormFile("./wwwroot/img/avatars/3.png")
     };
 
     defaultUser.AvatarFileData = await ConvertFileToByteArrayAsync(defaultUser.AvatarFormFile);
@@ -697,7 +697,7 @@ public static class DataUtility
       LastName = "Martinez",
       EmailConfirmed = true,
       CompanyId = company1Id,
-      AvatarFormFile = GetImageAsFormFile("./workflo/wwwroot/img/avatars/12.png")
+      AvatarFormFile = GetImageAsFormFile("./wwwroot/img/avatars/12.png")
     };
 
     defaultUser.AvatarFileData = await ConvertFileToByteArrayAsync(defaultUser.AvatarFormFile);
@@ -732,7 +732,7 @@ public static class DataUtility
       LastName = "Anderson",
       EmailConfirmed = true,
       CompanyId = company2Id,
-      AvatarFormFile = GetImageAsFormFile("./workflo/wwwroot/img/avatars/10.png")
+      AvatarFormFile = GetImageAsFormFile("./wwwroot/img/avatars/10.png")
     };
 
     defaultUser.AvatarFileData = await ConvertFileToByteArrayAsync(defaultUser.AvatarFormFile);
