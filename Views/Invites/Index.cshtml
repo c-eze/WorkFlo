@@ -15,7 +15,7 @@
 <div class="row my-2">
 	<div class="col">
 		<div class="card p-3">
-			<div class="card-body">
+			<div class="card-body" style="overflow-x:auto;overflow-y:auto;height:500px;">
 				<ul class="nav nav-tabs" role="tablist">
 					<li class="nav-item" role="presentation">
 						<button class="nav-link active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="true">Pending Invites</button>
@@ -148,6 +148,8 @@
 						</table>
 					</div>
 				</div>
+			</div>
+			<div class="card-footer">
 				<a asp-controller="Invites" asp-action="Create" class="btn btn-primary" style="font-size: .875rem;font-weight: 500;">
 					<span>Invite New User</span>
 				</a>
