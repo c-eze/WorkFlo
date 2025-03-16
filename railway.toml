@@ -4,4 +4,4 @@ dockerfilePath = "./Dockerfile"
 
 [deploy]
 startCommand = "dotnet AspnetCoreMvcFull.dll"
-restartPolicyType = "always"
+restartPolicyType = "never"

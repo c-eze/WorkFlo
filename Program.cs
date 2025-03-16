@@ -51,6 +51,9 @@ services.AddControllersWithViews();
 
 services.AddRazorPages();
 
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8081";
+builder.WebHost.UseUrls($"http://*:{port}");
+
 var app = builder.Build();
 
 await DataUtility.ManageDataAsync(app);
