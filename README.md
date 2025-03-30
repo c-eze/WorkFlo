@@ -1,4 +1,4 @@
-# WorkFlo [Live Demo](https://workflo.up.railway.app/)
+# WorkFlo [(Live Demo)](https://workflo.up.railway.app/)
 
 ## Description
 
