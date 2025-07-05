@@ -19,12 +19,9 @@
 	</ol>
 </nav>
 
-@if (User != null && (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager))))
-{
-	<p>
-		<a asp-action="Create" class="btn btn-primary">Create New Ticket</a>
-	</p>
-}
+<p>
+	<a asp-action="Create" class="btn btn-primary">Create New Ticket</a>
+</p>
 
 <div class="row row-cols-1">
 	<div class="col mb-6">
