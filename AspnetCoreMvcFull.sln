@@ -5,11 +5,6 @@ VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspnetCoreMvcFull", "AspnetCoreMvcFull.csproj", "{B0669AA4-51EF-43CE-9DA1-15DC79CF979D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C7E355C7-BED4-45E2-A966-1795D09C99B3}"
-	ProjectSection(SolutionItems) = preProject
-		railway.toml = railway.toml
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

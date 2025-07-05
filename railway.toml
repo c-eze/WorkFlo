@@ -1,7 +1,0 @@
-[build]
-builder = "dockerfile"
-dockerfilePath = "./Dockerfile"
-
-[deploy]
-startCommand = "dotnet AspnetCoreMvcFull.dll"
-restartPolicyType = "never"

@@ -94,7 +94,7 @@ public class TicketsController : Controller
     var pageNumber = page ?? 1;
     var pageSize = 10; // number of items per page
 
-    return View(tickets.Where(t => t.Archived == false).ToPagedList(pageNumber, pageSize)); 
+    return View(tickets.Where(t => t.Archived == false).OrderByDescending(d => d.Created).ToPagedList(pageNumber, pageSize)); 
   }
 
   public async Task<IActionResult> ArchivedTickets(int? page, string currentFilter, string searchString)
