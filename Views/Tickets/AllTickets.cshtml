@@ -57,7 +57,7 @@
 						</thead>
 						<tbody>
 							@* Table body *@
-							@foreach (Ticket ticket in Model.OrderByDescending(d => d.Created))
+							@foreach (Ticket ticket in Model)
 							{
 								<tr>
 									<td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id"><strong>@ticket.Title</strong></a> </td>
