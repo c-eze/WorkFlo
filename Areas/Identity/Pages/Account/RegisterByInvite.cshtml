@@ -27,13 +27,14 @@
 			<input asp-for="Input.FirstName" type="hidden" value="@Model.GuestInvite.InviteeFirstName" />
 			<input asp-for="Input.LastName" type="hidden" value="@Model.GuestInvite.InviteeLastName" />
 			<input asp-for="Input.CompanyId" type="hidden" value="@Model.GuestInvite.CompanyId" />
+			<input asp-for="Input.ProjectId" type="hidden" value="@Model.GuestInvite.Project?.Id" />
 			<input asp-for="Input.Token" type="hidden" value="@Model.GuestInvite.CompanyToken" />
-			<div class="form-floating">
+			<div class="form-floating mb-3">
 				<input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
 				<label asp-for="Input.Password"></label>
 				<span asp-validation-for="Input.Password" class="text-danger"></span>
 			</div>
-			<div class="form-floating">
+			<div class="form-floating mb-3">
 				<input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
 				<label asp-for="Input.ConfirmPassword"></label>
 				<span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>

@@ -23,6 +23,7 @@ public class RegisterByInviteModel : PageModel
   private readonly ILogger<RegisterByInviteModel> _logger;
   private readonly IEmailSender _emailSender;
   private readonly IBTInviteService _inviteService;
+  private readonly IBTProjectService _projectService;
 
   public RegisterByInviteModel(
     UserManager<BTUser> userManager,
@@ -30,7 +31,8 @@ public class RegisterByInviteModel : PageModel
     SignInManager<BTUser> signInManager,
     ILogger<RegisterByInviteModel> logger,
     IEmailSender emailSender,
-    IBTInviteService inviteService)
+    IBTInviteService inviteService,
+    IBTProjectService projectService)
   {
     _userManager = userManager;
     _userStore = userStore;
@@ -39,6 +41,7 @@ public class RegisterByInviteModel : PageModel
     _logger = logger;
     _emailSender = emailSender;
     _inviteService = inviteService;
+    _projectService = projectService;
   }
 
   /// <summary>
@@ -86,6 +89,8 @@ public class RegisterByInviteModel : PageModel
     public string LastName { get; set; }
 
     public int CompanyId { get; set; }
+
+    public int ProjectId { get; set; }
 
     public Guid Token { get; set; }
 
@@ -141,6 +146,8 @@ public class RegisterByInviteModel : PageModel
         var emailResult = await _userManager.ConfirmEmailAsync(user, code);
 
         await _userManager.AddToRoleAsync(user, Roles.Submitter.ToString());
+
+        await _projectService.AddUserToProjectAsync(userId, Input.ProjectId);
 
         await _emailSender.SendEmailAsync(Input.Email, "WorkFlo Registration Confirmation",
                       $"Congratulations! You are registered with WorkFlo.<br><br>Your credentials are:<br><br>&emsp;&emsp;Username:{Input.Email} <br>&emsp;&emsp;Password: {Input.Password}<br><br>Thank you");
