@@ -123,7 +123,7 @@ public class RegisterByInviteModel : PageModel
 
   public async Task<IActionResult> OnPostAsync(string returnUrl = null)
   {
-    returnUrl ??= Url.Content("~/");
+    returnUrl ??= Url.Content("~/Tickets/AllTickets");
     ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
     if (ModelState.IsValid)
     {
