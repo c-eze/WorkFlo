@@ -2,7 +2,6 @@ using AspnetCoreMvcFull.Models;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.DotNet.Scaffolding.Shared.CodeModifier.CodeChange;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using RestSharp;
@@ -31,10 +30,12 @@ namespace AspnetCoreMvcFull.Services.Interfaces
         Authenticator = new HttpBasicAuthenticator("api", Environment.GetEnvironmentVariable("MailPassword") ?? _mailSettings.MailPassword)
       };
 
+      var emailSender = _mailSettings.Email ?? Environment.GetEnvironmentVariable("Email");
+
       var client = new RestClient(options);
-      var request = new RestRequest("/v3/sandbox0b6ecaaca57746eead36336b93db5677.mailgun.org/messages", RestSharp.Method.Post);
+      var request = new RestRequest("/v3/sandbox0b6ecaaca57746eead36336b93db5677.mailgun.org/messages", Method.Post);
       request.AlwaysMultipartFormData = true;
-      request.AddParameter("from", "Workflo <hi@chikere.dev>");
+      request.AddParameter("from", emailSender);
       request.AddParameter("to", emailTo);
       request.AddParameter("subject", subject); 
       request.AddParameter("text", htmlMessage);
