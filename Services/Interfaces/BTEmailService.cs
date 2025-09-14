@@ -35,51 +35,51 @@ namespace AspnetCoreMvcFull.Services.Interfaces
       var client = new RestClient(options);
       var request = new RestRequest("/v3/sandbox0b6ecaaca57746eead36336b93db5677.mailgun.org/messages", Method.Post);
       request.AlwaysMultipartFormData = true;
-      request.AddParameter("from", emailSender);
-      request.AddParameter("to", emailTo);
+      request.AddParameter("from", $"Workflo <{emailSender}>");
+      request.AddParameter("to", $"<{emailTo}>");
       request.AddParameter("subject", subject); 
       request.AddParameter("text", htmlMessage);
       await client.ExecuteAsync(request);  
     }
     #endregion
 
-    //#region Send Email
-    //public async Task SendEmailAsync(string emailTo, string subject, string htmlMessage)
-    //{
-    //  var emailSender = _mailSettings.Email ?? Environment.GetEnvironmentVariable("Email");
+      //#region Send Email
+      //public async Task SendEmailAsync(string emailTo, string subject, string htmlMessage)
+      //{
+      //  var emailSender = _mailSettings.Email ?? Environment.GetEnvironmentVariable("Email");
 
-    //  MimeMessage email = new();
+      //  MimeMessage email = new();
 
-    //  email.Sender = MailboxAddress.Parse(emailSender);
-    //  email.To.Add(MailboxAddress.Parse(emailTo));
-    //  email.Subject = subject;
+      //  email.Sender = MailboxAddress.Parse(emailSender);
+      //  email.To.Add(MailboxAddress.Parse(emailTo));
+      //  email.Subject = subject;
 
-    //  var builder = new BodyBuilder
-    //  {
-    //    HtmlBody = htmlMessage
-    //  };
+      //  var builder = new BodyBuilder
+      //  {
+      //    HtmlBody = htmlMessage
+      //  };
 
-    //  email.Body = builder.ToMessageBody();
+      //  email.Body = builder.ToMessageBody();
 
-    //  using var smtp = new SmtpClient();
-    //  try
-    //  {
-    //    var host = _mailSettings.MailHost ?? Environment.GetEnvironmentVariable("MailHost");
-    //    var port = _mailSettings.MailPort != 0 ? _mailSettings.MailPort : int.Parse(Environment.GetEnvironmentVariable("MailPort")!);
-    //    var password = _mailSettings.MailPassword ?? Environment.GetEnvironmentVariable("MailPassword");
+      //  using var smtp = new SmtpClient();
+      //  try
+      //  {
+      //    var host = _mailSettings.MailHost ?? Environment.GetEnvironmentVariable("MailHost");
+      //    var port = _mailSettings.MailPort != 0 ? _mailSettings.MailPort : int.Parse(Environment.GetEnvironmentVariable("MailPort")!);
+      //    var password = _mailSettings.MailPassword ?? Environment.GetEnvironmentVariable("MailPassword");
 
-    //    await smtp.ConnectAsync(host, port, SecureSocketOptions.StartTls);
-    //    await smtp.AuthenticateAsync(emailSender, password);
+      //    await smtp.ConnectAsync(host, port, SecureSocketOptions.StartTls);
+      //    await smtp.AuthenticateAsync(emailSender, password);
 
-    //    await smtp.SendAsync(email);
-    //    smtp.Disconnect(true);
-    //  }
-    //  catch (Exception)
-    //  {
+      //    await smtp.SendAsync(email);
+      //    smtp.Disconnect(true);
+      //  }
+      //  catch (Exception)
+      //  {
 
-    //    throw;
-    //  }
-    //}
-    //#endregion
+      //    throw;
+      //  }
+      //}
+      //#endregion
   }
 }
