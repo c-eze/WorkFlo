@@ -33,7 +33,7 @@ namespace AspnetCoreMvcFull.Services.Interfaces
       var emailSender = _mailSettings.Email ?? Environment.GetEnvironmentVariable("Email");
 
       var client = new RestClient(options);
-      var request = new RestRequest("/v3/chikere.dev/messages", Method.Post);
+      var request = new RestRequest("/v3/chikere.dev/messages.mime", Method.Post);
       request.AlwaysMultipartFormData = true;
       request.AddParameter("from", $"Workflo <{emailSender}>");
       request.AddParameter("to", $"<{emailTo}>");
