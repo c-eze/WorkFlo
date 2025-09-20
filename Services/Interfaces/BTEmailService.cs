@@ -46,12 +46,11 @@ namespace AspnetCoreMvcFull.Services.Interfaces
       //email.Body = builder.ToMessageBody();
 
       var client = new RestClient(options);
-      var request = new RestRequest("/v3/chikere.dev/messages.mime", Method.Post);
+      var request = new RestRequest("/v3/chikere.dev/messages", Method.Post);
       request.AlwaysMultipartFormData = true;
       request.AddParameter("from", $"Workflo <{emailSender}>");
       request.AddParameter("to", $"<{emailTo}>");
       request.AddParameter("subject", subject);
-      request.AddParameter("text", htmlMessage);
       request.AddParameter("html", htmlMessage);
       await client.ExecuteAsync(request);  
     }
