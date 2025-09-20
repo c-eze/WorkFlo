@@ -186,7 +186,7 @@ public class InvitesController : Controller
           protocol: Request.Scheme);
 
       await _inviteService.AddNewInviteAsync(invite);
-      await _emailService.SendEmailAsync(invite.InviteeEmail, $"Workflo Invitation", $"<p>Hello {invite.InviteeFirstName} {invite.InviteeLastName},</p><p>Click the following link to join our team on Workflo: <a href='{returnUrl}'>Click Here</a>.</p><p>If clicking the link above does not take you to the activation screen, paste the following link into your browser's URL:</p><p>{returnUrl}</p><p>Thank you,</p><p>Admin</p>");
+      await _emailService.SendEmailAsync(invite.InviteeEmail, $"Workflo Invitation", $"<p>Hello {invite.InviteeFirstName} {invite.InviteeLastName},<br><p>Click the following link to join our team on Workflo: <a href='{returnUrl}'>Click Here</a>.<br><p>If clicking the link above does not take you to the activation screen, paste the following link into your browser's URL:<br><p>{returnUrl}<br><p>Thank you,<br><p>Admin<br>");
       return RedirectToAction("Index", "Invites");
     }
     ViewData["CompanyId"] = new SelectList(_context.Companies, "Id", "Name", invite.CompanyId);
