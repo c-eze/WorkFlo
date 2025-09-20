@@ -50,7 +50,8 @@ namespace AspnetCoreMvcFull.Services.Interfaces
       request.AlwaysMultipartFormData = true;
       request.AddParameter("from", $"Workflo <{emailSender}>");
       request.AddParameter("to", $"<{emailTo}>");
-      request.AddParameter("subject", subject); 
+      request.AddParameter("subject", subject);
+      request.AddParameter("text", htmlMessage);
       request.AddParameter("html", htmlMessage);
       await client.ExecuteAsync(request);  
     }
