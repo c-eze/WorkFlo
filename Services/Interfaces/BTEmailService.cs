@@ -48,10 +48,20 @@ namespace AspnetCoreMvcFull.Services.Interfaces
       var client = new RestClient(options);
       var request = new RestRequest("/v3/chikere.dev/messages", Method.Post);
       request.AlwaysMultipartFormData = true;
-      request.AddParameter("from", $"Workflo <{emailSender}>");
-      request.AddParameter("to", $"<{emailTo}>");
-      request.AddParameter("subject", subject);
-      request.AddParameter("html", htmlMessage);
+
+      //request.AddParameter("from", $"Workflo <{emailSender}>");
+      //request.AddParameter("to", $"<{emailTo}>");
+      //request.AddParameter("subject", subject);
+      //request.AddParameter("html", htmlMessage);
+
+      var parameters = new
+      {
+        From = $"Workflo <{emailSender}>",
+        To = $"<{emailTo}>",
+        Subject = subject,
+        Html = htmlMessage
+      };
+      request.AddObject(parameters);
       await client.ExecuteAsync(request);  
     }
     #endregion
