@@ -56,10 +56,10 @@ namespace AspnetCoreMvcFull.Services.Interfaces
 
       var parameters = new
       {
-        From = $"Workflo <{emailSender}>",
-        To = $"<{emailTo}>",
-        Subject = subject,
-        Html = htmlMessage
+        from = $"Workflo <{emailSender}>",
+        to = $"<{emailTo}>",
+        subject = subject,
+        html = htmlMessage
       };
       request.AddObject(parameters);
       await client.ExecuteAsync(request);  
