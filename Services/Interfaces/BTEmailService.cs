@@ -30,29 +30,11 @@ namespace AspnetCoreMvcFull.Services.Interfaces
         Authenticator = new HttpBasicAuthenticator("api", Environment.GetEnvironmentVariable("MailPassword") ?? _mailSettings.MailPassword)
       };
 
-      var emailSender = _mailSettings.Email ?? Environment.GetEnvironmentVariable("Email");
-
-      //MimeMessage email = new();
-
-      //email.Sender = MailboxAddress.Parse(emailSender);
-      //email.To.Add(MailboxAddress.Parse(emailTo));
-      //email.Subject = subject;
-
-      var builder = new BodyBuilder
-      {
-        HtmlBody = htmlMessage
-      };
-
-      //email.Body = builder.ToMessageBody();
+      var emailSender = _mailSettings.Email ?? Environment.GetEnvironmentVariable("Email"); 
 
       var client = new RestClient(options);
       var request = new RestRequest("/v3/chikere.dev/messages", Method.Post);
-      request.AlwaysMultipartFormData = true;
-
-      //request.AddParameter("from", $"Workflo <{emailSender}>");
-      //request.AddParameter("to", $"<{emailTo}>");
-      //request.AddParameter("subject", subject);
-      //request.AddParameter("html", htmlMessage);
+      request.AlwaysMultipartFormData = true; 
 
       var parameters = new
       {
@@ -61,6 +43,7 @@ namespace AspnetCoreMvcFull.Services.Interfaces
         subject = subject,
         html = htmlMessage
       };
+
       request.AddObject(parameters);
       await client.ExecuteAsync(request);  
     }
