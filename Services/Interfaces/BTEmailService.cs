@@ -51,7 +51,7 @@ namespace AspnetCoreMvcFull.Services.Interfaces
       request.AddParameter("from", $"Workflo <{emailSender}>");
       request.AddParameter("to", $"<{emailTo}>");
       request.AddParameter("subject", subject); 
-      request.AddParameter("text", builder.ToString());
+      request.AddParameter("html", htmlMessage);
       await client.ExecuteAsync(request);  
     }
     #endregion
